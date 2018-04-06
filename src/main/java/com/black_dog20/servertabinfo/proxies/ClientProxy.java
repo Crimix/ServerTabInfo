@@ -1,6 +1,5 @@
 package com.black_dog20.servertabinfo.proxies;
 
-import com.black_dog20.servertabinfo.client.settings.Keybindings;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
 
