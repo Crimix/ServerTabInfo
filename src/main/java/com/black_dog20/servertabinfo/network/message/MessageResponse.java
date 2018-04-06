@@ -44,6 +44,7 @@ public class MessageResponse implements IMessage, IMessageHandler<MessageRespons
 		for(TpsDimension s: dims) {
 			ByteBufUtils.writeUTF8String(buf, s.name);
 			buf.writeDouble(s.meanTickTime);
+			buf.writeInt(s.Id);
 		}
 		
 	}
@@ -52,7 +53,7 @@ public class MessageResponse implements IMessage, IMessageHandler<MessageRespons
 	public void fromBytes(ByteBuf buf) {
 		int length = buf.readInt();
 		while (length != 0) {
-			dims.add(new TpsDimension(ByteBufUtils.readUTF8String(buf), buf.readDouble()));
+			dims.add(new TpsDimension(ByteBufUtils.readUTF8String(buf), buf.readDouble(),buf.readInt()));
 			length--;
 		}
 		

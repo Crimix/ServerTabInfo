@@ -27,7 +27,10 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 		
 		for(WorldServer world : server.worlds) {
 			String name = world.provider.getDimensionType().getName();
-			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimension()))* 1.0E-006D));
+			if(name.equals(null)) {
+				name = "";
+			}
+			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimension()))* 1.0E-006D, world.provider.getDimension()));
 		}
 		
 		return new MessageResponse(dims);

@@ -6,8 +6,17 @@ public class TpsDimension {
 	
 	public Double meanTickTime;
 	
-	public TpsDimension(String name, Double meanTickTiem ) {
+	public int Id;
+	
+	public TpsDimension(String name, Double meanTickTime) {
+		this.name = name;
+		this.meanTickTime = meanTickTime;
+	}
+	
+	
+	public TpsDimension(String name, Double meanTickTiem, int id) {
 		this.name = name;
 		this.meanTickTime = meanTickTiem;
+		this.Id = id;
 	}
 }

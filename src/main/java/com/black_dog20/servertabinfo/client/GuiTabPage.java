@@ -105,7 +105,10 @@ public class GuiTabPage extends GuiScreen
 
 			TextComponentString tpsString = new TextComponentString(Integer.toString(tps));
 			TextComponentTranslation mean = new TextComponentTranslation("gui.servertabinfo.mean");
-			TextComponentTranslation name = new TextComponentTranslation(tpsInfo.name);
+			TextComponentTranslation dim = new TextComponentTranslation("gui.servertabinfo.dim");
+			TextComponentTranslation name = new TextComponentTranslation(dim.getFormattedText() + " " +Integer.toString(tpsInfo.Id));
+			if(!tpsInfo.name.equals(""))
+				name = new TextComponentTranslation(tpsInfo.name);
 			tpsString.getStyle().setColor(color);
 			list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, "ms", tpsString.getFormattedText(), "tps" ));
 
