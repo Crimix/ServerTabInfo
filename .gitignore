@@ -1,0 +1,18 @@
+## Windows
+Thumbs.db
+
+## gradle
+/.gradle
+/build
+
+## ForgeGradle
+/run
+*.launch
+
+## eclipse
+/.settings
+/.metadata
+/.classpath
+/.project
+/eclipse
+/bin

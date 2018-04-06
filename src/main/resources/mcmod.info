@@ -1,0 +1,17 @@
+[
+{
+  "modid": "servertabinfo",
+  "name": "Server Tab Info",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["black_dog20"
+],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
