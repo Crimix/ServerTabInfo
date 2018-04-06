@@ -25,7 +25,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)* 1.0E-006D));
 		
-		for(WorldServer world : server.worldServers) {
+		for(WorldServer world : server.worlds) {
 			String name = world.provider.getDimensionType().getName();
 			if(name.equals(null)) {
 				name = "";
