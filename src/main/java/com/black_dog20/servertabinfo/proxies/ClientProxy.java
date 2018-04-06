@@ -1,8 +1,10 @@
 package com.black_dog20.servertabinfo.proxies;
 
+import com.black_dog20.servertabinfo.client.settings.Keybindings;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends CommonProxy {
 
@@ -11,5 +13,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRendersPreInit() {
 		MinecraftForge.EVENT_BUS.register(guiTabPage);
+	}
+	
+	@Override
+	public void registerKeyBindings() {
+		ClientRegistry.registerKeyBinding(Keybindings.SHOW);
+		ClientRegistry.registerKeyBinding(Keybindings.SHOW2);
 	}
 }

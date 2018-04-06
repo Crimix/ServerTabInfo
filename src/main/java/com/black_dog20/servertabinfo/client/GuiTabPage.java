@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 
 import com.black_dog20.servertabinfo.ServerTabInfo;
+import com.black_dog20.servertabinfo.client.settings.Keybindings;
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
@@ -40,16 +41,18 @@ public class GuiTabPage extends GuiScreen
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
+		width = event.getResolution().getScaledWidth();
+		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+		{
+			return;
+		}
+		
+		if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
+		{
+			return;
+		}
 		if(ServerTabInfo.modOnServer) {
-			width = event.getResolution().getScaledWidth();
-			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
-			{
-				return;
-			}
-			if (!(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)))
-			{
-				return;
-			}
+			
 			if(ticks%100 == 0) {
 				ticks = 0;
 				PacketHandler.network.sendToServer(new MessageRequest());
@@ -62,16 +65,6 @@ public class GuiTabPage extends GuiScreen
 			}
 		}
 		else {
-			width = event.getResolution().getScaledWidth();
-			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
-			{
-				return;
-			}
-			
-			if (!(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)))
-			{
-				return;
-			}
 			
 			TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
 			int textLength = mc.fontRenderer.getStringWidth(text.getFormattedText());
@@ -124,7 +117,7 @@ public class GuiTabPage extends GuiScreen
 			}
 		}
 
-		maxWidth = (int) (maxWidth*1.5);
+		maxWidth = (int) (maxWidth*1.3);
 
 
 		if (list != null && !list.isEmpty())
