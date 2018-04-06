@@ -40,6 +40,7 @@ public class ServerTabInfo {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		PacketHandler.init();
+		Proxy.registerKeyBindings();
 		Proxy.registerRendersPreInit();
 		logger.info("Pre Initialization Complete!");
 	}

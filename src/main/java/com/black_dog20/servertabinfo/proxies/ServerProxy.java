@@ -7,4 +7,10 @@ public class ServerProxy extends CommonProxy {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void registerKeyBindings() {
+		// TODO Auto-generated method stub
+		
+	}
 }
