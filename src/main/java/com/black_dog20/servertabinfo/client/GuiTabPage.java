@@ -13,9 +13,9 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,8 +41,8 @@ public class GuiTabPage extends GuiScreen
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
 		if(ServerTabInfo.modOnServer) {
-			width = event.getResolution().getScaledWidth();
-			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+			width = event.resolution.getScaledWidth();
+			if (event.type!= RenderGameOverlayEvent.ElementType.PLAYER_LIST)
 			{
 				return;
 			}
@@ -62,8 +62,8 @@ public class GuiTabPage extends GuiScreen
 			}
 		}
 		else {
-			width = event.getResolution().getScaledWidth();
-			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+			width = event.resolution.getScaledWidth();
+			if (event.type != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
 			{
 				return;
 			}
@@ -73,9 +73,9 @@ public class GuiTabPage extends GuiScreen
 				return;
 			}
 			
-			TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
-			int textLength = mc.fontRenderer.getStringWidth(text.getFormattedText());
-			mc.fontRenderer.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - textLength / 2), (float) 10, -1);
+			ChatComponentTranslation text = new ChatComponentTranslation("gui.servertabinfo.notinstalled");
+			int textLength = mc.fontRendererObj.getStringWidth(text.getFormattedText());
+			mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - textLength / 2), (float) 10, -1);
 			
 			event.setCanceled(true);
 		}
@@ -91,22 +91,25 @@ public class GuiTabPage extends GuiScreen
 			return true;
 		
 		for(TpsDimension tpsInfo : dims) {
-			TextFormatting color = TextFormatting.GREEN;
+			EnumChatFormatting color = EnumChatFormatting.GREEN;
 			int tps = (int) Math.min(1000.0D / tpsInfo.meanTickTime, 20);
 
 			if (tps < 20)
 			{
-				color = TextFormatting.YELLOW;
+				color = EnumChatFormatting.YELLOW;
 			}
 			if (tps <= 10)
 			{
-				color = TextFormatting.RED;
+				color = EnumChatFormatting.RED;
 			}
 
-			TextComponentString tpsString = new TextComponentString(Integer.toString(tps));
-			TextComponentTranslation mean = new TextComponentTranslation("gui.servertabinfo.mean");
-			TextComponentTranslation name = new TextComponentTranslation(tpsInfo.name);
-			tpsString.getStyle().setColor(color);
+			ChatComponentText tpsString = new ChatComponentText(Integer.toString(tps));
+			ChatComponentTranslation mean = new ChatComponentTranslation("gui.servertabinfo.mean");
+			ChatComponentTranslation dim = new ChatComponentTranslation("gui.servertabinfo.dim");
+			ChatComponentTranslation name = new ChatComponentTranslation(dim.getFormattedText() + " " +Integer.toString(tpsInfo.Id));
+			if(!tpsInfo.name.equals(""))
+				name = new ChatComponentTranslation(tpsInfo.name);
+			tpsString.getChatStyle().setColor(color);
 			list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, "ms", tpsString.getFormattedText(), "tps" ));
 
 		}
@@ -116,7 +119,7 @@ public class GuiTabPage extends GuiScreen
 		for (String tpsInfoString : list)
 		{
 			if(tpsInfoString != null) {
-				int k = mc.fontRenderer.getStringWidth(tpsInfoString);
+				int k = mc.fontRendererObj.getStringWidth(tpsInfoString);
 				maxWidth = Math.max(maxWidth, k);
 			}
 		}
@@ -127,7 +130,7 @@ public class GuiTabPage extends GuiScreen
 		if (list != null && !list.isEmpty())
 		{
 
-			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
 
 			for (String string : list)
 			{
@@ -136,11 +139,11 @@ public class GuiTabPage extends GuiScreen
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.enableAlpha();
 				GlStateManager.enableBlend();
-				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-				int i2 = mc.fontRenderer.getStringWidth(string);
-				mc.fontRenderer.drawStringWithShadow(string, (float) (width / 2 - i2 / 2), (float) startTop, -1);
-				startTop += mc.fontRenderer.FONT_HEIGHT;
+				GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+				
+				int i2 = mc.fontRendererObj.getStringWidth(string);
+				mc.fontRendererObj.drawStringWithShadow(string, (float) (width / 2 - i2 / 2), (float) startTop, -1);
+				startTop += mc.fontRendererObj.FONT_HEIGHT;
 			}
 		}
 

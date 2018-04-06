@@ -1,3 +1,4 @@
 gui.servertabinfo.overall=Overall
 gui.servertabinfo.mean=mean
 gui.servertabinfo.notinstalled=Server Tab Info not installed on server
+gui.servertabinfo.dim=Dim

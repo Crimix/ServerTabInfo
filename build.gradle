@@ -7,7 +7,7 @@ buildscript {
 		}
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -47,8 +47,6 @@ repositories {
 }
 
 dependencies {
-	deobfProvided  "mezz.jei:jei_${mcversion}:${jei_version}:api"
-	runtime "mezz.jei:jei_${mcversion}:${jei_version}"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
