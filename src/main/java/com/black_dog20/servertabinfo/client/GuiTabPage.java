@@ -14,9 +14,6 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,18 +38,18 @@ public class GuiTabPage extends GuiScreen
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
-		width = event.getResolution().getScaledWidth();
-		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+		width = event.resolution.getScaledWidth();
+		if (event.type!= RenderGameOverlayEvent.ElementType.PLAYER_LIST)
 		{
 			return;
 		}
-		
 		if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
 		{
 			return;
 		}
 		if(ServerTabInfo.modOnServer) {
 			
+
 			if(ticks%100 == 0) {
 				ticks = 0;
 				PacketHandler.network.sendToServer(new MessageRequest());
@@ -66,9 +63,10 @@ public class GuiTabPage extends GuiScreen
 		}
 		else {
 			
-			TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
-			int textLength = mc.fontRenderer.getStringWidth(text.getFormattedText());
-			mc.fontRenderer.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - textLength / 2), (float) 10, -1);
+
+			ChatComponentTranslation text = new ChatComponentTranslation("gui.servertabinfo.notinstalled");
+			int textLength = mc.fontRendererObj.getStringWidth(text.getFormattedText());
+			mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - textLength / 2), (float) 10, -1);
 			
 			event.setCanceled(true);
 		}

@@ -4,19 +4,18 @@ public class TpsDimension {
 
 	public String name;
 	
-	public Double meanTickTime;
-	
 	public int Id;
+	
+	public Double meanTickTime;
 	
 	public TpsDimension(String name, Double meanTickTime) {
 		this.name = name;
 		this.meanTickTime = meanTickTime;
 	}
 	
-	
-	public TpsDimension(String name, Double meanTickTiem, int id) {
+	public TpsDimension(String name, Double meanTickTime, int id ) {
 		this.name = name;
-		this.meanTickTime = meanTickTiem;
+		this.meanTickTime = meanTickTime;
 		this.Id = id;
 	}
 }
