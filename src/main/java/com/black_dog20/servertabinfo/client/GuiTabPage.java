@@ -3,8 +3,6 @@ package com.black_dog20.servertabinfo.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
 import com.black_dog20.servertabinfo.network.PacketHandler;
