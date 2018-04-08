@@ -1,8 +1,8 @@
 package com.black_dog20.servertabinfo.network;
 
 
-import com.black_dog20.servertabinfo.network.message.MessageResponse;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
+import com.black_dog20.servertabinfo.network.message.MessageResponse;
 import com.black_dog20.servertabinfo.reference.Reference;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
