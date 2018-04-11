@@ -5,13 +5,29 @@ buildscript {
 			name = "forge"
 			url = "http://files.minecraftforge.net/maven"
 		}
+		maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'com.matthewprenger:CurseGradle:1.0-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.matthewprenger.cursegradle'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
+
+ext.priv = parseConfig(file('private.properties'))
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}
 
 
 version = version_major + '.' + version_minor + '.' + version_patch
@@ -90,3 +106,24 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+
+curseforge {
+  apiKey = priv.apiKey
+  project {
+    id = '291788'
+    if(file('changes').exists()){
+	 changelog = file('changes')
+   	} else {
+   	 changelog = ''
+   	}
+    releaseType = 'release'
+    addGameVersion 'Java 8'
+    addGameVersion '1.9'
+    addGameVersion '1.9.1'
+    addGameVersion '1.9.2'
+    addGameVersion '1.9.3'
+    addGameVersion '1.9.4'
+  }
+}
+
