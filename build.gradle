@@ -5,14 +5,21 @@ buildscript {
 			name = "forge"
 			url = "http://files.minecraftforge.net/maven"
 		}
+		maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.matthewprenger:CurseGradle:1.0-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.matthewprenger.cursegradle'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
+ext.priv = parseConfig(file('private.properties'))
 
 version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -90,3 +97,45 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+curseforge {
+  apiKey = priv.apiKey
+  project {
+    id = '291788'
+	changelog = file('changelog.txt')
+    releaseType = 'release'
+    addGameVersion 'Java 8'
+    addGameVersion '1.8'
+    addGameVersion '1.8.1'
+    addGameVersion '1.8.2'
+    addGameVersion '1.8.3'
+    addGameVersion '1.8.4'
+    addGameVersion '1.8.5'
+    addGameVersion '1.8.6'
+    addGameVersion '1.8.7'
+    addGameVersion '1.8.8'
+    addGameVersion '1.8.9'
+  }
+}
+
+task clearChangelog() {
+	doLast{
+		clearFile(file('changelog.txt'))
+	}
+}
+
+
+def clearFile(File f) {
+    f.withWriter  {
+    	writer -> writer.write('')
+    }
+}
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}
+
