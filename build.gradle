@@ -21,15 +21,6 @@ apply plugin: 'com.matthewprenger.cursegradle'
 
 ext.priv = parseConfig(file('private.properties'))
 
-def parseConfig(File config) {
-    config.withReader {
-        def prop = new Properties()
-        prop.load(it)
-        return (new ConfigSlurper().parse(prop))
-    }
-}
-
-
 version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_archivesBaseName + "-" + mcversion
@@ -112,11 +103,7 @@ curseforge {
   apiKey = priv.apiKey
   project {
     id = '291788'
-    if(file('changes').exists()){
-	 changelog = file('changes')
-   	} else {
-   	 changelog = ''
-   	}
+	changelog = file('changelog.txt')
     releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.9'
@@ -125,5 +112,26 @@ curseforge {
     addGameVersion '1.9.3'
     addGameVersion '1.9.4'
   }
+}
+
+task clearChangelog() {
+	doLast{
+		clearFile(file('changelog.txt'))
+	}
+}
+
+
+def clearFile(File f) {
+    f.withWriter  {
+    	writer -> writer.write('')
+    }
+}
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
 }
 
