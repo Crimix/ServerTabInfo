@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
+import com.black_dog20.servertabinfo.config.ModConfig;
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
+import com.black_dog20.servertabinfo.reference.Constants;
+import com.black_dog20.servertabinfo.reference.Reference;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
@@ -29,7 +32,9 @@ public class GuiTabPage extends GuiScreen
 	private int ticks = 100;
 
 	public static List<TpsDimension> dims = new ArrayList<TpsDimension>();
-
+	public static int responseVersion = 0;
+	public static int ping = 0;
+	public static String serverVersion;
 	public GuiTabPage()
 	{
 		mc = Minecraft.getMinecraft();
@@ -53,7 +58,7 @@ public class GuiTabPage extends GuiScreen
 			
 			if(ticks%100 == 0) {
 				ticks = 0;
-				PacketHandler.network.sendToServer(new MessageRequest());
+				PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
 			}
 
 			if (renderServerInfo())
@@ -65,8 +70,21 @@ public class GuiTabPage extends GuiScreen
 		else {
 			
 			TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
-			int textLength = mc.fontRenderer.getStringWidth(text.getFormattedText());
-			mc.fontRenderer.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - textLength / 2), (float) 10, -1);
+			int startTop = 10;
+			int maxWidth = mc.fontRenderer.getStringWidth(text.getFormattedText());
+			
+			maxWidth = (int) (maxWidth*1.3);
+			
+			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+		
+			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+			int i2 = mc.fontRenderer.getStringWidth(text.getFormattedText());
+			mc.fontRenderer.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - i2 / 2), (float) startTop, -1);
 			
 			event.setCanceled(true);
 		}
@@ -74,14 +92,29 @@ public class GuiTabPage extends GuiScreen
 
 	public boolean renderServerInfo()
 	{
+		int startTop = 10;
+		
+		renderClientServerVersion();
+		
+		startTop = renderPing(startTop);
+		
+		renderTps(startTop);
 
+		return true;
+	}
+
+
+	private int renderTps(int startTop) {
 		int maxWidth = 0;
 		List<String> list = new ArrayList<>();
 
 		if(dims==null && dims.isEmpty())
-			return true;
+			return startTop;
 		
 		for(TpsDimension tpsInfo : dims) {
+			if(responseVersion >= 2) {
+				tpsInfo.meanTickTime = tpsInfo.meanTickTime* 1.0E-006D;
+			}
 			TextFormatting color = TextFormatting.GREEN;
 			int tps = (int) Math.min(1000.0D / tpsInfo.meanTickTime, 20);
 
@@ -94,18 +127,27 @@ public class GuiTabPage extends GuiScreen
 				color = TextFormatting.RED;
 			}
 
-			TextComponentString tpsString = new TextComponentString(Integer.toString(tps));
+			TextComponentString tpsValue = new TextComponentString(Integer.toString(tps));
 			TextComponentTranslation mean = new TextComponentTranslation("gui.servertabinfo.mean");
 			TextComponentTranslation dim = new TextComponentTranslation("gui.servertabinfo.dim");
+			TextComponentTranslation ms = new TextComponentTranslation("gui.servertabinfo.ms");
+			TextComponentTranslation tpsText = new TextComponentTranslation("gui.servertabinfo.tps");
 			TextComponentTranslation name = new TextComponentTranslation(dim.getFormattedText() + " " +Integer.toString(tpsInfo.Id));
-			if(!tpsInfo.name.equals(""))
+			if(!tpsInfo.name.equals("")) {
 				name = new TextComponentTranslation(tpsInfo.name);
-			tpsString.getStyle().setColor(color);
-			list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, "ms", tpsString.getFormattedText(), "tps" ));
+
+				if(name.getFormattedText().equals(tpsInfo.name+"§r")) {
+					TextComponentTranslation nameC = new TextComponentTranslation("servertabinfo.dim." + tpsInfo.name);
+					if(!nameC.getFormattedText().equals("servertabinfo.dim." + tpsInfo.name+"§r")) {
+						name = nameC;
+					}
+				}
+			}
+			tpsValue.getStyle().setColor(color);
+			list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, ms.getFormattedText(), tpsValue.getFormattedText(), tpsText.getFormattedText() ));
 
 		}
-
-		int startTop = 10;
+		
 
 		for (String tpsInfoString : list)
 		{
@@ -116,7 +158,7 @@ public class GuiTabPage extends GuiScreen
 		}
 
 		maxWidth = (int) (maxWidth*1.3);
-
+		
 
 		if (list != null && !list.isEmpty())
 		{
@@ -137,8 +179,64 @@ public class GuiTabPage extends GuiScreen
 				startTop += mc.fontRenderer.FONT_HEIGHT;
 			}
 		}
+		return startTop;
+	}
 
-		return true;
+
+	private int renderPing(int startTop) {
+		if(ModConfig.ping && responseVersion >= 2) {
+
+			TextComponentTranslation pingText = new TextComponentTranslation("gui.servertabinfo.ping");
+			TextComponentString pingValue = new TextComponentString(Integer.toString(ping));
+			TextComponentTranslation ms = new TextComponentTranslation("gui.servertabinfo.ms");
+			String pingString = String.format("%s: %s%s", pingText.getFormattedText(), pingValue.getFormattedText(), ms.getFormattedText());
+			
+			int maxWidth = mc.fontRenderer.getStringWidth(pingString);
+			
+			maxWidth = (int) (maxWidth*1.3);
+			
+			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+		
+			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+			int i2 = mc.fontRenderer.getStringWidth(pingString);
+			mc.fontRenderer.drawStringWithShadow(pingString, (float) (width / 2 - i2 / 2), (float) startTop, -1);
+			startTop += mc.fontRenderer.FONT_HEIGHT;
+			
+			startTop += 10;
+		}
+		return startTop;
+	}
+
+
+	private void renderClientServerVersion() {
+		int startTopp = 1;
+		String cv = "C" + ": " + Reference.VERSION;
+		String sv = "S" + ": " + (serverVersion != null ? serverVersion : "1.0.0");
+		GlStateManager.pushMatrix();
+		if(this.mc.gameSettings.guiScale!=1)
+			GlStateManager.scale(0.5, 0.5, 0.5);
+		int maxWidth = mc.fontRenderer.getStringWidth(sv);
+		
+		maxWidth+=6;
+		
+		drawRect(0 , startTopp - 1, maxWidth-1, startTopp + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+		drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+
+		drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
+		drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+		mc.fontRenderer.drawStringWithShadow(cv, (float) 2, (float) startTopp, -1);
+		mc.fontRenderer.drawStringWithShadow(sv, (float) 2, (float) startTopp+10, -1);
+		GlStateManager.popMatrix();
 	}
 
 }
