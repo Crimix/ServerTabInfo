@@ -21,4 +21,5 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerKeyBinding(Keybindings.SHOW2);
 		
 	}
+
 }
