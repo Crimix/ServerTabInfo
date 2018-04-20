@@ -26,7 +26,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 
 		List<TpsDimension> dims = new ArrayList<TpsDimension>();
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		int ping = context.getServerHandler().player.ping;
+		int ping = context.getServerHandler().playerEntity.ping;
 		if(message.version==0) {
 			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)* 1.0E-006D));
 		

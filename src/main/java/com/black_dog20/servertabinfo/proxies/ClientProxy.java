@@ -2,7 +2,6 @@ package com.black_dog20.servertabinfo.proxies;
 
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
-import com.black_dog20.servertabinfo.config.ModConfig;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
