@@ -2,7 +2,24 @@ gui.servertabinfo.overall=Overall
 gui.servertabinfo.mean=mean
 gui.servertabinfo.notinstalled=Server Tab Info not installed on server
 gui.servertabinfo.dim=Dim
+gui.servertabinfo.ping=Ping
+gui.servertabinfo.ms=ms
+gui.servertabinfo.tps=tps
 
+//Kebindings
 keys.servertabinfo.category=Server Tab Info
 keys.servertabinfo.show=Show TPS (Press TAB + this)
 keys.servertabinfo.show2=Show TPS (Press TAB + this)
+
+//Config
+config.servertabinfo=Server Tab Info
+config.servertabinfo.ping=Show ping
+
+//Vanilla dimensions 
+servertabinfo.dim.overworld=Overworld
+servertabinfo.dim.the_nether=The Nether
+servertabinfo.dim.the_end=The End
+
+//Modded dimensions 
+servertabinfo.dim.lostcities=The Lost Cities
+servertabinfo.dim.twilight_forest=The Twilight Forest
