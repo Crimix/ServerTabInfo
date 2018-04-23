@@ -28,8 +28,8 @@ public class MessageResponseServerInfo implements IMessage, IMessageHandler<Mess
 		
 		Minecraft.getMinecraft().addScheduledTask(new Runnable(){
 		  	public void run(){
-		  		GuiTabPage.dims = message.dims;
 		  		GuiTabPage.responseVersion = message.version;
+		  		GuiTabPage.dims = message.dims;
 		  		GuiTabPage.ping = message.ping;
 		  		GuiTabPage.serverVersion = message.versionString;
 		  		
