@@ -53,7 +53,6 @@ public class GuiTabPage extends GuiScreen
 			return;
 		}
 		if(ServerTabInfo.modOnServer) {
-
 			if(ticks%100 == 0) {
 				ticks = 0;
 				PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
@@ -107,15 +106,18 @@ public class GuiTabPage extends GuiScreen
 		int maxWidth = 0;
 		List<String> list = new ArrayList<>();
 
-		if(dims==null && dims.isEmpty())
+		if(dims==null || dims.isEmpty())
 			return startTop;
 
 		for(TpsDimension tpsInfo : dims) {
-			if(responseVersion >= 2) {
-				tpsInfo.meanTickTime = tpsInfo.meanTickTime* 1.0E-006D;
-			}
 			EnumChatFormatting color = EnumChatFormatting.GREEN;
-			int tps = (int) Math.min(1000.0D / tpsInfo.meanTickTime, 20);
+			int tps;
+			if(responseVersion >= 2) {
+				tps = (int) Math.min(1000.0D / (tpsInfo.meanTickTime*1.0E-006D), 20);
+			}
+			else {
+				tps = (int) Math.min(1000.0D / tpsInfo.meanTickTime, 20);
+			}
 
 			if (tps < 20)
 			{
@@ -144,8 +146,11 @@ public class GuiTabPage extends GuiScreen
 				}
 			}
 			tpsValue.getChatStyle().setColor(color);
-			list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, ms.getFormattedText(), tpsValue.getFormattedText(), tpsText.getFormattedText() ));
-
+			if(responseVersion >= 2) {
+				list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), (tpsInfo.meanTickTime*1.0E-006D), ms.getFormattedText(), tpsValue.getFormattedText(), tpsText.getFormattedText() ));
+			} else {
+				list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, ms.getFormattedText(), tpsValue.getFormattedText(), tpsText.getFormattedText() ));
+			}
 		}
 
 
@@ -185,7 +190,6 @@ public class GuiTabPage extends GuiScreen
 
 	private int renderPing(int startTop) {
 		if(responseVersion >= 2) {
-
 			ChatComponentTranslation pingText = new ChatComponentTranslation("gui.servertabinfo.ping");
 			ChatComponentText pingValue = new ChatComponentText(Integer.toString(ping));
 			ChatComponentTranslation ms = new ChatComponentTranslation("gui.servertabinfo.ms");
