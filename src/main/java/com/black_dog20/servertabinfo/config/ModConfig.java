@@ -17,7 +17,10 @@ public class ModConfig {
 	@Config.LangKey("config.servertabinfo.ping")
 	public static boolean ping = true;
 	
+	@Config.LangKey("config.servertabinfo.version")
+	public static boolean version = true;
 
+	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 	private static class EventHandler {
 
