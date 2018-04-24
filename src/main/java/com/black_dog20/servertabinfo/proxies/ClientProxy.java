@@ -3,6 +3,7 @@ package com.black_dog20.servertabinfo.proxies;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -20,6 +21,11 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerKeyBinding(Keybindings.SHOW);
 		ClientRegistry.registerKeyBinding(Keybindings.SHOW2);
 		
+	}
+
+	@Override
+	public boolean isSinglePlayer() {
+		return Minecraft.getMinecraft().isSingleplayer();
 	}
 
 }

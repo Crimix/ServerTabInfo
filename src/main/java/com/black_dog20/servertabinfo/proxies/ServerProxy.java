@@ -13,4 +13,9 @@ public class ServerProxy extends CommonProxy {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isSinglePlayer() {
+		return false;
+	}
 }
