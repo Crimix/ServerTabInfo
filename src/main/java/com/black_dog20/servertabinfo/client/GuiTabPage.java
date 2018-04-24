@@ -41,24 +41,74 @@ public class GuiTabPage extends GuiScreen
 
 
 	@SubscribeEvent
-	public void onRenderGameOverlay(RenderGameOverlayEvent event)
+	public void onRenderGameOverlayServer(RenderGameOverlayEvent.Pre event)
 	{
-		width = event.getResolution().getScaledWidth();
-		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
-		{
-			return;
+		if(!ServerTabInfo.Proxy.isSinglePlayer()){
+			width = event.getResolution().getScaledWidth();
+			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+			{
+				return;
+			}
+
+			if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
+			{
+				return;
+			}
+			if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
+				if(ticks%100 == 0) {
+					ticks = 0;
+					PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
+				}
+
+				if (renderServerInfo())
+				{
+					ticks++;
+					event.setCanceled(true);
+				}
+			}
+			else {
+
+				TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
+				int startTop = 10;
+				int maxWidth = mc.fontRendererObj.getStringWidth(text.getFormattedText());
+				GlStateManager.pushMatrix();
+				maxWidth = (int) (maxWidth*1.3);
+
+				drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
+
+				drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
+				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+				GlStateManager.enableAlpha();
+				GlStateManager.enableBlend();
+				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+				int i2 = mc.fontRendererObj.getStringWidth(text.getFormattedText());
+				mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - i2 / 2), (float) startTop, -1);
+				event.setCanceled(true);
+				GlStateManager.popMatrix();
+			}
 		}
-		
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL && ServerTabInfo.Proxy.isSinglePlayer() && mc.gameSettings.keyBindPlayerList.isKeyDown())
-		{
-			return;
-		}
-		System.out.println(mc.gameSettings.keyBindPlayerList.isKeyDown());
-		if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
-		{
-			return;
-		}
-		if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
+	}
+
+	@SubscribeEvent
+	public void onRenderGameOverlayClient(RenderGameOverlayEvent.Post event)
+	{
+		if(ServerTabInfo.Proxy.isSinglePlayer()){
+			width = event.getResolution().getScaledWidth();
+
+			if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
+			{
+				return;
+			}
+
+			if(!mc.gameSettings.keyBindPlayerList.isKeyDown()) {
+				return;
+			}
+
+			if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
+			{
+				return;
+			}
 			if(ticks%100 == 0) {
 				ticks = 0;
 				PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
@@ -67,42 +117,18 @@ public class GuiTabPage extends GuiScreen
 			if (renderServerInfo())
 			{
 				ticks++;
-				if(!ServerTabInfo.Proxy.isSinglePlayer())
-					event.setCanceled(true);
 			}
-		}
-		else {
-			
-			TextComponentTranslation text = new TextComponentTranslation("gui.servertabinfo.notinstalled");
-
-			int startTop = 10;
-			int maxWidth = mc.fontRendererObj.getStringWidth(text.getFormattedText());
-			
-			maxWidth = (int) (maxWidth*1.3);
-			
-			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
-		
-			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableAlpha();
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-			int i2 = mc.fontRendererObj.getStringWidth(text.getFormattedText());
-			mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - i2 / 2), (float) startTop, -1);
-			
-			event.setCanceled(true);
 		}
 	}
 
 	public boolean renderServerInfo()
 	{
 		int startTop = 10;
-		
+
 		renderClientServerVersion();
-		
+
 		startTop = renderPing(startTop);
-		
+
 		renderTps(startTop);
 
 		return true;
@@ -115,7 +141,7 @@ public class GuiTabPage extends GuiScreen
 
 		if(dims==null || dims.isEmpty())
 			return startTop;
-		
+
 		for(TpsDimension tpsInfo : dims) {
 			TextFormatting color = TextFormatting.GREEN;
 			int tps;
@@ -158,7 +184,7 @@ public class GuiTabPage extends GuiScreen
 				list.add(String.format("%s: %s %.2f%s (%s %s)", name.getFormattedText(), mean.getFormattedText(), tpsInfo.meanTickTime, ms.getFormattedText(), tpsValue.getFormattedText(), tpsText.getFormattedText() ));
 			}
 		}
-		
+
 
 		for (String tpsInfoString : list)
 		{
@@ -169,11 +195,11 @@ public class GuiTabPage extends GuiScreen
 		}
 
 		maxWidth = (int) (maxWidth*1.3);
-		
+
 
 		if (list != null && !list.isEmpty())
 		{
-
+			GlStateManager.pushMatrix();
 			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
 
 			for (String string : list)
@@ -189,25 +215,26 @@ public class GuiTabPage extends GuiScreen
 				mc.fontRendererObj.drawStringWithShadow(string, (float) (width / 2 - i2 / 2), (float) startTop, -1);
 				startTop += mc.fontRendererObj.FONT_HEIGHT;
 			}
+			GlStateManager.popMatrix();
 		}
 		return startTop;
 	}
 
 
-
 	private int renderPing(int startTop) {
-		if( responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
+		if(responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
 			TextComponentTranslation pingText = new TextComponentTranslation("gui.servertabinfo.ping");
 			TextComponentString pingValue = new TextComponentString(Integer.toString(ping));
 			TextComponentTranslation ms = new TextComponentTranslation("gui.servertabinfo.ms");
 			String pingString = String.format("%s: %s%s", pingText.getFormattedText(), pingValue.getFormattedText(), ms.getFormattedText());
-			
+
 			int maxWidth = mc.fontRendererObj.getStringWidth(pingString);
-			
+
 			maxWidth = (int) (maxWidth*1.3);
-			
+			GlStateManager.pushMatrix();
+
 			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
-		
+
 			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.enableAlpha();
@@ -217,8 +244,9 @@ public class GuiTabPage extends GuiScreen
 			int i2 = mc.fontRendererObj.getStringWidth(pingString);
 			mc.fontRendererObj.drawStringWithShadow(pingString, (float) (width / 2 - i2 / 2), (float) startTop, -1);
 			startTop += mc.fontRendererObj.FONT_HEIGHT;
-			
+
 			startTop += 10;
+			GlStateManager.popMatrix();
 		}
 		return startTop;
 	}
@@ -232,9 +260,8 @@ public class GuiTabPage extends GuiScreen
 		if(this.mc.gameSettings.guiScale!=1)
 			GlStateManager.scale(0.5, 0.5, 0.5);
 		int maxWidth = mc.fontRendererObj.getStringWidth(sv);
-		
-			maxWidth+=6;
-		
+
+		maxWidth+=6;
 
 		drawRect(0 , startTopp - 1, maxWidth-1, startTopp + 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
 		if(!ServerTabInfo.Proxy.isSinglePlayer())
@@ -252,7 +279,6 @@ public class GuiTabPage extends GuiScreen
 		if(!ServerTabInfo.Proxy.isSinglePlayer())
 			mc.fontRendererObj.drawStringWithShadow(sv, (float) 2, (float) startTopp+10, -1);
 		GlStateManager.popMatrix();
-
 	}
 
 }
