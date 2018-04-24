@@ -14,6 +14,7 @@ keys.servertabinfo.show2=Show TPS (Press TAB + this)
 //Config
 config.servertabinfo=Server Tab Info
 config.servertabinfo.ping=Show ping
+config.servertabinfo.version=Show version box
 
 //Vanilla dimensions 
 servertabinfo.dim.overworld=Overworld
