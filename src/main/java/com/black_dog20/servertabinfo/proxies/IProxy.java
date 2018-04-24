@@ -5,5 +5,7 @@ public interface IProxy {
 	void registerRendersPreInit();
 	
 	void registerKeyBindings();
+	
+	boolean isSinglePlayer();
 
 }
