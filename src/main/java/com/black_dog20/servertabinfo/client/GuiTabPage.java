@@ -53,7 +53,7 @@ public class GuiTabPage extends GuiScreen
 		{
 			return;
 		}
-		
+		System.out.println(mc.gameSettings.keyBindPlayerList.isKeyDown());
 		if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
 		{
 			return;
@@ -240,13 +240,13 @@ public class GuiTabPage extends GuiScreen
 		if(!ServerTabInfo.Proxy.isSinglePlayer())
 			drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
 
-			drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
-			if(!ServerTabInfo.Proxy.isSinglePlayer())
-				drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableAlpha();
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
+		if(!ServerTabInfo.Proxy.isSinglePlayer())
+			drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
 		mc.fontRendererObj.drawStringWithShadow(cv, (float) 2, (float) startTopp, -1);
 		if(!ServerTabInfo.Proxy.isSinglePlayer())
