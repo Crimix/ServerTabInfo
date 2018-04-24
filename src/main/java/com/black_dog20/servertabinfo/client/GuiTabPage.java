@@ -239,7 +239,8 @@ public class GuiTabPage extends GuiScreen
 			drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
 
 		drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
-		drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
+		if(!ServerTabInfo.Proxy.isSinglePlayer())
+			drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
