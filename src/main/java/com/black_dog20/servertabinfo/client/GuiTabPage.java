@@ -54,7 +54,7 @@ public class GuiTabPage extends GuiScreen
 			{
 				return;
 			}
-			if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
+			if(ServerTabInfo.modOnServer) {
 				if(ticks%100 == 0) {
 					ticks = 0;
 					PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
@@ -86,6 +86,8 @@ public class GuiTabPage extends GuiScreen
 				mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - i2 / 2), (float) startTop, -1);
 				event.setCanceled(true);
 				GlStateManager.popMatrix();
+				
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -118,28 +120,6 @@ public class GuiTabPage extends GuiScreen
 			{
 				ticks++;
 			}
-		}
-		else {
-
-			ChatComponentTranslation text = new ChatComponentTranslation("gui.servertabinfo.notinstalled");
-
-			int startTop = 10;
-			int maxWidth = mc.fontRendererObj.getStringWidth(text.getFormattedText());
-
-			maxWidth = (int) (maxWidth*1.3);
-
-			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
-
-			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableAlpha();
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-			
-			int i2 = mc.fontRendererObj.getStringWidth(text.getFormattedText());
-			mc.fontRendererObj.drawStringWithShadow(text.getFormattedText(), (float) (width / 2 - i2 / 2), (float) startTop, -1);
-
-			event.setCanceled(true);
 		}
 	}
 
