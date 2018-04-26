@@ -45,7 +45,12 @@ public class GuiTabPage extends GuiScreen
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
 		width = event.getResolution().getScaledWidth();
-		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
+		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
+		{
+			return;
+		}
+		
+		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL && ServerTabInfo.Proxy.isSinglePlayer() && mc.gameSettings.keyBindPlayerList.isKeyDown())
 		{
 			return;
 		}
@@ -54,7 +59,7 @@ public class GuiTabPage extends GuiScreen
 		{
 			return;
 		}
-		if(ServerTabInfo.modOnServer) {
+		if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
 			if(ticks%100 == 0) {
 				ticks = 0;
 				PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
@@ -63,7 +68,8 @@ public class GuiTabPage extends GuiScreen
 			if (renderServerInfo())
 			{
 				ticks++;
-				event.setCanceled(true);
+				if(!ServerTabInfo.Proxy.isSinglePlayer())
+					event.setCanceled(true);
 			}
 		}
 		else {
@@ -189,7 +195,7 @@ public class GuiTabPage extends GuiScreen
 
 
 	private int renderPing(int startTop) {
-		if(ModConfig.ping && responseVersion >= 2) {
+		if(ModConfig.ping && responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
 			TextComponentTranslation pingText = new TextComponentTranslation("gui.servertabinfo.ping");
 			TextComponentString pingValue = new TextComponentString(Integer.toString(ping));
 			TextComponentTranslation ms = new TextComponentTranslation("gui.servertabinfo.ms");
@@ -218,29 +224,34 @@ public class GuiTabPage extends GuiScreen
 
 
 	private void renderClientServerVersion() {
-		int startTopp = 1;
-		String cv = "C" + ": " + Reference.VERSION;
-		String sv = "S" + ": " + (serverVersion != null ? serverVersion : "1.0.0");
-		GlStateManager.pushMatrix();
-		if(this.mc.gameSettings.guiScale!=1)
-			GlStateManager.scale(0.5, 0.5, 0.5);
-		int maxWidth = mc.fontRenderer.getStringWidth(sv);
+		if(ModConfig.version) {
+			int startTopp = 1;
+			String cv = "C" + ": " + Reference.VERSION;
+			String sv = "S" + ": " + (serverVersion != null ? serverVersion : "1.0.0");
+			GlStateManager.pushMatrix();
+			if(this.mc.gameSettings.guiScale!=1)
+				GlStateManager.scale(0.5, 0.5, 0.5);
+			int maxWidth = mc.fontRenderer.getStringWidth(sv);
 		
-		maxWidth+=6;
+			maxWidth+=6;
 		
-		drawRect(0 , startTopp - 1, maxWidth-1, startTopp + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
-		drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+			drawRect(0 , startTopp - 1, maxWidth-1, startTopp + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+			if(!ServerTabInfo.Proxy.isSinglePlayer())
+				drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
 
-		drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
-		drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+			drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
+			if(!ServerTabInfo.Proxy.isSinglePlayer())
+				drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-		mc.fontRenderer.drawStringWithShadow(cv, (float) 2, (float) startTopp, -1);
-		mc.fontRenderer.drawStringWithShadow(sv, (float) 2, (float) startTopp+10, -1);
-		GlStateManager.popMatrix();
+			mc.fontRenderer.drawStringWithShadow(cv, (float) 2, (float) startTopp, -1);
+			if(!ServerTabInfo.Proxy.isSinglePlayer())
+				mc.fontRenderer.drawStringWithShadow(sv, (float) 2, (float) startTopp+10, -1);
+			GlStateManager.popMatrix();
+		}
 	}
 
 }
