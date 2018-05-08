@@ -10,6 +10,7 @@ import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.reference.Constants;
 import com.black_dog20.servertabinfo.reference.Reference;
+import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
@@ -170,27 +171,8 @@ public class GuiTabPage extends GuiScreen
 
 		maxWidth = (int) (maxWidth*1.3);
 		
-
-		if (list != null && !list.isEmpty())
-		{
-
-			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
-
-			for (String string : list)
-			{
-
-				drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
-				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-				GlStateManager.enableAlpha();
-				GlStateManager.enableBlend();
-				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-				int i2 = mc.fontRenderer.getStringWidth(string);
-				mc.fontRenderer.drawStringWithShadow(string, (float) (width / 2 - i2 / 2), (float) startTop, -1);
-				startTop += mc.fontRenderer.FONT_HEIGHT;
-			}
-		}
-		return startTop;
+		
+		return RenderHelper.RenderList(list, mc, maxWidth, startTop, width);
 	}
 
 
@@ -205,18 +187,10 @@ public class GuiTabPage extends GuiScreen
 			
 			maxWidth = (int) (maxWidth*1.3);
 			
-			drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
-		
-			drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableAlpha();
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-			int i2 = mc.fontRenderer.getStringWidth(pingString);
-			mc.fontRenderer.drawStringWithShadow(pingString, (float) (width / 2 - i2 / 2), (float) startTop, -1);
-			startTop += mc.fontRenderer.FONT_HEIGHT;
+			List<String> input = new ArrayList<String>();
+			input.add(pingString);
 			
+			startTop = RenderHelper.RenderList(input, mc, maxWidth, startTop, width);
 			startTop += 10;
 		}
 		return startTop;
@@ -235,21 +209,13 @@ public class GuiTabPage extends GuiScreen
 		
 			maxWidth+=6;
 		
-			drawRect(0 , startTopp - 1, maxWidth-1, startTopp + 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
+			List<String> list = new ArrayList<>();
+			list.add(cv);
 			if(!ServerTabInfo.Proxy.isSinglePlayer())
-				drawRect(0 , startTopp+10 - 1, maxWidth-1, startTopp+10+ 1 * mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
-
-			drawRect(1, startTopp, maxWidth-2, startTopp+8, 553648127);
-			if(!ServerTabInfo.Proxy.isSinglePlayer())
-				drawRect(1, startTopp+9, maxWidth-2, startTopp+18, 553648127);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableAlpha();
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-			mc.fontRenderer.drawStringWithShadow(cv, (float) 2, (float) startTopp, -1);
-			if(!ServerTabInfo.Proxy.isSinglePlayer())
-				mc.fontRenderer.drawStringWithShadow(sv, (float) 2, (float) startTopp+10, -1);
+				list.add(sv);
+			
+			RenderHelper.RenderListAtStartPoint(list, mc, maxWidth, startTopp, 0);
+			
 			GlStateManager.popMatrix();
 		}
 	}
