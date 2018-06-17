@@ -15,6 +15,7 @@ keys.servertabinfo.show2=Show TPS (Press TAB + this)
 config.servertabinfo=Server Tab Info
 config.servertabinfo.ping=Show ping
 config.servertabinfo.version=Show version box
+config.servertabinfo.playerlist=Replace player list
 
 //Vanilla dimensions 
 servertabinfo.dim.overworld=Overworld
