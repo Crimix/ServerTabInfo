@@ -4,10 +4,12 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
+import com.black_dog20.servertabinfo.config.ModConfig;
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.proxies.IProxy;
 import com.black_dog20.servertabinfo.reference.Reference;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,8 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptableRemoteVersions = "*", acceptedMinecraftVersions = Reference.MC_VERSIONS, dependencies = Reference.DEPENDENCIES)
-public class ServerTabInfo {
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptableRemoteVersions = "*", acceptedMinecraftVersions = Reference.MC_VERSIONS, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY_CLASS)public class ServerTabInfo {
 
 	@Mod.Instance(Reference.MOD_ID)
 	public static ServerTabInfo instance = new ServerTabInfo();
@@ -39,6 +40,8 @@ public class ServerTabInfo {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
+		ModConfig.init(event.getSuggestedConfigurationFile());
+		FMLCommonHandler.instance().bus().register(new ModConfig());
 		PacketHandler.init();
 		Proxy.registerKeyBindings();
 		Proxy.registerRendersPreInit();
