@@ -20,6 +20,8 @@ public class ModConfig {
 	@Config.LangKey("config.servertabinfo.version")
 	public static boolean version = true;
 
+	@Config.LangKey("config.servertabinfo.playerlist")
+	public static boolean playerlist = true;
 	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 	private static class EventHandler {
