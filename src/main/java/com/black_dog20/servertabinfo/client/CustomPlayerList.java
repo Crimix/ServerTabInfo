@@ -1,15 +1,17 @@
 package com.black_dog20.servertabinfo.client;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
 import com.black_dog20.servertabinfo.client.objects.Player;
 import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
