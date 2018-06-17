@@ -35,11 +35,11 @@ public class RenderHelper {
 		{
 			int maxWidth = findMaxWidthString(list, mc);
 			
-			GuiScreen.drawRect(x , y - 1, x+maxWidth-1, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			GuiScreen.drawRect(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 			
 			for (String string : list)
 			{
-				GuiScreen.drawRect(x+1, y, x+maxWidth-2, y+8, 553648127);
+				GuiScreen.drawRect(x+1, y, x+maxWidth+2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				CompatibilityHelper.drawStringWithShadow(mc, string, (float) x+2, (float) y, -1);
 				y += CompatibilityHelper.getFontRenderHeight(mc);
@@ -74,11 +74,11 @@ public class RenderHelper {
 		{
 			int maxWidth = findMaxWidth(list, mc);
 			
-			GuiScreen.drawRect(x , y - 1, x+maxWidth-1, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			GuiScreen.drawRect(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 			
 			for (IRenderable o : list)
 			{
-				GuiScreen.drawRect(x+1, y, x+maxWidth-2, y+8, 553648127);
+				GuiScreen.drawRect(x+1, y, x+maxWidth+2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				o.render(x, y);
 				y += CompatibilityHelper.getFontRenderHeight(mc);

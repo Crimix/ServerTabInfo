@@ -1,7 +1,6 @@
 package com.black_dog20.servertabinfo.client.objects;
 
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
-import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.mojang.authlib.GameProfile;
