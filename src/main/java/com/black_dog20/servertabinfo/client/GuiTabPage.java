@@ -26,11 +26,13 @@ public class GuiTabPage extends GuiScreen
 	private Minecraft mc;
 	public static int width = 0;
 	private int ticks = 100;
+	private int refreshTicks = 100;
 
 	public static List<TpsDimension> dims = new ArrayList<TpsDimension>();
 	public static int responseVersion = 0;
 	public static int ping = 0;
 	public static String serverVersion;
+	public static int hight;
 
 	private TpsPage tpsPage;
 	private NotInstalledPage notInstalledPage;
@@ -49,6 +51,7 @@ public class GuiTabPage extends GuiScreen
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
 		width = event.getResolution().getScaledWidth();
+		hight = event.getResolution().getScaledWidth();
 		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
 		{
 			return;
@@ -71,7 +74,7 @@ public class GuiTabPage extends GuiScreen
 		{	
 
 			if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
-				if(ticks%100 == 0) {
+				if(ticks%refreshTicks == 0) {
 					ticks = 0;
 					PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
 				}
@@ -90,7 +93,7 @@ public class GuiTabPage extends GuiScreen
 		}
 		else {
 			if(!ServerTabInfo.Proxy.isSinglePlayer() && ModConfig.playerlist) {
-				if(ticks%100 == 0) {
+				if(ticks%refreshTicks == 0) {
 					ticks = 0;
 					if(responseVersion >= 3)
 						PacketHandler.network.sendToServer(new MessageRequestPlayerDimInfo());
