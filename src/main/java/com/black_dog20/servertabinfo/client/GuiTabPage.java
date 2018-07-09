@@ -25,6 +25,7 @@ public class GuiTabPage extends GuiScreen
 
 	private Minecraft mc;
 	public static int width = 0;
+	public static int hight = 0;
 	private int ticks = 100;
 
 	public static List<TpsDimension> dims = new ArrayList<TpsDimension>();
@@ -50,6 +51,7 @@ public class GuiTabPage extends GuiScreen
 	{
 		if(!ServerTabInfo.Proxy.isSinglePlayer()){
 			width = event.getResolution().getScaledWidth();
+			hight = event.getResolution().getScaledHeight();
 			if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST)
 			{
 				return;
@@ -102,6 +104,7 @@ public class GuiTabPage extends GuiScreen
 	{
 		if(ServerTabInfo.Proxy.isSinglePlayer()){
 			width = event.getResolution().getScaledWidth();
+			hight = event.getResolution().getScaledHeight();
 
 			if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
 			{
