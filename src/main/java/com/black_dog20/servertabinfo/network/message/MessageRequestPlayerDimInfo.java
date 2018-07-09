@@ -6,13 +6,13 @@ import java.util.List;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageRequestPlayerDimInfo implements IMessage, IMessageHandler<MessageRequestPlayerDimInfo, IMessage> {
 	
@@ -25,10 +25,10 @@ public class MessageRequestPlayerDimInfo implements IMessage, IMessageHandler<Me
 		
 		for(EntityPlayerMP player : playerList) {
 			String name = player.getEntityWorld().provider.getDimensionName();
-			int id = player.getEntityWorld().provider.getDimensionId();
+			int id = player.getEntityWorld().provider.dimensionId;
 			Double meanTickTime = Helper.mean(server.worldTickTimes.get(id));
 			TpsDimension dim = new TpsDimension(name, meanTickTime,id);
-			playerDims.put(player.getDisplayNameString(), dim);
+			playerDims.put(player.getDisplayName(), dim);
 		}
 		
 		return new MessageResponsePlayerDimInfo(playerDims);

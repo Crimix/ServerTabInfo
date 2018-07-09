@@ -8,13 +8,14 @@ import com.black_dog20.servertabinfo.reference.Constants;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
 
 
 public class MessageRequest implements IMessage, IMessageHandler<MessageRequest, IMessage> {
@@ -35,7 +36,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 			if(name.equals(null)) {
 				name = "";
 			}
-			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimensionId()))* 1.0E-006D,world.provider.getDimensionId()));
+			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.dimensionId))* 1.0E-006D,world.provider.dimensionId));
 		}
 		
 			return new MessageResponse(dims);
@@ -48,7 +49,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 			if(name.equals(null)) {
 				name = "";
 			}
-			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimensionId())), world.provider.getDimensionId()));
+			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.dimensionId)), world.provider.dimensionId));
 		}
 		
 			return new MessageResponseServerInfo(Constants.VERSION, dims, ping);

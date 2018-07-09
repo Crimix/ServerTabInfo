@@ -1,7 +1,8 @@
 package com.black_dog20.servertabinfo.utility;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
@@ -30,22 +31,23 @@ public class CompatibilityHelper {
 	}
 	
 	public static void glPush() {
-		GlStateManager.pushMatrix();
+		GL11.glPushMatrix();
 	}
 	
 	public static void glPop() {
-		GlStateManager.popMatrix();
+		GL11.glPopMatrix();
 	}
 	
 	public static void glScale(double value) {
-		GlStateManager.scale(value, value, value);
+		GL11.glScaled(value, value, value);
 	}
 	
 	public static void glListHelper() {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glEnable(GL11.GL_ALPHA);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(770, 771);
+		GL11.glAlphaFunc(1, 0);
 	}
 	
 	public static int getStringWidth(Minecraft mc, String text) {
@@ -53,11 +55,11 @@ public class CompatibilityHelper {
 	}
 	
 	public static void drawStringWithShadow(Minecraft mc, String text, float x, float y, int color) {
-		mc.fontRendererObj.drawStringWithShadow(text, x, y, color);
+		mc.fontRendererObj.drawStringWithShadow(text, (int)x, (int)y, color);
 	}
 	
 	public static void drawStringWithShadowItalic(Minecraft mc, String text, float x, float y, int color) {
-		mc.fontRendererObj.drawStringWithShadow(EnumChatFormatting.ITALIC + text, x, y, color);
+		mc.fontRendererObj.drawStringWithShadow(EnumChatFormatting.ITALIC + text, (int)x, (int)y, color);
 	}
 	
 	public static int getFontRenderHeight(Minecraft mc) {

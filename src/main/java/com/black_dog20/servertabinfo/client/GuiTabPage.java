@@ -12,12 +12,13 @@ import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo
 import com.black_dog20.servertabinfo.reference.Constants;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
 
 @SideOnly(Side.CLIENT)
 public class GuiTabPage extends GuiScreen
@@ -59,7 +60,7 @@ public class GuiTabPage extends GuiScreen
 				PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
 			}
 
-			if ((Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
+			if ((Keybindings.SHOW.getIsKeyPressed() || Keybindings.SHOW2.getIsKeyPressed()))
 			{	
 				if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
 					if(ticks%100 == 0) {
@@ -108,11 +109,11 @@ public class GuiTabPage extends GuiScreen
 				return;
 			}
 
-			if(!mc.gameSettings.keyBindPlayerList.isKeyDown()) {
+			if(!mc.gameSettings.keyBindPlayerList.getIsKeyPressed()) {
 				return;
 			}
 
-			if (!(Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
+			if (!(Keybindings.SHOW.getIsKeyPressed() || Keybindings.SHOW2.getIsKeyPressed()))
 			{
 				return;
 			}
