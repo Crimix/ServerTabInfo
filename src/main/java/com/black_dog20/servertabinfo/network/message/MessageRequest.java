@@ -29,7 +29,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		int ping = context.getServerHandler().playerEntity.ping;
 		if(message.version==0) {
-			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)* 1.0E-006D));
+			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)* 1.0E-006D,0));
 		
 		for(WorldServer world : server.worldServers) {
 			String name = world.provider.getDimensionName();
@@ -42,7 +42,7 @@ public class MessageRequest implements IMessage, IMessageHandler<MessageRequest,
 			return new MessageResponse(dims);
 		}
 		else {
-			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)));
+			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray),Constants.VERSION));
 		
 		for(WorldServer world : server.worldServers) {
 			String name = world.provider.getDimensionName();

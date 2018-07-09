@@ -108,16 +108,7 @@ curseforge {
 	changelog = file('changelog.txt')
     releaseType = 'release'
     addGameVersion 'Java 8'
-    addGameVersion '1.8'
-    addGameVersion '1.8.1'
-    addGameVersion '1.8.2'
-    addGameVersion '1.8.3'
-    addGameVersion '1.8.4'
-    addGameVersion '1.8.5'
-    addGameVersion '1.8.6'
-    addGameVersion '1.8.7'
-    addGameVersion '1.8.8'
-    addGameVersion '1.8.9'
+    addGameVersion '1.7.10'
   }
 }
 

@@ -4,5 +4,5 @@ public interface IRenderable {
 
 	int getWidth();
 	
-	void render(int x, int y);
+	void render(int x, int y, int width);
 }
