@@ -1,6 +1,7 @@
 package com.black_dog20.servertabinfo.client.objects;
 
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
+import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.mojang.authlib.GameProfile;
@@ -18,7 +19,7 @@ public class Player implements IRenderable {
 	private NetworkPlayerInfo networkInfo;
 	private Minecraft mc;
 	private int headWidth = 10;
-	private int spacing = 2;
+	private int spacing = 3;
 	private boolean flag = false;
 	
 	public Player(NetworkPlayerInfo info, Minecraft minecraft) {
@@ -34,15 +35,21 @@ public class Player implements IRenderable {
 			width += headWidth;
 		}
 		width += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
-		width += spacing;
-		width += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
+		width += (2*spacing);
+		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
+			width += CompatibilityHelper.getStringWidth(mc, "Analysing");
+		else if(GuiTabPage.responseVersion < 3)
+			width += CompatibilityHelper.getStringWidth(mc, "Unknown");
+		else
+			width += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
 		width += spacing;
 		width += CompatibilityHelper.getStringWidth(mc, getPing());
 		return width;
 	}
 
 	@Override
-	public void render(int x, int y) {
+	public void render(int x, int y, int width) {
+		int leftoverspacing = width - this.getWidth();
 		
 		GameProfile gameprofile = networkInfo.getGameProfile();
 		EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
@@ -76,9 +83,16 @@ public class Player implements IRenderable {
             CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
         }
 
-        x += CompatibilityHelper.getStringWidth(mc, s4) + spacing;
-        CompatibilityHelper.drawStringWithShadow(mc, getDim(s4), (float)x, (float)y, -1);
-        x += CompatibilityHelper.getStringWidth(mc, getDim(s4))+spacing;
+        x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+leftoverspacing;
+        String dim = "Unknown";
+		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
+			dim ="Analysing";
+		else if(GuiTabPage.responseVersion < 3)
+			dim = "Unknown";
+		else
+			dim = getDim(getPlayerName(networkInfo));
+        CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
+        x += CompatibilityHelper.getStringWidth(mc, dim)+spacing;
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
 	}
 	
@@ -103,4 +117,5 @@ public class Player implements IRenderable {
     	}
     	
     }
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.black_dog20.servertabinfo.ServerTabInfo;
+import com.black_dog20.servertabinfo.client.objects.IRenderable;
 import com.black_dog20.servertabinfo.config.ModConfig;
 import com.black_dog20.servertabinfo.reference.Reference;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
@@ -15,6 +16,10 @@ import net.minecraft.client.Minecraft;
 public class TpsPage {
 	
 	private Minecraft mc;
+	private int maxPages = 1;
+	private int currentPage = 1;
+	private int ticks = 0;
+	private int changeTicks = 200;
 	
 	public TpsPage(Minecraft mc) {
 		this.mc = mc;
@@ -35,18 +40,42 @@ public class TpsPage {
 
 
 	private int renderTps(int startTop) {
-		List<String> list = new ArrayList<>();
+		ticks++;
+		int hith = (int) (GuiTabPage.hight-startTop-(GuiTabPage.hight*0.15));
+		
+		int itemPerPage = (int) Math.floor(hith/this.mc.fontRenderer.FONT_HEIGHT/2);
+		List<IRenderable> Tlist = new ArrayList<>();
 
 		if(GuiTabPage.dims==null || GuiTabPage.dims.isEmpty())
 			return startTop;
-		
+	
 		for(TpsDimension tpsInfo : GuiTabPage.dims) {
-			list.add(tpsInfo.getDimString(GuiTabPage.responseVersion));
+			Tlist.add(new TpsDimension(tpsInfo.name, tpsInfo.meanTickTime, tpsInfo.Id, GuiTabPage.responseVersion));
+		}
+		maxPages = (int)Math.ceil(Tlist.size() / (double)itemPerPage);
+		
+		if(ticks%changeTicks == 0) {
+			ticks=0;
+			changePage();
 		}
 		
-		return RenderHelper.RenderList(list, mc, startTop, GuiTabPage.width);
+		List<IRenderable> dimsT = RenderHelper.getPage(currentPage,itemPerPage,Tlist);
+		int y = RenderHelper.RenderObjectList(dimsT, mc, startTop, GuiTabPage.width);
+		String s = "Page " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
+		int x = GuiTabPage.width / 2;
+		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) y, -1);
+		y += mc.fontRenderer.FONT_HEIGHT;
+		return y;
 	}
-
+	
+	private void changePage() {
+		if(currentPage == maxPages) {
+			currentPage = 1;
+		}
+		else {
+			currentPage++;
+		}
+	}
 
 	private int renderPing(int startTop) {
 		if(ModConfig.ping && GuiTabPage.responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
