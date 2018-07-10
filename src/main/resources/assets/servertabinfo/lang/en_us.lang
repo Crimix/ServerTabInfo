@@ -5,8 +5,10 @@ gui.servertabinfo.dim=Dim
 gui.servertabinfo.ping=Ping
 gui.servertabinfo.ms=ms
 gui.servertabinfo.tps=tps
+gui.servertabinfo.unknown=Unknown
+gui.servertabinfo.analysing=Analysing
 
-//Kebindings
+//Keybindings
 keys.servertabinfo.category=Server Tab Info
 keys.servertabinfo.show=Show TPS (Press TAB + this)
 keys.servertabinfo.show2=Show TPS (Press TAB + this)
