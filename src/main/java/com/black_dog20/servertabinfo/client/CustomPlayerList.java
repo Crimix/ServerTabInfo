@@ -16,6 +16,7 @@ import com.google.common.collect.Ordering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.world.GameType;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,7 +56,7 @@ public class CustomPlayerList
     			changePage();
     		}
     		int yy = RenderHelper.RenderObjectList(RenderHelper.getPage(currentPage,itemPerPage,playerList), mc, y, width);
-    		String s = "Page " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
+    		String s = I18n.format("gui.servertabinfo.page")+ " " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
     		int x = GuiTabPage.width / 2;
     		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) yy, -1);
     		return true;
