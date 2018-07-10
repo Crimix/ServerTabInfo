@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiPlayerInfo;
 import net.minecraft.client.network.NetHandlerPlayClient;
 
-
 public class CustomPlayerList
 {
     private final Minecraft mc;
@@ -48,7 +47,7 @@ public class CustomPlayerList
     			changePage();
     		}
     		int yy = RenderHelper.RenderObjectList(RenderHelper.getPage(currentPage,itemPerPage,playerList), mc, y, width);
-    		String s = "Page " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
+    		String s = I18n.format("gui.servertabinfo.page")+ " " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
     		int x = GuiTabPage.width / 2;
     		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) yy, -1);
     		return true;

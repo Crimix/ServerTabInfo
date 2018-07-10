@@ -12,6 +12,7 @@ import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 
 public class TpsPage {
 	
@@ -61,7 +62,7 @@ public class TpsPage {
 		
 		List<IRenderable> dimsT = RenderHelper.getPage(currentPage,itemPerPage,Tlist);
 		int y = RenderHelper.RenderObjectList(dimsT, mc, startTop, GuiTabPage.width);
-		String s = "Page " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
+		String s = I18n.format("gui.servertabinfo.page")+ " " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
 		int x = GuiTabPage.width / 2;
 		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) y, -1);
 		y += mc.fontRendererObj.FONT_HEIGHT;
