@@ -9,6 +9,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -37,9 +38,9 @@ public class Player implements IRenderable {
 		width += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
 		width += (2*spacing);
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			width += CompatibilityHelper.getStringWidth(mc, "Analysing");
+			width += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.analysing"));
 		else if(GuiTabPage.responseVersion < 3)
-			width += CompatibilityHelper.getStringWidth(mc, "Unknown");
+			width += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.unknown"));
 		else
 			width += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
 		width += spacing;
