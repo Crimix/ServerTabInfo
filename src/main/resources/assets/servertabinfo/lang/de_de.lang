@@ -5,6 +5,9 @@ gui.servertabinfo.dim=Dim
 gui.servertabinfo.ping=Ping
 gui.servertabinfo.ms=ms
 gui.servertabinfo.tps=tps
+gui.servertabinfo.unknown=Unknown
+gui.servertabinfo.analysing=Analysing
+gui.servertabinfo.page=Page
 
 //Kebindings
 keys.servertabinfo.category=Server Tab Info
