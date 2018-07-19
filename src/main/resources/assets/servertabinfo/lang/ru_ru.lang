@@ -5,6 +5,9 @@ gui.servertabinfo.dim=Измерение
 gui.servertabinfo.ping=Пинг
 gui.servertabinfo.ms=мс
 gui.servertabinfo.tps=tps
+gui.servertabinfo.unknown=Unknown
+gui.servertabinfo.analysing=Analysing
+gui.servertabinfo.page=Page
 
 //Kebindings
 keys.servertabinfo.category=Server Tab Info
