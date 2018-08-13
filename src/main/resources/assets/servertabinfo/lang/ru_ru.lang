@@ -1,0 +1,30 @@
+gui.servertabinfo.overall=Итого
+gui.servertabinfo.mean=в среднем
+gui.servertabinfo.notinstalled=Server Tab Info не установлен на сервере
+gui.servertabinfo.dim=Измерение
+gui.servertabinfo.ping=Пинг
+gui.servertabinfo.ms=мс
+gui.servertabinfo.tps=tps
+gui.servertabinfo.unknown=Unknown
+gui.servertabinfo.analysing=Analysing
+gui.servertabinfo.page=Page
+
+//Kebindings
+keys.servertabinfo.category=Server Tab Info
+keys.servertabinfo.show=Показать TPS (Нажми TAB + это)
+keys.servertabinfo.show2=Показать TPS (Нажми TAB + это)
+
+//Config
+config.servertabinfo=Server Tab Info
+config.servertabinfo.ping=Показывать пинг
+config.servertabinfo.version=Показывать версию
+config.servertabinfo.playerlist=Заменить список игроков
+
+//Vanilla dimensions 
+servertabinfo.dim.overworld=Верхний мир
+servertabinfo.dim.the_nether=Нижний мир
+servertabinfo.dim.the_end=Край
+
+//Modded dimensions 
+servertabinfo.dim.lostcities=Заброшенные города
+servertabinfo.dim.twilight_forest=Сумеречный лес
