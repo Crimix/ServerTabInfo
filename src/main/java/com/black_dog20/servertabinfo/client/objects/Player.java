@@ -7,6 +7,13 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiPlayerInfo;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.world.WorldSettings.GameType;
 
 public class Player implements IRenderable {
 	
