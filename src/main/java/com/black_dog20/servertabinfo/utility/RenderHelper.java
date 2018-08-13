@@ -53,6 +53,9 @@ public class RenderHelper {
 		if (list != null && !list.isEmpty())
 		{
 			int maxWidth = findMaxWidth(list, mc);
+			int[] maxWidthArray = findMaxWidthArray(list, mc);
+			if(maxWidthArray == null)
+				return y;
 
 			GuiScreen.drawRect(width / 2 - maxWidth / 2 - 1, y - 1, width / 2 + maxWidth / 2 + 1, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 
@@ -60,7 +63,7 @@ public class RenderHelper {
 			{
 				GuiScreen.drawRect(width / 2 - maxWidth / 2, y, width / 2 + maxWidth / 2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
-				o.render((width / 2 - maxWidth / 2), y, maxWidth);
+				o.render((width / 2 - maxWidth / 2), y, maxWidthArray);
 				y += CompatibilityHelper.getFontRenderHeight(mc);
 			}
 		}
@@ -71,6 +74,9 @@ public class RenderHelper {
 		if (list != null && !list.isEmpty())
 		{
 			int maxWidth = findMaxWidth(list, mc);
+			int[] maxWidthArray = findMaxWidthArray(list, mc);
+			if(maxWidthArray == null)
+				return y;
 			
 			GuiScreen.drawRect(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 			
@@ -78,7 +84,7 @@ public class RenderHelper {
 			{
 				GuiScreen.drawRect(x+1, y, x+maxWidth+2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
-				o.render(x, y, maxWidth);
+				o.render(x, y, maxWidthArray);
 				y += CompatibilityHelper.getFontRenderHeight(mc);
 			}
 		}
@@ -99,6 +105,19 @@ public class RenderHelper {
 		for(IRenderable s : list) {
 			int i = s.getWidth();
 			maxWidth = Math.max(maxWidth, i);
+		}
+		return maxWidth;
+	}
+	
+	public static int[] findMaxWidthArray(List<IRenderable> list, Minecraft mc) {
+		int[] maxWidth = null;
+		for(IRenderable s : list) {
+			if(maxWidth == null)
+				maxWidth = s.getWidthArray();
+			int[] i = s.getWidthArray();
+			for(int n = 0; n < maxWidth.length; n++) {
+				maxWidth[n] = Math.max(maxWidth[n], i[n]);
+			}
 		}
 		return maxWidth;
 	}
