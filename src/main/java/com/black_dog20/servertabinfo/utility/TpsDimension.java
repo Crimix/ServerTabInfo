@@ -3,10 +3,13 @@ package com.black_dog20.servertabinfo.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.black_dog20.servertabinfo.client.CustomPlayerList;
+import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
 import com.black_dog20.servertabinfo.utility.ColorObject.Color;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 
 public class TpsDimension implements IRenderable{
 
@@ -68,6 +71,40 @@ public class TpsDimension implements IRenderable{
 		width += spacing;
 		width += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
 		width += 3;
+		return width;
+	}
+	
+	@Override
+	public int getWidthOfElement(int n) {
+		return getWidthArray()[n];
+	}
+	
+	@Override
+	public int[] getWidthArray() {
+		int[] width = new int[4];
+		int tempWidth = 0;
+		Minecraft mc = Minecraft.getMinecraft();
+		String[] strings = getStrings(responseVersion);
+		tempWidth += CompatibilityHelper.getStringWidth(mc, strings[0]+":");
+		tempWidth += spacing;
+		width[0] = tempWidth;
+		tempWidth = 0;
+		
+		tempWidth += CompatibilityHelper.getStringWidth(mc, strings[1]);
+		tempWidth += spacing;
+		width[1] = tempWidth;
+		tempWidth = 0;
+		
+		tempWidth += CompatibilityHelper.getStringWidth(mc, strings[2]);
+		tempWidth += 2*spacing;
+		width[2] = tempWidth;
+		tempWidth = 0;
+		
+		tempWidth += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
+		tempWidth += 3;
+		width[3] = tempWidth;
+		tempWidth = 0;
+		
 		return width;
 	}
 	
@@ -136,6 +173,28 @@ public class TpsDimension implements IRenderable{
         
         CompatibilityHelper.drawStringWithShadow(mc, strings[2], (float)x, (float)y, -1);
         x += CompatibilityHelper.getStringWidth(mc, strings[2])+spacing;
+		
+        CompatibilityHelper.drawStringWithShadow(mc, String.format("(%s %s)", strings[3], strings[4]), (float)x, (float)y, -1);
+	}
+	
+	private int calcLeftOverspace(int[] maxWidth, int n) {
+		return maxWidth[n]-getWidthOfElement(n);
+	}
+	
+	@Override
+	public void render(int x, int y, int[] width) {
+		Minecraft mc = Minecraft.getMinecraft();
+		String[] strings = getStrings(responseVersion);
+        String s4 = strings[0]+":";
+        CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
+
+        x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+calcLeftOverspace(width, 0);
+        CompatibilityHelper.drawStringWithShadow(mc, strings[1], (float)x, (float)y, -1);
+        x += CompatibilityHelper.getStringWidth(mc, strings[1])+spacing+calcLeftOverspace(width, 1);
+        
+        
+        CompatibilityHelper.drawStringWithShadow(mc, strings[2], (float)x, (float)y, -1);
+        x += CompatibilityHelper.getStringWidth(mc, strings[2])+spacing+calcLeftOverspace(width, 2);
 		
         CompatibilityHelper.drawStringWithShadow(mc, String.format("(%s %s)", strings[3], strings[4]), (float)x, (float)y, -1);
 	}
