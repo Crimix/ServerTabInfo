@@ -16,6 +16,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class MessageRequestPlayerDimInfo implements IMessage, IMessageHandler<MessageRequestPlayerDimInfo, IMessage> {
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public IMessage onMessage(MessageRequestPlayerDimInfo message, MessageContext context) {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();

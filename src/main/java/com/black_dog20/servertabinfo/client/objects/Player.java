@@ -7,13 +7,7 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiPlayerInfo;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.world.WorldSettings.GameType;
 
 public class Player implements IRenderable {
 	
@@ -51,9 +45,6 @@ public class Player implements IRenderable {
 	public int[] getWidthArray() {
 		int[] width = new int[3];
 		int tempWidth = 0;
-		if(flag) {
-			tempWidth += headWidth;
-		}
 		tempWidth += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
 		tempWidth += (2*spacing);
 		width[0] = tempWidth;
@@ -103,38 +94,8 @@ public class Player implements IRenderable {
 	
 	@Override
 	public void render(int x, int y, int[] maxWidth) {
-		GameProfile gameprofile = networkInfo.getGameProfile();
-		EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
-
-        if (flag)
-        {
-            boolean flag1 = entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.CAPE) && ("Dinnerbone".equals(gameprofile.getName()) || "Grumm".equals(gameprofile.getName()));
-            this.mc.getTextureManager().bindTexture(networkInfo.getLocationSkin());
-            int l2 = 8 + (flag1 ? 8 : 0);
-            int i3 = 8 * (flag1 ? -1 : 1);
-            Gui.drawScaledCustomSizeModalRect(x, y, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
-
-            if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT))
-            {
-                int j3 = 8 + (flag1 ? 8 : 0);
-                int k3 = 8 * (flag1 ? -1 : 1);
-                Gui.drawScaledCustomSizeModalRect(x, y, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
-            }
-
-            x += headWidth;
-        }
-
         String s4 = this.getPlayerName(networkInfo);
-
-        if (networkInfo.getGameType() == GameType.SPECTATOR)
-        {
-        	CompatibilityHelper.drawStringWithShadowItalic(mc, s4, (float)x, (float)y, -1862270977);
-        }
-        else
-        {
-            CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
-        }
-
+        CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+calcLeftOverspace(maxWidth,0);
         String dim = "Unknown";
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
@@ -148,7 +109,7 @@ public class Player implements IRenderable {
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
 	}
 	
-    public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
+    public String getPlayerName(GuiPlayerInfo networkPlayerInfoIn)
     {
         return networkPlayerInfoIn.name;
     }

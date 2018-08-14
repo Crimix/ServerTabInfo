@@ -13,6 +13,7 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiPlayerInfo;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.resources.I18n;
 
 public class CustomPlayerList
 {
@@ -32,6 +33,7 @@ public class CustomPlayerList
     	ticks++;
     		int y = 10;
     		NetHandlerPlayClient nethandlerplayclient = this.mc.thePlayer.sendQueue;
+    		@SuppressWarnings("unchecked") 
     		List<GuiPlayerInfo> list = nethandlerplayclient.playerInfoList;
     		List<IRenderable> playerList = new ArrayList<IRenderable>();
     		int hith = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
