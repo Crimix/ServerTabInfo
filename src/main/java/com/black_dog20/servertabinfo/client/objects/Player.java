@@ -139,7 +139,7 @@ public class Player implements IRenderable {
 	@Override
 	public void render(int x, int y, int[] maxWidth) {
 		GameProfile gameprofile = networkInfo.getGameProfile();
-		EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
+		EntityPlayer entityplayer = this.mc.theWorld.getPlayerEntityByUUID(gameprofile.getId());
 
         if (flag)
         {
