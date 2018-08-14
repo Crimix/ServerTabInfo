@@ -25,7 +25,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 
 ext.priv = parseConfig(file('private.properties'))
 
-version = version_major + '.' + version_minor + '.' + version_patch
+version = "Final" + '-' + final_build
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_archivesBaseName + "-" + mcversion
 
