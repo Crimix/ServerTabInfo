@@ -3,13 +3,10 @@ package com.black_dog20.servertabinfo.utility;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.black_dog20.servertabinfo.client.CustomPlayerList;
-import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
 import com.black_dog20.servertabinfo.utility.ColorObject.Color;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 
 public class TpsDimension implements IRenderable{
 
