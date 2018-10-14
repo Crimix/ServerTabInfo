@@ -1,8 +1,11 @@
 package com.black_dog20.servertabinfo.client.objects;
 
+import java.util.ArrayList;
+
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
+import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
@@ -23,7 +26,12 @@ public class Player implements IRenderable {
 	@Override
 	public int getWidth() {
 		int width = 0;
-		width += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
+		ArrayList<String> playerList = new ArrayList<>();
+		for(IRenderable p : CustomPlayerList.playerList) {
+			if(p instanceof Player)
+			playerList.add(((Player)p).getPlayerName());
+		}
+		width += RenderHelper.findMaxWidthString(playerList, mc);
 		width += (2*spacing);
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
 			width += CompatibilityHelper.getStringWidth(mc, "Analysing");
@@ -38,14 +46,31 @@ public class Player implements IRenderable {
 	
 	@Override
 	public int getWidthOfElement(int n) {
-		return getWidthArray()[n];
+		return getWidthArrayPrivate()[n];
 	}
 	
 	@Override
 	public int[] getWidthArray() {
+		return getWidtArrayHelper(false);
+	}
+	
+	private int[] getWidthArrayPrivate() {
+		return getWidtArrayHelper(true);
+	}
+	
+	private int[] getWidtArrayHelper(boolean here) {
 		int[] width = new int[3];
 		int tempWidth = 0;
-		tempWidth += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
+		if(!here) {
+			ArrayList<String> playerList = new ArrayList<>();
+			for(IRenderable p : CustomPlayerList.playerList) {
+				if(p instanceof Player)
+				playerList.add(((Player)p).getPlayerName());
+			}
+			tempWidth += RenderHelper.findMaxWidthString(playerList, mc);
+		}else {
+			tempWidth += CompatibilityHelper.getStringWidth(mc, getPlayerName());
+		}
 		tempWidth += (2*spacing);
 		width[0] = tempWidth;
 		
@@ -56,7 +81,7 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			tempWidth += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.unknown"));
 		else
-			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
+			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName()));
 		tempWidth += spacing;
 		width[1] = tempWidth;
 		
@@ -72,7 +97,7 @@ public class Player implements IRenderable {
 	public void render(int x, int y, int width) {
 		int leftoverspacing = width - this.getWidth();
 
-        String s4 = this.getPlayerName(networkInfo);
+        String s4 = this.getPlayerName();
         CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
 
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+leftoverspacing;
@@ -82,7 +107,7 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			dim = "Unknown";
 		else
-			dim = getDim(getPlayerName(networkInfo));
+			dim = getDim(getPlayerName());
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
         x += CompatibilityHelper.getStringWidth(mc, dim)+spacing;
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
@@ -94,8 +119,9 @@ public class Player implements IRenderable {
 	
 	@Override
 	public void render(int x, int y, int[] maxWidth) {
-        String s4 = this.getPlayerName(networkInfo);
+        String s4 = this.getPlayerName();
         CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
+        
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+calcLeftOverspace(maxWidth,0);
         String dim = "Unknown";
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
@@ -103,13 +129,19 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			dim = "Unknown";
 		else
-			dim = getDim(getPlayerName(networkInfo));
+			dim = getDim(getPlayerName());
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
         x += CompatibilityHelper.getStringWidth(mc, dim)+spacing+calcLeftOverspace(maxWidth,1);
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
 	}
+
 	
-    public String getPlayerName(GuiPlayerInfo networkPlayerInfoIn)
+    public String getPlayerName()
+    {
+        return networkInfo.name;
+    }
+	
+    public static String getPlayerName(GuiPlayerInfo networkPlayerInfoIn)
     {
         return networkPlayerInfoIn.name;
     }

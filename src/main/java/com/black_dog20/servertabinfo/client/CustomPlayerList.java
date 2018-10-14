@@ -19,6 +19,7 @@ public class CustomPlayerList
 {
     private final Minecraft mc;
     public static HashMap<String, TpsDimension> playerDims = new HashMap<>();
+    public static List<IRenderable> playerList;
 	private int maxPages = 1;
 	private int currentPage = 1;
 	private int ticks = 0;
@@ -32,10 +33,11 @@ public class CustomPlayerList
     public boolean render(int width) {
     	ticks++;
     		int y = 10;
+
     		NetHandlerPlayClient nethandlerplayclient = this.mc.thePlayer.sendQueue;
     		@SuppressWarnings("unchecked") 
     		List<GuiPlayerInfo> list = nethandlerplayclient.playerInfoList;
-    		List<IRenderable> playerList = new ArrayList<IRenderable>();
+    		playerList = new ArrayList<IRenderable>();
     		int hith = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
     		
     		int itemPerPage = (int) Math.floor(hith/this.mc.fontRendererObj.FONT_HEIGHT/2);
