@@ -100,6 +100,15 @@ public class RenderHelper {
 		return maxWidth;
 	}
 	
+	public static int findMaxWidthString(String[] list, Minecraft mc) {
+		int maxWidth = 0;
+		for(String s : list) {
+			int i = CompatibilityHelper.getStringWidth(mc, s);
+			maxWidth = Math.max(maxWidth, i);
+		}
+		return maxWidth;
+	}
+	
 	public static int findMaxWidth(List<IRenderable> list, Minecraft mc) {
 		int maxWidth = 0;
 		for(IRenderable s : list) {
@@ -119,6 +128,7 @@ public class RenderHelper {
 				maxWidth[n] = Math.max(maxWidth[n], i[n]);
 			}
 		}
+		
 		return maxWidth;
 	}
 	
