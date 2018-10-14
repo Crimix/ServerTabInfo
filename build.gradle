@@ -107,6 +107,7 @@ curseforge {
   apiKey = priv.apiKey
   project {
     id = '291788'
+    changelogType = 'markdown'
 	changelog = file('changelog.txt')
     releaseType = 'release'
     addGameVersion 'Java 8'
