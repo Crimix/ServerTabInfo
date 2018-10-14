@@ -1,8 +1,11 @@
 package com.black_dog20.servertabinfo.client.objects;
 
+import java.util.ArrayList;
+
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
+import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.mojang.authlib.GameProfile;
 
@@ -35,7 +38,12 @@ public class Player implements IRenderable {
 		if(flag) {
 			width += headWidth;
 		}
-		width += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
+		ArrayList<String> playerList = new ArrayList<>();
+		for(IRenderable p : CustomPlayerList.playerList) {
+			if(p instanceof Player)
+			playerList.add(((Player)p).getPlayerName());
+		}
+		width += RenderHelper.findMaxWidthString(playerList, mc);
 		width += (2*spacing);
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
 			width += CompatibilityHelper.getStringWidth(mc, "Analysing");
@@ -50,17 +58,34 @@ public class Player implements IRenderable {
 	
 	@Override
 	public int getWidthOfElement(int n) {
-		return getWidthArray()[n];
+		return getWidthArrayPrivate()[n];
 	}
 	
 	@Override
 	public int[] getWidthArray() {
+		return getWidtArrayHelper(false);
+	}
+	
+	private int[] getWidthArrayPrivate() {
+		return getWidtArrayHelper(true);
+	}
+	
+	private int[] getWidtArrayHelper(boolean here) {
 		int[] width = new int[3];
 		int tempWidth = 0;
 		if(flag) {
 			tempWidth += headWidth;
 		}
-		tempWidth += CompatibilityHelper.getStringWidth(mc, this.getPlayerName(networkInfo));
+		if(!here) {
+			ArrayList<String> playerList = new ArrayList<>();
+			for(IRenderable p : CustomPlayerList.playerList) {
+				if(p instanceof Player)
+				playerList.add(((Player)p).getPlayerName());
+			}
+			tempWidth += RenderHelper.findMaxWidthString(playerList, mc);
+		}else {
+			tempWidth += CompatibilityHelper.getStringWidth(mc, getPlayerName());
+		}
 		tempWidth += (2*spacing);
 		width[0] = tempWidth;
 		
@@ -71,7 +96,7 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			tempWidth += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.unknown"));
 		else
-			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
+			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName()));
 		tempWidth += spacing;
 		width[1] = tempWidth;
 		
@@ -108,7 +133,7 @@ public class Player implements IRenderable {
             x += headWidth;
         }
 
-        String s4 = this.getPlayerName(networkInfo);
+        String s4 = this.getPlayerName();
 
         if (networkInfo.getGameType() == GameType.SPECTATOR)
         {
@@ -159,7 +184,7 @@ public class Player implements IRenderable {
             x += headWidth;
         }
 
-        String s4 = this.getPlayerName(networkInfo);
+        String s4 = this.getPlayerName();
 
         if (networkInfo.getGameType() == GameType.SPECTATOR)
         {
@@ -183,7 +208,13 @@ public class Player implements IRenderable {
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
 	}
 	
-    public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
+	
+    public String getPlayerName()
+    {
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkInfo.getPlayerTeam(), networkInfo.getGameProfile().getName());
+    }
+	
+    public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
         return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
     }
