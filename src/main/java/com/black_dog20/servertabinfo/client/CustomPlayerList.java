@@ -25,6 +25,7 @@ public class CustomPlayerList
     private static final Ordering<NetworkPlayerInfo> ENTRY_ORDERING = Ordering.from(new CustomPlayerList.PlayerComparator());
     private final Minecraft mc;
     public static HashMap<String, TpsDimension> playerDims = new HashMap<>();
+    public static List<IRenderable> playerList;
 	private int maxPages = 1;
 	private int currentPage = 1;
 	private int ticks = 0;
@@ -40,7 +41,7 @@ public class CustomPlayerList
     		int y = 10;
     		NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
     		List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
-    		List<IRenderable> playerList = new ArrayList<IRenderable>();
+    		playerList = new ArrayList<IRenderable>();
     		int hith = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
     		
     		int itemPerPage = (int) Math.floor(hith/this.mc.fontRendererObj.FONT_HEIGHT/2);

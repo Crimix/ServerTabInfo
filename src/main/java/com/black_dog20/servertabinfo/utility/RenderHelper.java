@@ -3,9 +3,11 @@ package com.black_dog20.servertabinfo.utility;
 import java.util.List;
 
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
+import com.black_dog20.servertabinfo.client.objects.Player;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class RenderHelper {
 	
