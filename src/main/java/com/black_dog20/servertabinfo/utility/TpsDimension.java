@@ -67,7 +67,7 @@ public class TpsDimension implements IRenderable{
 		width += CompatibilityHelper.getStringWidth(mc, strings[2]);
 		width += spacing;
 		width += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		width += 3;
+		width += 4;
 		return width;
 	}
 	
@@ -98,7 +98,7 @@ public class TpsDimension implements IRenderable{
 		tempWidth = 0;
 		
 		tempWidth += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		tempWidth += 3;
+		tempWidth += 4;
 		width[3] = tempWidth;
 		tempWidth = 0;
 		
