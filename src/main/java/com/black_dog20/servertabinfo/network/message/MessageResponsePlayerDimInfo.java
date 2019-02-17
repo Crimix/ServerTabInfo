@@ -2,6 +2,7 @@ package com.black_dog20.servertabinfo.network.message;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
@@ -12,22 +13,20 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 
-public class MessageResponsePlayerDimInfo implements IMessage, IMessageHandler<MessageResponsePlayerDimInfo, IMessage> {
+public class MessageResponsePlayerDimInfo  {
 
 	private HashMap<String, TpsDimension> dims = new HashMap<>();
 	
-	@Override
-	public IMessage onMessage(MessageResponsePlayerDimInfo message, MessageContext context) {
+	public static void onMessage(MessageResponsePlayerDimInfo message, Supplier<NetworkEvent.Context> context) {
 		
-		Minecraft.getMinecraft().addScheduledTask(new Runnable(){
+		Minecraft.getInstance().addScheduledTask(new Runnable(){
 		  	public void run(){
 		  		CustomPlayerList.playerDims = message.dims;
 		  		
 			}
 		});
-		
-		return null;
 	}
 
 	public MessageResponsePlayerDimInfo() {
@@ -37,7 +36,6 @@ public class MessageResponsePlayerDimInfo implements IMessage, IMessageHandler<M
 		this.dims = playerDims;
 	}
 
-	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dims.size());
 		for(Map.Entry<String, TpsDimension> entry : dims.entrySet()) {
@@ -48,13 +46,14 @@ public class MessageResponsePlayerDimInfo implements IMessage, IMessageHandler<M
 		}		
 	}
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
+	public static MessageResponsePlayerDimInfo fromBytes(ByteBuf buf) {
+		HashMap<String, TpsDimension> dims = new HashMap<>();
 		int length = buf.readInt();
 		while (length != 0) {
 			dims.put(ByteBufUtils.readUTF8String(buf),new TpsDimension(ByteBufUtils.readUTF8String(buf), buf.readDouble(),buf.readInt()));
 			length--;
 		}
+		return new MessageResponsePlayerDimInfo(dims);
 		
 	}
 }

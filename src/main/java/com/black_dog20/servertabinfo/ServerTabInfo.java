@@ -5,54 +5,60 @@ import java.util.Map;
 import org.apache.logging.log4j.Logger;
 
 import com.black_dog20.servertabinfo.network.PacketHandler;
+import com.black_dog20.servertabinfo.proxies.ClientProxy;
 import com.black_dog20.servertabinfo.proxies.IProxy;
+import com.black_dog20.servertabinfo.proxies.ServerProxy;
 import com.black_dog20.servertabinfo.reference.Reference;
 
+import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptableRemoteVersions = "*", acceptedMinecraftVersions = Reference.MC_VERSIONS, dependencies = Reference.DEPENDENCIES)
+import org.apache.logging.log4j.LogManager;
+
+@Mod(Reference.MOD_ID)
 public class ServerTabInfo {
 
-	@Mod.Instance(Reference.MOD_ID)
-	public static ServerTabInfo instance = new ServerTabInfo();
-	public static Logger logger;
-	public static boolean modOnServer = false;
-
-	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
+	public static ServerTabInfo instance;
+	private static final Logger LOGGER = LogManager.getLogger();
 	public static IProxy Proxy;
+	public static boolean modOnServer = false;
 	
-	@NetworkCheckHandler
+	public ServerTabInfo() {
+		instance = this;
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        Proxy = DistExecutor.runForDist(()->()->new ClientProxy(), ()->()->new ServerProxy());
+        
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+	
+	private void setup(final FMLCommonSetupEvent event)
+    {
+        // some preinit code
+        LOGGER.info("HELLO FROM PREINIT");
+        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+    }
+
+    private void doClientStuff(final FMLClientSetupEvent event) {
+        // do something that can only be done on the client
+        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+    }
+	
+	
+	/*@NetworkCheckHandler
 	public boolean checkModLists(Map<String, String> modList, Side side) {
 		if (side == Side.SERVER) {
 			modOnServer = modList.containsKey(Reference.MOD_ID);
 		}
 	
 		return true;
-	}
-
-	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = event.getModLog();
-		PacketHandler.init();
-		Proxy.registerKeyBindings();
-		Proxy.registerRendersPreInit();
-		logger.info("Pre Initialization Complete!");
-	}
-
-	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
-
-		logger.info("Initialization Complete!");
-}
-
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		logger.info("Post Initialization Complete!");
-	}
+	}*/
 }

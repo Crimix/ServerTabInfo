@@ -3,7 +3,9 @@ package com.black_dog20.servertabinfo.network.message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
+import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.reference.Constants;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
@@ -11,64 +13,37 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 
-public class MessageRequest implements IMessage, IMessageHandler<MessageRequest, IMessage> {
+public class MessageRequest {
 
-	private int version;
-	
-	@Override
-	public IMessage onMessage(MessageRequest message, MessageContext context) {
+	public static void onMessage(MessageRequest message, Supplier<NetworkEvent.Context> context) {
 
 		List<TpsDimension> dims = new ArrayList<TpsDimension>();
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		int ping = context.getServerHandler().player.ping;
-		if(message.version==0) {
-			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray)* 1.0E-006D,0));
+		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+		int ping = context.get().getSender().ping;
+	
+		dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray),Constants.VERSION));
 		
-		for(WorldServer world : server.worlds) {
-			String name = world.provider.getDimensionType().getName();
+		for(WorldServer world : server.forgeGetWorldMap().values()) {
+			String name = world.dimension.getType().getRegistryName().toString();
 			if(name.equals(null)) {
 				name = "";
 			}
-			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimension()))* 1.0E-006D, world.provider.getDimension()));
-		}
+			dims.add(new TpsDimension(name, Helper.mean(server.getTickTime(world.dimension.getType())), world.dimension.getType().getId()));
 		
-			return new MessageResponse(dims);
-		}
-		else {
-			dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray),Constants.VERSION));
-		
-		for(WorldServer world : server.worlds) {
-			String name = world.provider.getDimensionType().getName();
-			if(name.equals(null)) {
-				name = "";
-			}
-			dims.add(new TpsDimension(name, Helper.mean(server.worldTickTimes.get(world.provider.getDimension())), world.provider.getDimension()));
-		}
-		
-			return new MessageResponseServerInfo(Constants.VERSION, dims, ping);
+			PacketHandler.network.reply(new MessageResponseServerInfo(Constants.VERSION, dims, ping), context.get());
 		}
 	}
 
 	public MessageRequest() {}
-	
-	public MessageRequest(int version) {
-		this.version = version;
-	}
 
-	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(version);
 	}
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		if(buf.isReadable())
-			version = buf.readInt();
+	public static MessageRequest fromBytes(ByteBuf buf) {
+		return new MessageRequest();
 	}
 }

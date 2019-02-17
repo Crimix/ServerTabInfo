@@ -57,7 +57,7 @@ public class TpsDimension implements IRenderable{
 
 	@Override
 	public int getWidth() {
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		String[] strings = getStrings(responseVersion);
 		int width = 0;
 		width += CompatibilityHelper.getStringWidth(mc, strings[0]+":");
@@ -80,7 +80,7 @@ public class TpsDimension implements IRenderable{
 	public int[] getWidthArray() {
 		int[] width = new int[4];
 		int tempWidth = 0;
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		String[] strings = getStrings(responseVersion);
 		tempWidth += CompatibilityHelper.getStringWidth(mc, strings[0]+":");
 		tempWidth += spacing;
@@ -158,7 +158,7 @@ public class TpsDimension implements IRenderable{
 	@Override
 	public void render(int x, int y, int width) {
 		int leftoverspacing = width - this.getWidth();
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		String[] strings = getStrings(responseVersion);
         String s4 = strings[0]+":";
         CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
@@ -180,7 +180,7 @@ public class TpsDimension implements IRenderable{
 	
 	@Override
 	public void render(int x, int y, int[] width) {
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		String[] strings = getStrings(responseVersion);
         String s4 = strings[0]+":";
         CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);

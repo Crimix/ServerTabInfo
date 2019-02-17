@@ -3,26 +3,46 @@ package com.black_dog20.servertabinfo.network;
 
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo;
-import com.black_dog20.servertabinfo.network.message.MessageResponse;
 import com.black_dog20.servertabinfo.network.message.MessageResponsePlayerDimInfo;
 import com.black_dog20.servertabinfo.network.message.MessageResponseServerInfo;
 import com.black_dog20.servertabinfo.reference.Reference;
 
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 
 public class PacketHandler {
 
-	public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
-
-	public static void init() {
-		network.registerMessage(MessageRequest.class, MessageRequest.class, 1, Side.SERVER);
-		network.registerMessage(MessageResponse.class, MessageResponse.class, 2, Side.CLIENT);
-		network.registerMessage(MessageResponseServerInfo.class, MessageResponseServerInfo.class, 3, Side.CLIENT);
-		network.registerMessage(MessageRequestPlayerDimInfo.class, MessageRequestPlayerDimInfo.class, 4, Side.SERVER);
-		network.registerMessage(MessageResponsePlayerDimInfo.class, MessageResponsePlayerDimInfo.class, 5, Side.CLIENT);
+	private static ResourceLocation net = new ResourceLocation(Reference.MOD_ID,"net");
+	public static SimpleChannel network;
+	static {
+		network = NetworkRegistry.ChannelBuilder.named(net).simpleChannel();
+		
+		network.messageBuilder(MessageRequest.class, 1).
+		decoder(MessageRequest::fromBytes).
+		encoder(MessageRequest::toBytes).
+		consumer(MessageRequest::onMessage).
+		add();
+		
+		network.messageBuilder(MessageResponseServerInfo.class, 2).
+		decoder(MessageResponseServerInfo::fromBytes).
+		encoder(MessageResponseServerInfo::toBytes).
+		consumer(MessageResponseServerInfo::onMessage).
+		add();
+		
+		network.messageBuilder(MessageRequestPlayerDimInfo.class, 3).
+		decoder(MessageRequestPlayerDimInfo::fromBytes).
+		encoder(MessageRequestPlayerDimInfo::toBytes).
+		consumer(MessageRequestPlayerDimInfo::onMessage).
+		add();
+		
+		network.messageBuilder(MessageResponsePlayerDimInfo.class, 4).
+		decoder(MessageResponsePlayerDimInfo::fromBytes).
+		encoder(MessageResponsePlayerDimInfo::toBytes).
+		consumer(MessageResponsePlayerDimInfo::onMessage).
+		add();
+		
 	}
 
 }

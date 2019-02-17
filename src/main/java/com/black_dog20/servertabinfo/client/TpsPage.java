@@ -98,7 +98,7 @@ public class TpsPage {
 	private void renderClientServerVersion() {
 		if(ModConfig.version) {
 			int startTopp = 1;
-			String cv = "C" + ": " + Reference.VERSION;
+			String cv = "C" + ": " + "Reference.VERSION";
 			String sv = "S" + ": " + (GuiTabPage.serverVersion != null ? GuiTabPage.serverVersion : "1.0.0");
 			CompatibilityHelper.glPush();
 			if(this.mc.gameSettings.guiScale!=1)

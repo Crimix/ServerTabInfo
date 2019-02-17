@@ -14,12 +14,12 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiTabPage extends GuiScreen
 {
 
@@ -40,7 +40,7 @@ public class GuiTabPage extends GuiScreen
 
 	public GuiTabPage()
 	{
-		mc = Minecraft.getMinecraft();
+		mc = Minecraft.getInstance();
 		tpsPage = new TpsPage(mc);
 		notInstalledPage = new NotInstalledPage(mc);
 		playerList = new CustomPlayerList(mc);
@@ -50,8 +50,8 @@ public class GuiTabPage extends GuiScreen
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
-		width = event.getResolution().getScaledWidth();
-		hight = event.getResolution().getScaledWidth();
+		width = Minecraft.getInstance().mainWindow.getScaledWidth();
+		hight = Minecraft.getInstance().mainWindow.getScaledHeight();
 		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
 		{
 			return;
@@ -67,7 +67,7 @@ public class GuiTabPage extends GuiScreen
 		}
 		
 		if(serverVersion == null) {
-			PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
+			PacketHandler.network.sendToServer(new MessageRequest());
 		}
 
 		if ((Keybindings.SHOW.isKeyDown() || Keybindings.SHOW2.isKeyDown()))
@@ -76,7 +76,7 @@ public class GuiTabPage extends GuiScreen
 			if(ServerTabInfo.modOnServer || ServerTabInfo.Proxy.isSinglePlayer()) {
 				if(ticks%refreshTicks == 0) {
 					ticks = 0;
-					PacketHandler.network.sendToServer(new MessageRequest(Constants.VERSION));
+					PacketHandler.network.sendToServer(new MessageRequest());
 				}
 
 				if (tpsPage.render())

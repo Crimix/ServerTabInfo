@@ -3,6 +3,7 @@ package com.black_dog20.servertabinfo.network.message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.reference.Reference;
@@ -14,19 +15,19 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 
-public class MessageResponseServerInfo implements IMessage, IMessageHandler<MessageResponseServerInfo, IMessage> {
+public class MessageResponseServerInfo {
 
 	private int version;
 	private List<TpsDimension> dims = new ArrayList<TpsDimension>();
 	private int ping;
 	private String versionString;
 	
-	@Override
-	public IMessage onMessage(MessageResponseServerInfo message, MessageContext context) {
+	public static void onMessage(MessageResponseServerInfo message, Supplier<NetworkEvent.Context> context) {
 		
-		Minecraft.getMinecraft().addScheduledTask(new Runnable(){
+		Minecraft.getInstance().addScheduledTask(new Runnable(){
 		  	public void run(){
 		  		GuiTabPage.responseVersion = message.version;
 		  		GuiTabPage.dims = message.dims;
@@ -35,22 +36,27 @@ public class MessageResponseServerInfo implements IMessage, IMessageHandler<Mess
 		  		
 			}
 		});
-		
-		return null;
 	}
 
 	public MessageResponseServerInfo() {
 	}
 	
 	public MessageResponseServerInfo(int version, List<TpsDimension> dims, int ping) {
+		this.versionString = "";
+		this.version = version;
+		this.dims = dims;
+		this.ping = ping;
+	}
+	
+	public MessageResponseServerInfo(String serverVersion, int version, List<TpsDimension> dims, int ping) {
+		this.versionString = serverVersion;
 		this.version = version;
 		this.dims = dims;
 		this.ping = ping;
 	}
 
-	@Override
 	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, Reference.VERSION);
+		ByteBufUtils.writeUTF8String(buf, "Reference.VERSION");
 		buf.writeInt(version);
 		buf.writeInt(dims.size());
 		for(TpsDimension s: dims) {
@@ -62,18 +68,16 @@ public class MessageResponseServerInfo implements IMessage, IMessageHandler<Mess
 		
 	}
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		versionString = ByteBufUtils.readUTF8String(buf);
-		version = buf.readInt();
+	public static MessageResponseServerInfo fromBytes(ByteBuf buf) {
+		List<TpsDimension> dims = new ArrayList<TpsDimension>();
+		String versionString = ByteBufUtils.readUTF8String(buf);
+		int version = buf.readInt();
 		int length = buf.readInt();
 		while (length != 0) {
 			dims.add(new TpsDimension(ByteBufUtils.readUTF8String(buf), buf.readDouble(),buf.readInt()));
 			length--;
 		}
-		if(version >= 2) {
-			ping = buf.readInt();
-		}
-		
+		int ping = buf.readInt();
+		return new MessageResponseServerInfo(versionString, version, dims, ping);
 	}
 }

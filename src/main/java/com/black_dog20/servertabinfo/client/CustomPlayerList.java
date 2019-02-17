@@ -19,8 +19,8 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.world.GameType;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CustomPlayerList
 {
@@ -72,7 +72,7 @@ public class CustomPlayerList
 		}
 	}
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     static class PlayerComparator implements Comparator<NetworkPlayerInfo>
         {
             private PlayerComparator()

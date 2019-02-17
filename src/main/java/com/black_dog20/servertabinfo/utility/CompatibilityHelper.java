@@ -38,14 +38,14 @@ public class CompatibilityHelper {
 	}
 	
 	public static void glScale(double value) {
-		GlStateManager.scale(value, value, value);
+		GlStateManager.scaled(value, value, value);
 	}
 	
 	public static void glListHelper() {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableAlpha();
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.enableAlphaTest();
 		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 	}
 	
 	public static int getStringWidth(Minecraft mc, String text) {

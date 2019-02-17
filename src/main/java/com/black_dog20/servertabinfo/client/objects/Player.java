@@ -16,6 +16,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 
 public class Player implements IRenderable {
@@ -211,12 +213,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkInfo.getPlayerTeam(), networkInfo.getGameProfile().getName());
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
     }
     
     private String getPing() {

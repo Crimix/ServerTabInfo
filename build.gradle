@@ -14,12 +14,14 @@ buildscript {
     	}
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.10'
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'eclipse'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 ext.priv = parseConfig(file('private.properties'))
@@ -28,19 +30,35 @@ version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_archivesBaseName + "-" + mcversion
 
-sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
     version = mcversion + "-" + forge_version
-    runDir = "eclipse/assets"	
-    mappings = mcp_mappings
+    mappings channel: 'snapshot', version: '20180921-1.13'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-    
-    replace "@VERSION@", project.version
-    replaceIn "src/main/java/com/black_dog20/servertabinfo/reference/Reference.java"
+    //accessTransformer = file('my_at.cfg')
+
+    // default run configurations.
+    // these can be tweaked, removed, or duplicated as needed.
+    runs {
+        client = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('eclipse/assets').canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('eclipse/assets').canonicalPath
+            source sourceSets.main
+        }
+    }
 }
 
 repositories {
@@ -58,46 +76,23 @@ repositories {
 
 dependencies {
 
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+	minecraft([
+		group  : "${project.forge_group}",
+		name   : "forge",
+		version: "${project.mcversion}-${project.forge_version}"
+	])
 
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mc_version
-        expand 'version': project.version, 'mcversion': project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+jar {
+    manifest {
+        attributes(["Specification-Title": "examplemod",
+                    "Specification-Vendor": "examplemodsareus",
+                    "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": "${version}",
+                    "Implementation-Vendor" :"examplemodsareus",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
 
