@@ -145,9 +145,9 @@ public class TpsDimension implements IRenderable{
 		strings.add(nameT);
 		strings.add(mean);
 		if(responseVersion >= 2) {
-			strings.add(String.format("%.2f%s", (meanTickTime*1.0E-006D), ms));
+			strings.add(String.format("%5.2f%s", (meanTickTime*1.0E-006D), ms));
 		} else {
-			strings.add(String.format("%.2f%s", meanTickTime, ms));
+			strings.add(String.format("%5.2f%s", meanTickTime, ms));
 		}
 		strings.add(tpsValue);
 		strings.add(tpsText);
