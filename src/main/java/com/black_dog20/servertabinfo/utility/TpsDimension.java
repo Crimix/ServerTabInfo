@@ -67,7 +67,7 @@ public class TpsDimension implements IRenderable{
 		width += CompatibilityHelper.getStringWidth(mc, strings[2]);
 		width += spacing;
 		width += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		width += 4;
+		width += 3;
 		return width;
 	}
 	
@@ -98,7 +98,7 @@ public class TpsDimension implements IRenderable{
 		tempWidth = 0;
 		
 		tempWidth += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		tempWidth += 4;
+		tempWidth += 3;
 		width[3] = tempWidth;
 		tempWidth = 0;
 		
@@ -145,9 +145,9 @@ public class TpsDimension implements IRenderable{
 		strings.add(nameT);
 		strings.add(mean);
 		if(responseVersion >= 2) {
-			strings.add(String.format("%.2f%s", (meanTickTime*1.0E-006D), ms));
+			strings.add(String.format("%5.2f%s", (meanTickTime*1.0E-006D), ms));
 		} else {
-			strings.add(String.format("%.2f%s", meanTickTime, ms));
+			strings.add(String.format("%5.2f%s", meanTickTime, ms));
 		}
 		strings.add(tpsValue);
 		strings.add(tpsText);
