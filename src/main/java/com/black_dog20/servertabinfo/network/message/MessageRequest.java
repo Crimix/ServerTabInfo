@@ -11,6 +11,7 @@ import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -40,10 +41,10 @@ public class MessageRequest {
 
 	public MessageRequest() {}
 
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(PacketBuffer buf) {
 	}
 
-	public static MessageRequest fromBytes(ByteBuf buf) {
+	public static MessageRequest fromBytes(PacketBuffer buf) {
 		return new MessageRequest();
 	}
 }

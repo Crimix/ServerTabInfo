@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
-import com.black_dog20.servertabinfo.config.ModConfig;
+import com.black_dog20.servertabinfo.config.Config;
 import com.black_dog20.servertabinfo.reference.Reference;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
 import com.black_dog20.servertabinfo.utility.RenderHelper;
@@ -79,7 +79,7 @@ public class TpsPage {
 	}
 
 	private int renderPing(int startTop) {
-		if(ModConfig.ping && GuiTabPage.responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
+		if(Config.ping && GuiTabPage.responseVersion >= 2 && !ServerTabInfo.Proxy.isSinglePlayer()) {
 			String pingText = CompatibilityHelper.translate("gui.servertabinfo.ping");
 			String pingValue = CompatibilityHelper.text(Integer.toString(GuiTabPage.ping));
 			String ms = CompatibilityHelper.translate("gui.servertabinfo.ms");
@@ -96,9 +96,9 @@ public class TpsPage {
 
 
 	private void renderClientServerVersion() {
-		if(ModConfig.version) {
+		if(Config.version) {
 			int startTopp = 1;
-			String cv = "C" + ": " + "Reference.VERSION";
+			String cv = "C" + ": " + Reference.VERSION;
 			String sv = "S" + ": " + (GuiTabPage.serverVersion != null ? GuiTabPage.serverVersion : "1.0.0");
 			CompatibilityHelper.glPush();
 			if(this.mc.gameSettings.guiScale!=1)

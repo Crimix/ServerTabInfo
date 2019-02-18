@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
-import com.black_dog20.servertabinfo.config.ModConfig;
+import com.black_dog20.servertabinfo.config.Config;
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo;
@@ -92,7 +92,7 @@ public class GuiTabPage extends GuiScreen
 			}
 		}
 		else {
-			if(!ServerTabInfo.Proxy.isSinglePlayer() && ModConfig.playerlist) {
+			if(!ServerTabInfo.Proxy.isSinglePlayer() && Config.playerlist) {
 				if(ticks%refreshTicks == 0) {
 					ticks = 0;
 					if(responseVersion >= 3)

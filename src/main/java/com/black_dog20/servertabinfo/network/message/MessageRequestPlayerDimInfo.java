@@ -10,6 +10,7 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -39,11 +40,11 @@ public class MessageRequestPlayerDimInfo {
 	
 
 
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(PacketBuffer buf) {
 	}
 
 
-	public static MessageRequestPlayerDimInfo fromBytes(ByteBuf buf) {
+	public static MessageRequestPlayerDimInfo fromBytes(PacketBuffer buf) {
 		return new MessageRequestPlayerDimInfo();
 	}
 }

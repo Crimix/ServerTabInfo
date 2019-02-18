@@ -9,12 +9,8 @@ import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.reference.Reference;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 
@@ -55,12 +51,12 @@ public class MessageResponseServerInfo {
 		this.ping = ping;
 	}
 
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, "Reference.VERSION");
+	public void toBytes(PacketBuffer buf) {
+		buf.writeString(Reference.VERSION);
 		buf.writeInt(version);
 		buf.writeInt(dims.size());
 		for(TpsDimension s: dims) {
-			ByteBufUtils.writeUTF8String(buf, s.name);
+			buf.writeString(s.name);
 			buf.writeDouble(s.meanTickTime);
 			buf.writeInt(s.Id);
 		}
@@ -68,13 +64,13 @@ public class MessageResponseServerInfo {
 		
 	}
 
-	public static MessageResponseServerInfo fromBytes(ByteBuf buf) {
+	public static MessageResponseServerInfo fromBytes(PacketBuffer buf) {
 		List<TpsDimension> dims = new ArrayList<TpsDimension>();
-		String versionString = ByteBufUtils.readUTF8String(buf);
+		String versionString = buf.readString(32767);
 		int version = buf.readInt();
 		int length = buf.readInt();
 		while (length != 0) {
-			dims.add(new TpsDimension(ByteBufUtils.readUTF8String(buf), buf.readDouble(),buf.readInt()));
+			dims.add(new TpsDimension(buf.readString(32767), buf.readDouble(),buf.readInt()));
 			length--;
 		}
 		int ping = buf.readInt();
