@@ -17,7 +17,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 
 public class Player implements IRenderable {
@@ -32,30 +31,6 @@ public class Player implements IRenderable {
 		networkInfo = info;
 		mc = minecraft;
 		flag = this.mc.isIntegratedServerRunning() || this.mc.getConnection().getNetworkManager().isEncrypted();
-	}
-
-	@Override
-	public int getWidth() {
-		int width = 0;
-		if(flag) {
-			width += headWidth;
-		}
-		ArrayList<String> playerList = new ArrayList<>();
-		for(IRenderable p : CustomPlayerList.playerList) {
-			if(p instanceof Player)
-			playerList.add(((Player)p).getPlayerName());
-		}
-		width += RenderHelper.findMaxWidthString(playerList, mc);
-		width += (2*spacing);
-		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			width += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.analysing"));
-		else if(GuiTabPage.responseVersion < 3)
-			width += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.unknown"));
-		else
-			width += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName(networkInfo)));
-		width += spacing;
-		width += CompatibilityHelper.getStringWidth(mc, getPing());
-		return width;
 	}
 	
 	@Override
@@ -108,55 +83,6 @@ public class Player implements IRenderable {
 		width[2] = tempWidth;
 		
 		return width;
-	}
-
-	@Override
-	public void render(int x, int y, int width) {
-		int leftoverspacing = width - this.getWidth();
-		
-		GameProfile gameprofile = networkInfo.getGameProfile();
-		EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
-
-        if (flag)
-        {
-            boolean flag1 = entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.CAPE) && ("Dinnerbone".equals(gameprofile.getName()) || "Grumm".equals(gameprofile.getName()));
-            this.mc.getTextureManager().bindTexture(networkInfo.getLocationSkin());
-            int l2 = 8 + (flag1 ? 8 : 0);
-            int i3 = 8 * (flag1 ? -1 : 1);
-            Gui.drawScaledCustomSizeModalRect(x, y, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
-
-            if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT))
-            {
-                int j3 = 8 + (flag1 ? 8 : 0);
-                int k3 = 8 * (flag1 ? -1 : 1);
-                Gui.drawScaledCustomSizeModalRect(x, y, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
-            }
-
-            x += headWidth;
-        }
-
-        String s4 = this.getPlayerName();
-
-        if (networkInfo.getGameType() == GameType.SPECTATOR)
-        {
-        	CompatibilityHelper.drawStringWithShadowItalic(mc, s4, (float)x, (float)y, -1862270977);
-        }
-        else
-        {
-            CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
-        }
-
-        x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+leftoverspacing;
-        String dim = "Unknown";
-		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			dim ="Analysing";
-		else if(GuiTabPage.responseVersion < 3)
-			dim = "Unknown";
-		else
-			dim = getDim(getPlayerName(networkInfo));
-        CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
-        x += CompatibilityHelper.getStringWidth(mc, dim)+spacing;
-        CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
 	}
 	
 	private int calcLeftOverspace(int[] maxWidth, int n) {

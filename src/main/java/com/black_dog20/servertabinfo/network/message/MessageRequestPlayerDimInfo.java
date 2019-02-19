@@ -8,7 +8,6 @@ import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;

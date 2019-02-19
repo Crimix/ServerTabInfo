@@ -16,8 +16,13 @@ public class PacketHandler {
 
 	private static ResourceLocation net = new ResourceLocation(Reference.MOD_ID,"net");
 	public static SimpleChannel network;
-	static {
-		network = NetworkRegistry.ChannelBuilder.named(net).simpleChannel();
+
+	public static void init() {
+		network = NetworkRegistry.ChannelBuilder.named(net).
+        clientAcceptedVersions(s -> true).
+        serverAcceptedVersions(s -> true).
+        networkProtocolVersion(() -> "1").
+		simpleChannel();
 		
 		network.messageBuilder(MessageRequest.class, 1).
 		decoder(MessageRequest::fromBytes).

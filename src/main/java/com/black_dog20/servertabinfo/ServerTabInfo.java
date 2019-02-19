@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.black_dog20.servertabinfo.config.Config;
+import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.proxies.ClientProxy;
 import com.black_dog20.servertabinfo.proxies.IProxy;
 import com.black_dog20.servertabinfo.proxies.ServerProxy;
@@ -39,9 +40,9 @@ public class ServerTabInfo {
         MinecraftForge.EVENT_BUS.register(this);
     }
 	
-	private void setup(final FMLCommonSetupEvent event)
-    {
+	private void setup(final FMLCommonSetupEvent event){
         // some preinit code
+		PacketHandler.init();
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }

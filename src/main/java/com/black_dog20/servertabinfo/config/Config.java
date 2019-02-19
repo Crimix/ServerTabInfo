@@ -3,14 +3,9 @@ package com.black_dog20.servertabinfo.config;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.Lists;
-
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 
-//@Config(modid = Reference.MOD_ID)
-//@Config.LangKey("config.servertabinfo")
 public class Config {
 	
 	

@@ -52,8 +52,8 @@ public class RenderHelper {
 
 		if (list != null && !list.isEmpty())
 		{
-			int maxWidth = findMaxWidth(list, mc);
 			int[] maxWidthArray = findMaxWidthArray(list, mc);
+			int maxWidth = sum(maxWidthArray);
 			if(maxWidthArray == null)
 				return y;
 
@@ -73,8 +73,10 @@ public class RenderHelper {
 	public static int RenderObjectListAtStartPoint(List<IRenderable> list, Minecraft mc, int x, int y) {
 		if (list != null && !list.isEmpty())
 		{
-			int maxWidth = findMaxWidth(list, mc);
+			
 			int[] maxWidthArray = findMaxWidthArray(list, mc);
+			int maxWidth = sum(maxWidthArray);
+			
 			if(maxWidthArray == null)
 				return y;
 			
@@ -109,14 +111,6 @@ public class RenderHelper {
 		return maxWidth;
 	}
 	
-	public static int findMaxWidth(List<IRenderable> list, Minecraft mc) {
-		int maxWidth = 0;
-		for(IRenderable s : list) {
-			int i = s.getWidth();
-			maxWidth = Math.max(maxWidth, i);
-		}
-		return maxWidth;
-	}
 	
 	public static int[] findMaxWidthArray(List<IRenderable> list, Minecraft mc) {
 		int[] maxWidth = null;
@@ -130,6 +124,13 @@ public class RenderHelper {
 		}
 		
 		return maxWidth;
+	}
+	
+	public static int sum(int[] array) {
+		int res = 0;
+		for(int i : array)
+			res += i;
+		return res;
 	}
 	
 	public static List<IRenderable> getPage(int page, int itemPerPage, List<IRenderable> input){

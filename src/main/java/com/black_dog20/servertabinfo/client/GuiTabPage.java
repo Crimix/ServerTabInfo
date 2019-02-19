@@ -9,7 +9,6 @@ import com.black_dog20.servertabinfo.config.Config;
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo;
-import com.black_dog20.servertabinfo.reference.Constants;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;

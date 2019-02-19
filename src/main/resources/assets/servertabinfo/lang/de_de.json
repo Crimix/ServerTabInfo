@@ -1,0 +1,32 @@
+{
+    "gui.servertabinfo.overall": "Insgesamt",
+    "gui.servertabinfo.mean": "durchschn.",
+    "gui.servertabinfo.notinstalled": "Server Tab Info ist nicht auf dem Server installiert",
+    "gui.servertabinfo.dim": "Dim",
+    "gui.servertabinfo.ping": "Ping",
+    "gui.servertabinfo.ms": "ms",
+    "gui.servertabinfo.tps": "tps",
+    "gui.servertabinfo.unknown": "Unknown",
+    "gui.servertabinfo.analysing": "Analysing",
+    "gui.servertabinfo.page": "Page",
+
+    "_comment": "Keybindings",
+    "keys.servertabinfo.category": "Server Tab Info",
+    "keys.servertabinfo.show": "TPS anzeigen (Drücke TAB + dies)",
+    "keys.servertabinfo.show2": "TPS anzeigen (Drücke TAB + dies)",
+
+    "_comment": "Config",
+    "config.servertabinfo": "Server Tab Info",
+    "config.servertabinfo.ping": "Ping anzeigen",
+    "config.servertabinfo.version": "Version anzeigen",
+    "config.servertabinfo.playerlist": "Spielerliste ersetzen",
+
+    "_comment": "Vanilla dimensions",
+    "servertabinfo.dim.overworld": "Oberwelt",
+    "servertabinfo.dim.the_nether": "Nether",
+    "servertabinfo.dim.the_end": "Das Ende",
+
+    "_comment": "Modded dimensions",
+    "servertabinfo.dim.lostcities": "The Lost Cities",
+    "servertabinfo.dim.twilight_forest": "The Twilight Forest"
+}

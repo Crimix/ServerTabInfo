@@ -53,23 +53,6 @@ public class TpsDimension implements IRenderable{
 		String[] strings = getStrings(responseVersion);
 		return String.format("%s(%s)", strings[0], strings[3]);
 	}
-
-
-	@Override
-	public int getWidth() {
-		Minecraft mc = Minecraft.getInstance();
-		String[] strings = getStrings(responseVersion);
-		int width = 0;
-		width += CompatibilityHelper.getStringWidth(mc, strings[0]+":");
-		width += spacing;
-		width += CompatibilityHelper.getStringWidth(mc, strings[1]);
-		width += spacing;
-		width += CompatibilityHelper.getStringWidth(mc, strings[2]);
-		width += spacing;
-		width += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		width += 3;
-		return width;
-	}
 	
 	@Override
 	public int getWidthOfElement(int n) {
@@ -98,7 +81,6 @@ public class TpsDimension implements IRenderable{
 		tempWidth = 0;
 		
 		tempWidth += CompatibilityHelper.getStringWidth(mc, String.format("(%s %s)", strings[3], strings[4]));
-		tempWidth += 3;
 		width[3] = tempWidth;
 		tempWidth = 0;
 		
@@ -134,7 +116,7 @@ public class TpsDimension implements IRenderable{
 		if(!name.equals("")) {
 			nameT = CompatibilityHelper.translate(name);
 
-			if(nameT.equals(name+"§r")) {
+			if(nameT.equals(name)) {
 				String nameC = CompatibilityHelper.translate("servertabinfo.dim." + name);
 				if(!nameC.equals("servertabinfo.dim." + name+"§r")) {
 					nameT = nameC;
@@ -144,34 +126,10 @@ public class TpsDimension implements IRenderable{
 		
 		strings.add(nameT);
 		strings.add(mean);
-		if(responseVersion >= 2) {
-			strings.add(String.format("%5.2f%s", (meanTickTime*1.0E-006D), ms));
-		} else {
-			strings.add(String.format("%5.2f%s", meanTickTime, ms));
-		}
+		strings.add(String.format("%.2f%s", (meanTickTime*1.0E-006D), ms));
 		strings.add(tpsValue);
 		strings.add(tpsText);
 		return strings.toArray(new String[0]);
-	}
-
-
-	@Override
-	public void render(int x, int y, int width) {
-		int leftoverspacing = width - this.getWidth();
-		Minecraft mc = Minecraft.getInstance();
-		String[] strings = getStrings(responseVersion);
-        String s4 = strings[0]+":";
-        CompatibilityHelper.drawStringWithShadow(mc, s4, (float)x, (float)y, -1);
-
-        x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+leftoverspacing;
-        CompatibilityHelper.drawStringWithShadow(mc, strings[1], (float)x, (float)y, -1);
-        x += CompatibilityHelper.getStringWidth(mc, strings[1])+spacing;
-        
-        
-        CompatibilityHelper.drawStringWithShadow(mc, strings[2], (float)x, (float)y, -1);
-        x += CompatibilityHelper.getStringWidth(mc, strings[2])+spacing;
-		
-        CompatibilityHelper.drawStringWithShadow(mc, String.format("(%s %s)", strings[3], strings[4]), (float)x, (float)y, -1);
 	}
 	
 	private int calcLeftOverspace(int[] maxWidth, int n) {

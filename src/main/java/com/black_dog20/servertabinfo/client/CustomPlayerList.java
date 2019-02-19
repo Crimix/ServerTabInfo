@@ -44,9 +44,9 @@ public class CustomPlayerList
     		NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
     		List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
     		playerList = new ArrayList<IRenderable>();
-    		int hith = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
+    		int hight = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
     		
-    		int itemPerPage = (int) Math.floor(hith/this.mc.fontRenderer.FONT_HEIGHT/2);
+    		int itemPerPage = (int) Math.floor(hight/this.mc.fontRenderer.FONT_HEIGHT/2);
     		
     		for (NetworkPlayerInfo networkplayerinfo : list) {
     			playerList.add(new Player(networkplayerinfo,mc));
