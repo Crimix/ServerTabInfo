@@ -1,6 +1,7 @@
 package com.black_dog20.servertabinfo.network;
 
 
+import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo;
 import com.black_dog20.servertabinfo.network.message.MessageResponsePlayerDimInfo;
@@ -19,7 +20,7 @@ public class PacketHandler {
 
 	public static void init() {
 		network = NetworkRegistry.ChannelBuilder.named(net).
-        clientAcceptedVersions(s -> true).
+        clientAcceptedVersions(s -> checkRemoteVersion(s)).
         serverAcceptedVersions(s -> true).
         networkProtocolVersion(() -> "1").
 		simpleChannel();
@@ -48,6 +49,14 @@ public class PacketHandler {
 		consumer(MessageResponsePlayerDimInfo::onMessage).
 		add();
 		
+	}
+	
+	private static boolean checkRemoteVersion(String s) {
+		if(s.equals(NetworkRegistry.ABSENT))
+			ServerTabInfo.modOnServer = false;
+		else
+			ServerTabInfo.modOnServer = true;
+		return true;
 	}
 
 }

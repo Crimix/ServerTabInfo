@@ -7,6 +7,7 @@ import com.black_dog20.servertabinfo.client.objects.IRenderable;
 import com.black_dog20.servertabinfo.utility.ColorObject.Color;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 
 public class TpsDimension implements IRenderable{
 
@@ -118,8 +119,10 @@ public class TpsDimension implements IRenderable{
 
 			if(nameT.equals(name)) {
 				String nameC = CompatibilityHelper.translate("servertabinfo.dim." + name);
-				if(!nameC.equals("servertabinfo.dim." + name+"§r")) {
+				if(!nameC.equals("servertabinfo.dim." + name)) {
 					nameT = nameC;
+				} else {
+					nameT = new ResourceLocation(name).getPath();
 				}
 			}
 		}

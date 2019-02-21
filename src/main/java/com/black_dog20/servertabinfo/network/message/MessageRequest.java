@@ -20,6 +20,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class MessageRequest {
 
+	@SuppressWarnings("deprecation")
 	public static void onMessage(MessageRequest message, Supplier<NetworkEvent.Context> context) {
 
 		List<TpsDimension> dims = new ArrayList<TpsDimension>();
@@ -29,7 +30,6 @@ public class MessageRequest {
 		dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray),Constants.VERSION));
 		
 		for(WorldServer world : server.forgeGetWorldMap().values()) {
-			//String name = world.dimension.getType().getRegistryName().toString();
 			String name = IRegistry.field_212622_k.getKey(world.dimension.getType()).toString();
 			if(name.equals(null)) {
 				name = "";

@@ -28,12 +28,12 @@ ext.priv = parseConfig(file('private.properties'))
 
 version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = mod_archivesBaseName + "-" + mcversion
+archivesBaseName = mod_archivesBaseName + "-" + mc_version
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    version = mcversion + "-" + forge_version
+    //version = mc_version + "-" + forge_version
     mappings channel: 'snapshot', version: '20180921-1.13'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
@@ -79,7 +79,7 @@ dependencies {
 	minecraft([
 		group  : "${project.forge_group}",
 		name   : "forge",
-		version: "${project.mcversion}-${project.forge_version}"
+		version: "${project.mc_version}-${project.forge_version}"
 	])
 
 }

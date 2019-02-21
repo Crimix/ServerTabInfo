@@ -11,6 +11,7 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.registry.IRegistry;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 public class MessageRequestPlayerDimInfo {
 	
 
+	@SuppressWarnings("deprecation")
 	public static void onMessage(MessageRequestPlayerDimInfo message, Supplier<NetworkEvent.Context> context) {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 		HashMap<String, TpsDimension> playerDims = new HashMap<String, TpsDimension>();
@@ -25,7 +27,7 @@ public class MessageRequestPlayerDimInfo {
 		List<EntityPlayerMP>playerList = server.getPlayerList().getPlayers();
 		
 		for(EntityPlayerMP player : playerList) {
-			String name = player.getEntityWorld().dimension.getType().getRegistryName().toString();
+			String name = IRegistry.field_212622_k.getKey(player.getEntityWorld().dimension.getType()).toString();
 			DimensionType type = player.getEntityWorld().dimension.getType();
 			Double meanTickTime = Helper.mean(server.getTickTime(type));
 			TpsDimension dim = new TpsDimension(name, meanTickTime, type.getId());
