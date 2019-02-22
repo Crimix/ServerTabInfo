@@ -37,17 +37,17 @@ public class Config {
         ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("Client");
             ping = builder
-                    .comment("TileEntities to allow regardless of the blacklist")
+                    .comment("Show ping box on TPS page")
                     .translation("config.servertabinfo.ping")
                     .define("ping", true);
             version =builder
-                    .comment("TileEntities to allow regardless of the blacklist")
+                    .comment("Show version box on TPS page")
                     .translation("config.servertabinfo.version")
-                    .define("ping", true);
+                    .define("version", true);
             playerlist = builder
-                    .comment("TileEntities to allow regardless of the blacklist")
+                    .comment("Replace the vanilla player list / tab page")
                     .translation("config.servertabinfo.playerlist")
-                    .define("ping", true);
+                    .define("playerlist", true);
             builder.pop();
         }
     }

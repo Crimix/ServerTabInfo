@@ -52,7 +52,7 @@ public class MessageResponseServerInfo {
 	}
 
 	public void toBytes(PacketBuffer buf) {
-		buf.writeString(Reference.VERSION);
+		buf.writeString(Reference.getVersion());
 		buf.writeInt(version);
 		buf.writeInt(dims.size());
 		for(TpsDimension s: dims) {

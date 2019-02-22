@@ -91,13 +91,7 @@ public class TpsDimension implements IRenderable{
 	private String[] getStrings(int responseVersion) {
 		List<String> strings = new ArrayList<String>();
 		ColorObject color = new ColorObject(Color.Green);
-		int tps;
-		if(responseVersion >= 2) {
-			tps = (int) Math.min(1000.0D / (meanTickTime*1.0E-006D), 20);
-		}
-		else {
-			tps = (int) Math.min(1000.0D / meanTickTime, 20);
-		}
+		int tps = (int) Math.min(1000.0D / (meanTickTime*1.0E-006D), 20);
 
 		if (tps < 20)
 		{

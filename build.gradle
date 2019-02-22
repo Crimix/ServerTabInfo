@@ -33,7 +33,6 @@ archivesBaseName = mod_archivesBaseName + "-" + mc_version
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    //version = mc_version + "-" + forge_version
     mappings channel: 'snapshot', version: '20180921-1.13'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
@@ -84,14 +83,27 @@ dependencies {
 
 }
 
+processResources {
+    exclude '**/*.xcf'
+    from(sourceSets.main.resources.srcDirs) {
+        include 'META-INF/mods.toml'
+
+        expand 'version': project.version, 'mcversion': mc_version, 'forge_version': forge_version_toml
+    }
+    
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'META-INF/mods.toml'
+    }
+}
+
 jar {
     manifest {
-        attributes(["Specification-Title": "examplemod",
-                    "Specification-Vendor": "examplemodsareus",
-                    "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
-                    "Implementation-Title": project.name,
+        attributes(["Specification-Title": "servertabinfo",
+                    "Specification-Vendor": "black_dog20",
+                    "Specification-Version": "1",  // We are version 1 of ourselves
+                    "Implementation-Title": "Server Tab Info",
                     "Implementation-Version": "${version}",
-                    "Implementation-Vendor" :"examplemodsareus",
+                    "Implementation-Vendor" :"black_dog20",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
@@ -102,11 +114,9 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
 	changelog = file('changelog.txt')
-    releaseType = 'release'
+    releaseType = 'beta'
     addGameVersion 'Java 8'
-    addGameVersion '1.12'
-    addGameVersion '1.12.1'
-    addGameVersion '1.12.2'
+    addGameVersion '1.13.2'
   }
 }
 

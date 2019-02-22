@@ -7,22 +7,23 @@
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[25,)" #mandatory (24 is current forge version)
-# A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Crimix/ServerTabInfo/issues" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://minecraft.curseforge.com/projects/server-tab-info" #optional
+
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
 credits="" #optional
-# A text field displayed in the mod UI
-authors="black_dog20" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
 modId="servertabinfo" #mandatory
+# A text field displayed in the mod UI
+authors="black_dog20" #optional
+# A URL to refer people to when problems occur with this mod
+issueTrackerURL="https://github.com/Crimix/ServerTabInfo/issues" #optional
+# A URL for the "homepage" for this mod, displayed in the mod UI
+displayURL="https://minecraft.curseforge.com/projects/server-tab-info" #optional
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="${file.jarVersion}" #mandatory
+version="${version}" #mandatory
  # A display name for the mod
 displayName="Server Tab Info" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
@@ -39,7 +40,7 @@ The inspiration came from a small feature from MineTogether which used to work q
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[25,)" #mandatory
+    versionRange="[${forge_version},)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
