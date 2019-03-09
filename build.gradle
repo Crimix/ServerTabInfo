@@ -36,26 +36,34 @@ minecraft {
     mappings channel: 'snapshot', version: '20180921-1.13'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-    //accessTransformer = file('my_at.cfg')
+    // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
 
     // default run configurations.
     // these can be tweaked, removed, or duplicated as needed.
     runs {
         client = {
+        	workingDirectory project.file('eclipse/assets')
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('eclipse/assets').canonicalPath
-            source sourceSets.main
+            mods {
+                ServerTabInfo {
+                    source sourceSets.main
+                }
+            }
         }
         server = {
+            workingDirectory project.file('eclipse/assets')
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('eclipse/assets').canonicalPath
-            source sourceSets.main
+            mods {
+                ServerTabInfo {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
