@@ -145,11 +145,11 @@ public class Player implements IRenderable {
         }
 
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+leftoverspacing;
-        String dim = "Unknown";
+        String dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			dim ="Analysing";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.analysing");
 		else if(GuiTabPage.responseVersion < 3)
-			dim = "Unknown";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		else
 			dim = getDim(getPlayerName(networkInfo));
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
@@ -196,11 +196,11 @@ public class Player implements IRenderable {
         }
 
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+calcLeftOverspace(maxWidth,0);
-        String dim = "Unknown";
+        String dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			dim ="Analysing";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.analysing");
 		else if(GuiTabPage.responseVersion < 3)
-			dim = "Unknown";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		else
 			dim = getDim(getPlayerName(networkInfo));
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
@@ -211,12 +211,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkInfo.getPlayerTeam(), networkInfo.getGameProfile().getName());
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getUnformattedText() : ScorePlayerTeam.formatPlayerName(networkInfo.getPlayerTeam(), networkInfo.getGameProfile().getName());
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getUnformattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
     }
     
     private String getPing() {
