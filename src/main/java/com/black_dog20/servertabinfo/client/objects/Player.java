@@ -124,11 +124,11 @@ public class Player implements IRenderable {
         }
 
         x += CompatibilityHelper.getStringWidth(mc, s4) + (2*spacing)+calcLeftOverspace(maxWidth,0);
-        String dim = "Unknown";
+        String dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		if(GuiTabPage.responseVersion >= 3 && (CustomPlayerList.playerDims.isEmpty()))
-			dim ="Analysing";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.analysing");
 		else if(GuiTabPage.responseVersion < 3)
-			dim = "Unknown";
+			dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		else
 			dim = getDim(getPlayerName(networkInfo));
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);

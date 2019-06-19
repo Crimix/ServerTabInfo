@@ -122,7 +122,7 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
 	changelog = file('changelog.txt')
-    releaseType = 'beta'
+    releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.13.2'
   }
