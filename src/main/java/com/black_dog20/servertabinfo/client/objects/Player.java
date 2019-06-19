@@ -139,12 +139,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getString() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getString() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
     }
     
     private String getPing() {
