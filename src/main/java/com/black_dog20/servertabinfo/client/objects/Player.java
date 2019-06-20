@@ -73,7 +73,7 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			tempWidth += CompatibilityHelper.getStringWidth(mc, I18n.format("gui.servertabinfo.unknown"));
 		else
-			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(getPlayerName()));
+			tempWidth += CompatibilityHelper.getStringWidth(mc, getDim(networkInfo));
 		tempWidth += spacing;
 		width[1] = tempWidth;
 		
@@ -130,7 +130,7 @@ public class Player implements IRenderable {
 		else if(GuiTabPage.responseVersion < 3)
 			dim = CompatibilityHelper.translate("gui.servertabinfo.unknown");
 		else
-			dim = getDim(getPlayerName(networkInfo));
+			dim = getDim(networkInfo);
         CompatibilityHelper.drawStringWithShadow(mc, dim, (float)x, (float)y, -1);
         x += CompatibilityHelper.getStringWidth(mc, dim)+spacing+calcLeftOverspace(maxWidth,1);
         CompatibilityHelper.drawStringWithShadow(mc, getPing(),(float)x, (float)y, -1);
@@ -139,12 +139,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getString() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getString() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
     }
     
     private String getPing() {
@@ -154,7 +154,8 @@ public class Player implements IRenderable {
 		return pingString;
     }
     
-    private String getDim(String player) {
+    private String getDim(NetworkPlayerInfo networkPlayerInfoIn) {
+    	String player = networkPlayerInfoIn.getGameProfile().getName();
     	TpsDimension dim = CustomPlayerList.playerDims.get(player);
     	if(dim != null) {
     		return CustomPlayerList.playerDims.get(player).getShortDimString(2);
