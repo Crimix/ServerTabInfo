@@ -5,7 +5,7 @@ import java.util.List;
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 
 public class RenderHelper {
 	
@@ -15,12 +15,12 @@ public class RenderHelper {
 		{
 			int maxWidth = findMaxWidthString(list, mc);
 			
-			GuiScreen.drawRect(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			Screen.fill(width / 2 - maxWidth / 2 - 1, startTop - 1, width / 2 + maxWidth / 2 + 1, startTop + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 
 			for (String string : list)
 			{
 
-				GuiScreen.drawRect(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
+				Screen.fill(width / 2 - maxWidth / 2, startTop, width / 2 + maxWidth / 2, startTop+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				int i2 = CompatibilityHelper.getStringWidth(mc,string);
 				CompatibilityHelper.drawStringWithShadow(mc, string, (float) (width / 2 - i2 / 2), (float) startTop, -1);
@@ -35,11 +35,11 @@ public class RenderHelper {
 		{
 			int maxWidth = findMaxWidthString(list, mc);
 			
-			GuiScreen.drawRect(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			Screen.fill(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 			
 			for (String string : list)
 			{
-				GuiScreen.drawRect(x+1, y, x+maxWidth+2, y+8, 553648127);
+				Screen.fill(x+1, y, x+maxWidth+2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				CompatibilityHelper.drawStringWithShadow(mc, string, (float) x+2, (float) y, -1);
 				y += CompatibilityHelper.getFontRenderHeight(mc);
@@ -57,11 +57,11 @@ public class RenderHelper {
 			if(maxWidthArray == null)
 				return y;
 
-			GuiScreen.drawRect(width / 2 - maxWidth / 2 - 1, y - 1, width / 2 + maxWidth / 2 + 1, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			Screen.fill(width / 2 - maxWidth / 2 - 1, y - 1, width / 2 + maxWidth / 2 + 1, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 
 			for (IRenderable o : list)
 			{
-				GuiScreen.drawRect(width / 2 - maxWidth / 2, y, width / 2 + maxWidth / 2, y+8, 553648127);
+				Screen.fill(width / 2 - maxWidth / 2, y, width / 2 + maxWidth / 2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				o.render((width / 2 - maxWidth / 2), y, maxWidthArray);
 				y += CompatibilityHelper.getFontRenderHeight(mc);
@@ -80,11 +80,11 @@ public class RenderHelper {
 			if(maxWidthArray == null)
 				return y;
 			
-			GuiScreen.drawRect(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
+			Screen.fill(x , y - 1, x+maxWidth+3, y + list.size() * CompatibilityHelper.getFontRenderHeight(mc), Integer.MIN_VALUE);
 			
 			for (IRenderable o : list)
 			{
-				GuiScreen.drawRect(x+1, y, x+maxWidth+2, y+8, 553648127);
+				Screen.fill(x+1, y, x+maxWidth+2, y+8, 553648127);
 				CompatibilityHelper.glListHelper();
 				o.render(x, y, maxWidthArray);
 				y += CompatibilityHelper.getFontRenderHeight(mc);

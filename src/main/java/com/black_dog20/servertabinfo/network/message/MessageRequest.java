@@ -12,8 +12,8 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.registry.IRegistry;
-import net.minecraft.world.WorldServer;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
@@ -29,8 +29,8 @@ public class MessageRequest {
 	
 		dims.add(new TpsDimension("gui.servertabinfo.overall" , Helper.mean(server.tickTimeArray),Constants.VERSION));
 		
-		for(WorldServer world : server.forgeGetWorldMap().values()) {
-			String name = IRegistry.field_212622_k.getKey(world.dimension.getType()).toString();
+		for(ServerWorld world : server.forgeGetWorldMap().values()) {
+			String name = Registry.DIMENSION_TYPE.getKey(world.dimension.getType()).toString();
 			if(name.equals(null)) {
 				name = "";
 			}

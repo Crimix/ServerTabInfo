@@ -23,7 +23,7 @@ public class MessageResponseServerInfo {
 	
 	public static void onMessage(MessageResponseServerInfo message, Supplier<NetworkEvent.Context> context) {
 		
-		Minecraft.getInstance().addScheduledTask(new Runnable(){
+		Minecraft.getInstance().runAsync(new Runnable(){
 		  	public void run(){
 		  		GuiTabPage.responseVersion = message.version;
 		  		GuiTabPage.dims = message.dims;

@@ -8,10 +8,10 @@ import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.registry.IRegistry;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -24,10 +24,10 @@ public class MessageRequestPlayerDimInfo {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 		HashMap<String, TpsDimension> playerDims = new HashMap<String, TpsDimension>();
 
-		List<EntityPlayerMP>playerList = server.getPlayerList().getPlayers();
+		List<ServerPlayerEntity>playerList = server.getPlayerList().getPlayers();
 		
-		for(EntityPlayerMP player : playerList) {
-			String name = IRegistry.field_212622_k.getKey(player.getEntityWorld().dimension.getType()).toString();
+		for(ServerPlayerEntity player : playerList) {
+			String name = Registry.DIMENSION_TYPE.getKey(player.getEntityWorld().dimension.getType()).toString();
 			DimensionType type = player.getEntityWorld().dimension.getType();
 			Double meanTickTime = Helper.mean(server.getTickTime(type));
 			TpsDimension dim = new TpsDimension(name, meanTickTime, type.getId());

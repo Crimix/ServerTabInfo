@@ -12,14 +12,15 @@ import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiTabPage extends GuiScreen
+public class GuiTabPage extends Screen
 {
 
 	private Minecraft mc;
@@ -39,6 +40,7 @@ public class GuiTabPage extends GuiScreen
 
 	public GuiTabPage()
 	{
+		super(new StringTextComponent(""));
 		mc = Minecraft.getInstance();
 		tpsPage = new TpsPage(mc);
 		notInstalledPage = new NotInstalledPage(mc);

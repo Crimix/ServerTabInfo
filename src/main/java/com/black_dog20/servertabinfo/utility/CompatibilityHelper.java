@@ -1,31 +1,32 @@
 package com.black_dog20.servertabinfo.utility;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class CompatibilityHelper {
 	
 	public static String translate(String text) {
-		return new TextComponentTranslation(text).getFormattedText();
+		return new TranslationTextComponent(text).getFormattedText();
 	}
 	
 	public static String translate(String text, ColorObject color) {
-		TextComponentTranslation temp = new TextComponentTranslation(text);
+		TranslationTextComponent temp = new TranslationTextComponent(text);
 		temp.getStyle().setColor(color.getColor());
 		return temp.getFormattedText();
 	}
 	
 	public static String text(String text, ColorObject color) {
-		TextComponentString temp = new TextComponentString(text);
+		StringTextComponent temp = new StringTextComponent(text);
 		temp.getStyle().setColor(color.getColor());
 		return temp.getFormattedText();
 	}
 	
 	public static String text(String text) {
-		TextComponentString temp = new TextComponentString(text);
+		StringTextComponent temp = new StringTextComponent(text);
 		return temp.getFormattedText();
 	}
 	

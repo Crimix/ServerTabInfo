@@ -14,8 +14,8 @@ import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.network.play.NetworkPlayerInfo;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.world.GameType;
@@ -41,7 +41,7 @@ public class CustomPlayerList
     public boolean render(int width) {
     	ticks++;
     		int y = 10;
-    		NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
+    		ClientPlayNetHandler nethandlerplayclient = this.mc.player.connection;
     		List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
     		playerList = new ArrayList<IRenderable>();
     		int hight = (int) (GuiTabPage.hight-y-(GuiTabPage.hight*0.15));
@@ -49,7 +49,7 @@ public class CustomPlayerList
     		int itemPerPage = (int) Math.floor(hight/this.mc.fontRenderer.FONT_HEIGHT/2);
     		
     		for (NetworkPlayerInfo networkplayerinfo : list) {
-    			playerList.add(new Player(networkplayerinfo,mc));
+    			playerList.add(new Player(networkplayerinfo, mc));
     		}
     		maxPages = (int)Math.ceil(playerList.size() / (double)itemPerPage);
     		if(ticks%changeTicks == 0) {

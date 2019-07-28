@@ -17,7 +17,7 @@ public class MessageResponsePlayerDimInfo  {
 	
 	public static void onMessage(MessageResponsePlayerDimInfo message, Supplier<NetworkEvent.Context> context) {
 		
-		Minecraft.getInstance().addScheduledTask(new Runnable(){
+		Minecraft.getInstance().runAsync(new Runnable(){
 		  	public void run(){
 		  		CustomPlayerList.playerDims = message.dims;
 		  		

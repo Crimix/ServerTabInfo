@@ -10,13 +10,13 @@ import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.network.play.NetworkPlayerInfo;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameType;
 
 public class Player implements IRenderable {
@@ -92,21 +92,21 @@ public class Player implements IRenderable {
 	@Override
 	public void render(int x, int y, int[] maxWidth) {
 		GameProfile gameprofile = networkInfo.getGameProfile();
-		EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
+		PlayerEntity entityplayer = this.mc.world.getPlayerByUuid(gameprofile.getId());
 
         if (flag)
         {
-            boolean flag1 = entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.CAPE) && ("Dinnerbone".equals(gameprofile.getName()) || "Grumm".equals(gameprofile.getName()));
+            boolean flag1 = entityplayer != null && entityplayer.isWearing(PlayerModelPart.CAPE) && ("Dinnerbone".equals(gameprofile.getName()) || "Grumm".equals(gameprofile.getName()));
             this.mc.getTextureManager().bindTexture(networkInfo.getLocationSkin());
             int l2 = 8 + (flag1 ? 8 : 0);
             int i3 = 8 * (flag1 ? -1 : 1);
-            Gui.drawScaledCustomSizeModalRect(x, y, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
+            AbstractGui.blit(x, y, 8, 8, 8.0F, (float)l2, 8, i3, 64, 64);
 
-            if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT))
+            if (entityplayer != null && entityplayer.isWearing(PlayerModelPart.HAT))
             {
                 int j3 = 8 + (flag1 ? 8 : 0);
                 int k3 = 8 * (flag1 ? -1 : 1);
-                Gui.drawScaledCustomSizeModalRect(x, y, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
+                AbstractGui.blit(x, y, 8, 8, 40.0F, (float)j3, 8, k3, 64, 64);
             }
 
             x += headWidth;
@@ -139,12 +139,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new TextComponentString(networkInfo.getGameProfile().getName())).getFormattedText();
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new StringTextComponent(networkInfo.getGameProfile().getName())).getFormattedText();
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new TextComponentString(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new StringTextComponent(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
     }
     
     private String getPing() {
