@@ -36,8 +36,9 @@ public class MessageRequest {
 			}
 			dims.add(new TpsDimension(name, Helper.mean(server.getTickTime(world.dimension.getType())), world.dimension.getType().getId()));
 		
-			PacketHandler.network.reply(new MessageResponseServerInfo(Constants.VERSION, dims, ping), context.get());
 		}
+		PacketHandler.network.reply(new MessageResponseServerInfo(Constants.VERSION, dims, ping), context.get());
+		context.get().setPacketHandled(true);
 	}
 
 	public MessageRequest() {}

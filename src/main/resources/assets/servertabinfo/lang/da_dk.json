@@ -8,7 +8,9 @@
     "gui.servertabinfo.tps": "tps",
     "gui.servertabinfo.unknown": "Ukendt",
     "gui.servertabinfo.analysing": "Analysere",
-    "gui.servertabinfo.page": "Side",
+    "gui.servertabinfo.page": "Side %d af %d",
+    "gui.servertabinfo.errorpage1": "Et mod forårsager problemer med ServerTabInfo",
+    "gui.servertabinfo.errorpage2": "Venligts rapporter det med en mod liste til mig",
 
     "_comment": "Keybindings",
     "keys.servertabinfo.category": "Server Tab Info",

@@ -23,7 +23,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class ServerTabInfo {
 
 	public static ServerTabInfo instance;
-	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 	public static IProxy Proxy;
 	public static boolean modOnServer = false;
 	

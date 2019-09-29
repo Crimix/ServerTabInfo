@@ -32,6 +32,7 @@ public class MessageResponseServerInfo {
 		  		
 			}
 		});
+		context.get().setPacketHandled(true);
 	}
 
 	public MessageResponseServerInfo() {
