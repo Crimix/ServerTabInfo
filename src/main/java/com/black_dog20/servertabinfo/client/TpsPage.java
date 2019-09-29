@@ -59,18 +59,28 @@ public class TpsPage {
 			ticks=0;
 			changePage();
 		}
+		int y = startTop;
 		
 		List<IRenderable> dimsT = RenderHelper.getPage(currentPage,itemPerPage,Tlist);
-		int y = RenderHelper.RenderObjectList(dimsT, mc, startTop, GuiTabPage.width);
-		String s = I18n.format("gui.servertabinfo.page")+ " " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
-		int x = GuiTabPage.width / 2;
-		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) y, -1);
-		y += mc.fontRenderer.FONT_HEIGHT;
+		if(dimsT.isEmpty()) {
+			String error = I18n.format("gui.servertabinfo.errorpage1");	
+			CompatibilityHelper.drawCenteredStringWithShadow(mc, error, (float) GuiTabPage.width / 2, (float) y, -1);
+			y += CompatibilityHelper.getFontRenderHeight(mc);
+			String error2 = I18n.format("gui.servertabinfo.errorpage2");	
+			CompatibilityHelper.drawCenteredStringWithShadow(mc, error2, (float) GuiTabPage.width / 2, (float) y, -1);
+			y += CompatibilityHelper.getFontRenderHeight(mc);
+		} else {
+			y = RenderHelper.RenderObjectList(dimsT, mc, startTop, GuiTabPage.width);
+			String s = I18n.format("gui.servertabinfo.page", currentPage, maxPages);
+			int x = GuiTabPage.width / 2;
+			CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) y, -1);
+			y += CompatibilityHelper.getFontRenderHeight(mc);
+		}
 		return y;
 	}
 	
 	private void changePage() {
-		if(currentPage == maxPages) {
+		if(currentPage >= maxPages) {
 			currentPage = 1;
 		}
 		else {

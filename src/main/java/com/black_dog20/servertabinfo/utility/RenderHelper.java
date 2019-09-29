@@ -1,7 +1,10 @@
 package com.black_dog20.servertabinfo.utility;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.objects.IRenderable;
 
 import net.minecraft.client.Minecraft;
@@ -133,9 +136,16 @@ public class RenderHelper {
 	}
 	
 	public static List<IRenderable> getPage(int page, int itemPerPage, List<IRenderable> input){
-		int last = page*itemPerPage;
-		if(last > input.size())
-			last = input.size();
-		return input.subList((page-1)*itemPerPage, last);
+		int first = (page-1)*itemPerPage;
+		if (first > input.size())
+			first = input.size() - itemPerPage;
+		if(first < 0)
+			first = 0;
+		try {
+			return input.stream().skip(first).limit(itemPerPage).collect(Collectors.toList());
+		} catch (Exception e) {
+			ServerTabInfo.logger.error(String.format("%s at getPage with page=%d, itemPerPage=%d, input.size=%d, skip=%d", e.getClass().getName(), page, itemPerPage, input.size(), first));
+			return new ArrayList<IRenderable>();
+		}
 	}
 }

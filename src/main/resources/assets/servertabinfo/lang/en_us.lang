@@ -7,7 +7,9 @@ gui.servertabinfo.ms=ms
 gui.servertabinfo.tps=tps
 gui.servertabinfo.unknown=Unknown
 gui.servertabinfo.analysing=Analysing
-gui.servertabinfo.page=Page
+gui.servertabinfo.page=Page %d of %d
+gui.servertabinfo.errorpage1=Some mod is interfering with ServerTabInfo
+gui.servertabinfo.errorpage2=Please report this to me with a mod list
 
 //Keybindings
 keys.servertabinfo.category=Server Tab Info

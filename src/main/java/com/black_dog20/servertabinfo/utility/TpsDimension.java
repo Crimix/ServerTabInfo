@@ -134,9 +134,9 @@ public class TpsDimension implements IRenderable{
 		if(!name.equals("")) {
 			nameT = CompatibilityHelper.translate(name);
 
-			if(nameT.equals(name+"§r")) {
+			if(nameT.equals(name+"Â§r")) {
 				String nameC = CompatibilityHelper.translate("servertabinfo.dim." + name);
-				if(!nameC.equals("servertabinfo.dim." + name+"§r")) {
+				if(!nameC.equals("servertabinfo.dim." + name+"Â§r")) {
 					nameT = nameC;
 				}
 			}
