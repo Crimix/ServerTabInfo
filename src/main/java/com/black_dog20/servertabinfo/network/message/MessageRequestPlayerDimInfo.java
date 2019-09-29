@@ -35,6 +35,7 @@ public class MessageRequestPlayerDimInfo {
 		}
 		
 		PacketHandler.network.reply(new MessageResponsePlayerDimInfo(playerDims), context.get());
+		context.get().setPacketHandled(true);
 	}
 
 	public MessageRequestPlayerDimInfo() {}

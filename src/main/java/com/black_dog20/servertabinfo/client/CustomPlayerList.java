@@ -56,15 +56,25 @@ public class CustomPlayerList
     			ticks=0;
     			changePage();
     		}
-    		int yy = RenderHelper.RenderObjectList(RenderHelper.getPage(currentPage,itemPerPage,playerList), mc, y, width);
-    		String s = I18n.format("gui.servertabinfo.page")+ " " + Integer.toString(currentPage) +" of " + Integer.toString(maxPages);
-    		int x = GuiTabPage.width / 2;
-    		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) yy, -1);
+    		List<IRenderable> renderList = RenderHelper.getPage(currentPage,itemPerPage,playerList);
+    		if(renderList.isEmpty()) {
+    			String error = I18n.format("gui.servertabinfo.errorpage1");	
+    			CompatibilityHelper.drawCenteredStringWithShadow(mc, error, (float) GuiTabPage.width / 2, (float) y, -1);
+    			y += CompatibilityHelper.getFontRenderHeight(mc);
+    			String error2 = I18n.format("gui.servertabinfo.errorpage2");	
+    			CompatibilityHelper.drawCenteredStringWithShadow(mc, error2, (float) GuiTabPage.width / 2, (float) y, -1);
+    		} else {
+        		int yy = RenderHelper.RenderObjectList(renderList, mc, y, width);
+        		String s = I18n.format("gui.servertabinfo.page", currentPage, maxPages);
+        		int x = GuiTabPage.width / 2;
+        		CompatibilityHelper.drawStringWithShadow(mc, s, (float) x+2, (float) yy, -1);
+    		}
+    		
     		return true;
     }  
 	
 	private void changePage() {
-		if(currentPage == maxPages) {
+		if(currentPage >= maxPages) {
 			currentPage = 1;
 		}
 		else {

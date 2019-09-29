@@ -23,6 +23,7 @@ public class MessageResponsePlayerDimInfo  {
 		  		
 			}
 		});
+		context.get().setPacketHandled(true);
 	}
 
 	public MessageResponsePlayerDimInfo() {

@@ -64,4 +64,9 @@ public class CompatibilityHelper {
 	public static int getFontRenderHeight(Minecraft mc) {
 		return mc.fontRenderer.FONT_HEIGHT;
 	}
+	
+	public static void drawCenteredStringWithShadow(Minecraft mc, String text, float x, float y, int color) {
+		int i2 = getStringWidth(mc, text);
+		CompatibilityHelper.drawStringWithShadow(mc, text, (float) (x - i2 / 2), (float) y, color);
+	}
 }
