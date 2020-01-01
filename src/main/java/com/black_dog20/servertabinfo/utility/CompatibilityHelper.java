@@ -1,6 +1,7 @@
 package com.black_dog20.servertabinfo.utility;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.StringTextComponent;
@@ -31,22 +32,22 @@ public class CompatibilityHelper {
 	}
 	
 	public static void glPush() {
-		GlStateManager.pushMatrix();
+		RenderSystem.pushMatrix();
 	}
 	
 	public static void glPop() {
-		GlStateManager.popMatrix();
+		RenderSystem.popMatrix();
 	}
 	
 	public static void glScale(double value) {
-		GlStateManager.scaled(value, value, value);
+		RenderSystem.scaled(value, value, value);
 	}
 	
 	public static void glListHelper() {
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableAlphaTest();
-		GlStateManager.enableBlend();
-		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.enableAlphaTest();
+		RenderSystem.enableBlend();
+		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 	}
 	
 	public static int getStringWidth(Minecraft mc, String text) {

@@ -51,8 +51,8 @@ public class GuiTabPage extends Screen
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
-		width = Minecraft.getInstance().mainWindow.getScaledWidth();
-		hight = Minecraft.getInstance().mainWindow.getScaledHeight();
+		width = Minecraft.getInstance().func_228018_at_().getScaledWidth();
+		hight = Minecraft.getInstance().func_228018_at_().getScaledHeight();
 		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
 		{
 			return;

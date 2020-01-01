@@ -15,7 +15,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.2.0'
+        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
     }
 }
 
@@ -97,16 +97,18 @@ repositories {
     name = "ModMaven"
     url = "modmaven.k-4u.nl"
   }
+  maven {
+	name = "forge"
+	url = "http://files.minecraftforge.net/maven"
+  }
 }
 
 dependencies {
-
 	minecraft([
 		group  : "${project.forge_group}",
 		name   : "forge",
 		version: "${project.mc_version}-${project.forge_version}"
 	])
-
 }
 
 processResources {
@@ -140,9 +142,9 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
 	changelog = file('changelog.txt')
-    releaseType = 'release'
+    releaseType = 'beta'
     addGameVersion 'Java 8'
-    addGameVersion '1.14.4'
+    addGameVersion '1.15.1'
   }
 }
 
