@@ -1,6 +1,6 @@
 gui.servertabinfo.overall=Overordnet
 gui.servertabinfo.mean=middel
-gui.servertabinfo.notinstalled=Server Tab Info er ikke installeret på serveren
+gui.servertabinfo.notinstalled=Server Tab Info er ikke installeret pÃ¥ serveren
 gui.servertabinfo.dim=Dim
 gui.servertabinfo.ping=Ping
 gui.servertabinfo.ms=ms

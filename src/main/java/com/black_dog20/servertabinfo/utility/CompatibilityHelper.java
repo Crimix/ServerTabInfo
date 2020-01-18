@@ -3,6 +3,7 @@ package com.black_dog20.servertabinfo.utility;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
@@ -10,11 +11,14 @@ import net.minecraft.util.EnumChatFormatting;
 public class CompatibilityHelper {
 	
 	public static String translate(String text) {
-		return new ChatComponentTranslation(text).getFormattedText();
+		String t = I18n.format(text);
+		ChatComponentTranslation temp = new ChatComponentTranslation(t);
+		return temp.getFormattedText();
 	}
 	
 	public static String translate(String text, ColorObject color) {
-		ChatComponentTranslation temp = new ChatComponentTranslation(text);
+		String t = I18n.format(text);
+		ChatComponentTranslation temp = new ChatComponentTranslation(t);
 		temp.getChatStyle().setColor(color.getColor());
 		return temp.getFormattedText();
 	}
