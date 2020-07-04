@@ -1,0 +1,10 @@
+{
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/server-tab-info",
+  "1.15.2": {
+    "1.2.7": "https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md"
+  },
+  "promos": {
+    "1.15.2-latest": "1.2.7",
+    "1.15.2-recommended": "1.2.7"
+  }
+}

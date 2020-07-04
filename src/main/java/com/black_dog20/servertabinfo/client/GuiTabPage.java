@@ -1,8 +1,5 @@
 package com.black_dog20.servertabinfo.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.settings.Keybindings;
 import com.black_dog20.servertabinfo.config.Config;
@@ -10,7 +7,6 @@ import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.network.message.MessageRequest;
 import com.black_dog20.servertabinfo.network.message.MessageRequestPlayerDimInfo;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
@@ -18,6 +14,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiTabPage extends Screen
@@ -28,7 +27,7 @@ public class GuiTabPage extends Screen
 	private int ticks = 100;
 	private int refreshTicks = 100;
 
-	public static List<TpsDimension> dims = new ArrayList<TpsDimension>();
+	public static List<TpsDimension> dims = new ArrayList<>();
 	public static int responseVersion = 0;
 	public static int ping = 0;
 	public static String serverVersion;
@@ -51,8 +50,8 @@ public class GuiTabPage extends Screen
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event)
 	{
-		width = Minecraft.getInstance().func_228018_at_().getScaledWidth();
-		hight = Minecraft.getInstance().func_228018_at_().getScaledHeight();
+		width = Minecraft.getInstance().getMainWindow().getScaledWidth();
+		hight = Minecraft.getInstance().getMainWindow().getScaledHeight();
 		if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST && !ServerTabInfo.Proxy.isSinglePlayer())
 		{
 			return;

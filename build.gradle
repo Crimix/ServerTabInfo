@@ -16,11 +16,13 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'eclipse'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
@@ -32,22 +34,21 @@ archivesBaseName = mod_archivesBaseName + "-" + mc_version
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+sourceSets {
+    main.resources.srcDirs += 'src/main/generated_resources'
+}
+
 minecraft {
-	// The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: 'snapshot', version: "${mcp_mappings}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client = {
-        	workingDirectory project.file('eclipse/assets')
+            workingDirectory project.file("run/client")
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
@@ -59,7 +60,7 @@ minecraft {
             }
         }
         server = {
-            workingDirectory project.file('eclipse/assets')
+            workingDirectory project.file("run/server")
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
@@ -71,12 +72,12 @@ minecraft {
             }
         }
         data {
-            workingDirectory project.file('eclipse/assets')
+            workingDirectory project.file("run/data")
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'ServerTabInfo', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'servertabinfo', '--all', '--output', file("src/main/generated_resources"), '--existing', file('src/main/resources/')
             mods {
                 ServerTabInfo {
                     source sourceSets.main
@@ -101,23 +102,13 @@ repositories {
     name = "ModMaven"
     url = "modmaven.k-4u.nl"
   }
+    maven {url "http://tehnut.info/maven"}
 }
 
 dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
-}
-
-processResources {
-    exclude '**/*.xcf'
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META-INF/mods.toml'
-
-        expand 'version': project.version, 'mcversion': mc_version, 'forge_version': forge_version_toml
-    }
-    
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META-INF/mods.toml'
-    }
+    compileOnly fg.deobf("curse.maven:hwyla:2880069")
+    //runtimeOnly fg.deobf("curse.maven:hwyla:2880069")
 }
 
 jar {
@@ -137,24 +128,11 @@ curseforge {
   project {
     id = '291788'
     changelogType = 'markdown'
-	changelog = file('changelog.txt')
+      changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
     releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.15.2'
   }
-}
-
-task clearChangelog() {
-	doLast{
-		clearFile(file('changelog.txt'))
-	}
-}
-
-
-def clearFile(File f) {
-    f.withWriter  {
-    	writer -> writer.write('')
-    }
 }
 
 def parseConfig(File config) {
