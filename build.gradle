@@ -102,13 +102,12 @@ repositories {
     name = "ModMaven"
     url = "modmaven.k-4u.nl"
   }
-    maven {url "http://tehnut.info/maven"}
 }
 
 dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
-    compileOnly fg.deobf("curse.maven:hwyla:2880069")
-    //runtimeOnly fg.deobf("curse.maven:hwyla:2880069")
+    //compileOnly fg.deobf("curse.maven:hwyla:2880069") Re-add when it is released
+    //runtimeOnly fg.deobf("curse.maven:hwyla:2880069") Re-add when it is released
 }
 
 jar {
@@ -129,9 +128,9 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
       changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
-    releaseType = 'release'
+    releaseType = 'alpha'
     addGameVersion 'Java 8'
-    addGameVersion '1.15.2'
+    addGameVersion '1.16.1'
   }
 }
 

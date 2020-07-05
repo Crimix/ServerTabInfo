@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[31,)"
+loaderVersion="[32,)"
 issueTrackerURL="https://github.com/Crimix/ServerTabInfo/issues"
 
 [[mods]] #mandatory
@@ -19,12 +19,12 @@ The inspiration came from a small feature from MineTogether which used to work q
 [[dependencies.servertabinfo]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[32,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.servertabinfo]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.1]"
     ordering="NONE"
     side="BOTH"

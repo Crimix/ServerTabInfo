@@ -1,3 +1,4 @@
+/*
 package com.black_dog20.servertabinfo.compat;
 
 import mcp.mobius.waila.api.event.WailaRenderEvent;
@@ -16,3 +17,4 @@ public class Waila {
         }
     }
 }
+*/

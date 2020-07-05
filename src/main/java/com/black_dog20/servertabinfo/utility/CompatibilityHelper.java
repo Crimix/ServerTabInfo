@@ -1,8 +1,8 @@
 package com.black_dog20.servertabinfo.utility;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -11,24 +11,24 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class CompatibilityHelper {
 	
 	public static String translate(String text) {
-		return new TranslationTextComponent(text).getFormattedText();
+		return new TranslationTextComponent(text).getString();
 	}
 	
 	public static String translate(String text, ColorObject color) {
 		TranslationTextComponent temp = new TranslationTextComponent(text);
-		temp.getStyle().setColor(color.getColor());
-		return temp.getFormattedText();
+		temp.func_230530_a_(temp.getStyle().func_240712_a_(color.getColor()));
+		return temp.getString();
 	}
 	
 	public static String text(String text, ColorObject color) {
 		StringTextComponent temp = new StringTextComponent(text);
-		temp.getStyle().setColor(color.getColor());
-		return temp.getFormattedText();
+		temp.func_230530_a_(temp.getStyle().func_240712_a_(color.getColor()));
+		return temp.getText();
 	}
 	
 	public static String text(String text) {
 		StringTextComponent temp = new StringTextComponent(text);
-		return temp.getFormattedText();
+		return temp.getText();
 	}
 	
 	public static void glPush() {
@@ -55,11 +55,13 @@ public class CompatibilityHelper {
 	}
 	
 	public static void drawStringWithShadow(Minecraft mc, String text, float x, float y, int color) {
-		mc.fontRenderer.drawStringWithShadow(text, x, y, color);
+		MatrixStack matrixStack = new MatrixStack();
+		mc.fontRenderer.func_238421_b_(matrixStack, text, x, y, color);
 	}
 	
 	public static void drawStringWithShadowItalic(Minecraft mc, String text, float x, float y, int color) {
-		mc.fontRenderer.drawStringWithShadow(TextFormatting.ITALIC + text, x, y, color);
+		MatrixStack matrixStack = new MatrixStack();
+		mc.fontRenderer.func_238421_b_(matrixStack, TextFormatting.ITALIC + text, x, y, color);
 	}
 	
 	public static int getFontRenderHeight(Minecraft mc) {

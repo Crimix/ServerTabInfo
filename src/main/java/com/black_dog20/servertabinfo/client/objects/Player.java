@@ -1,14 +1,12 @@
 package com.black_dog20.servertabinfo.client.objects;
 
-import java.util.ArrayList;
-
 import com.black_dog20.servertabinfo.client.CustomPlayerList;
 import com.black_dog20.servertabinfo.client.GuiTabPage;
 import com.black_dog20.servertabinfo.utility.CompatibilityHelper;
 import com.black_dog20.servertabinfo.utility.RenderHelper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
 import com.mojang.authlib.GameProfile;
-
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.network.play.NetworkPlayerInfo;
@@ -18,6 +16,8 @@ import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameType;
+
+import java.util.ArrayList;
 
 public class Player implements IRenderable {
 	
@@ -100,13 +100,14 @@ public class Player implements IRenderable {
             this.mc.getTextureManager().bindTexture(networkInfo.getLocationSkin());
             int l2 = 8 + (flag1 ? 8 : 0);
             int i3 = 8 * (flag1 ? -1 : 1);
-            AbstractGui.blit(x, y, 8, 8, 8.0F, (float)l2, 8, i3, 64, 64);
+            MatrixStack matrixStack = new MatrixStack();
+            AbstractGui.func_238466_a_(matrixStack,x, y, 8, 8, 8.0F, (float)l2, 8, i3, 64, 64);
 
             if (entityplayer != null && entityplayer.isWearing(PlayerModelPart.HAT))
             {
                 int j3 = 8 + (flag1 ? 8 : 0);
                 int k3 = 8 * (flag1 ? -1 : 1);
-                AbstractGui.blit(x, y, 8, 8, 40.0F, (float)j3, 8, k3, 64, 64);
+                AbstractGui.func_238466_a_(matrixStack, x, y, 8, 8, 40.0F, (float)j3, 8, k3, 64, 64);
             }
 
             x += headWidth;
@@ -139,12 +140,12 @@ public class Player implements IRenderable {
 	
     public String getPlayerName()
     {
-        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkInfo.getPlayerTeam(), new StringTextComponent(networkInfo.getGameProfile().getName())).getFormattedText();
+        return networkInfo.getDisplayName() != null ? networkInfo.getDisplayName().getString() : ScorePlayerTeam.func_237500_a_(networkInfo.getPlayerTeam(), new StringTextComponent(networkInfo.getGameProfile().getName())).getString();
     }
 	
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatMemberName(networkPlayerInfoIn.getPlayerTeam(), new StringTextComponent(networkPlayerInfoIn.getGameProfile().getName())).getFormattedText();
+        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getString() : ScorePlayerTeam.func_237500_a_(networkPlayerInfoIn.getPlayerTeam(), new StringTextComponent(networkPlayerInfoIn.getGameProfile().getName())).getString();
     }
     
     private String getPing() {

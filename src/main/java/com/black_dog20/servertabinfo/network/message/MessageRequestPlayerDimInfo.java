@@ -1,20 +1,17 @@
 package com.black_dog20.servertabinfo.network.message;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.black_dog20.servertabinfo.network.PacketHandler;
 import com.black_dog20.servertabinfo.utility.Helper;
 import com.black_dog20.servertabinfo.utility.TpsDimension;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class MessageRequestPlayerDimInfo {
 	
@@ -27,11 +24,10 @@ public class MessageRequestPlayerDimInfo {
 		List<ServerPlayerEntity>playerList = server.getPlayerList().getPlayers();
 		
 		for(ServerPlayerEntity player : playerList) {
-			String name = Registry.DIMENSION_TYPE.getKey(player.getEntityWorld().dimension.getType()).toString();
-			DimensionType type = player.getEntityWorld().dimension.getType();
-			Double meanTickTime = Helper.mean(server.getTickTime(type));
-			TpsDimension dim = new TpsDimension(name, meanTickTime, type.getId());
-			playerDims.put(player.getDisplayName().getFormattedText(), dim);
+			String name = player.getEntityWorld().func_234922_V_().func_240901_a_().toString();
+			Double meanTickTime = Helper.mean(server.getTickTime(player.getEntityWorld().func_234923_W_()));
+			TpsDimension dim = new TpsDimension(name, meanTickTime);
+			playerDims.put(player.getDisplayName().getString(), dim);
 		}
 		
 		PacketHandler.network.reply(new MessageResponsePlayerDimInfo(playerDims), context.get());
