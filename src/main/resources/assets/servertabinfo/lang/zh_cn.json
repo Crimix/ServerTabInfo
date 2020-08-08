@@ -1,0 +1,34 @@
+{
+    "gui.servertabinfo.overall": "Overall",
+    "gui.servertabinfo.mean": "mean",
+    "gui.servertabinfo.notinstalled": "服务器未安装服务器Tab信息",
+    "gui.servertabinfo.dim": "Dim",
+    "gui.servertabinfo.ping": "Ping",
+    "gui.servertabinfo.ms": "ms",
+    "gui.servertabinfo.tps": "tps",
+    "gui.servertabinfo.unknown": "Unknown",
+    "gui.servertabinfo.analysing": "Analysing",
+    "gui.servertabinfo.page": "Page %d of %d",
+    "gui.servertabinfo.errorpage1": "某些mod阻止了ServerTabInfo",
+    "gui.servertabinfo.errorpage2": "请向我报告你使用的mod列表",
+
+    "_comment": "按键绑定",
+    "keys.servertabinfo.category": "服务器Tab	信息",
+    "keys.servertabinfo.show": "显示 TPS (请按 TAB + this)",
+    "keys.servertabinfo.show2": "显示 TPS (请按 TAB + this)",
+
+    "_comment": "配置",
+    "config.servertabinfo": "服务器 Tab 配置",
+    "config.servertabinfo.ping": "显示 ping",
+    "config.servertabinfo.version": "显示 版本号",
+    "config.servertabinfo.playerlist": "重新载入玩家列表",
+
+    "_comment": "Vanilla dimensions",
+    "servertabinfo.dim.minecraft:overworld": "主世界",
+    "servertabinfo.dim.minecraft:the_nether": "下界",
+    "servertabinfo.dim.minecraft:the_end": "末地",
+
+    "_comment": "Modded dimensions",
+    "servertabinfo.dim.lostcities": "失落的城市",
+    "servertabinfo.dim.twilight_forest": "暮色森林"
+}
