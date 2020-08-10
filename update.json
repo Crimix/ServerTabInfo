@@ -4,12 +4,13 @@
     "1.2.7": "https://github.com/Crimix/ServerTabInfo/blob/1.15/CHANGELOG.md"
   },
   "1.16.1": {
-    "1.2.7-alpha": "https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md"
+    "1.2.7-alpha": "https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md",
+    "1.3.0": "https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md"
   },
   "promos": {
     "1.15.2-latest": "1.2.7",
     "1.15.2-recommended": "1.2.7",
-    "1.16.1-latest": "1.2.7-alpha",
-    "1.16.1-recommended": "1.2.7-alpha"
+    "1.16.1-latest": "1.3.0",
+    "1.16.1-recommended": "1.3.0"
   }
 }

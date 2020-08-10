@@ -1,73 +1,62 @@
 package com.black_dog20.servertabinfo;
 
-import com.black_dog20.servertabinfo.compat.ModCompat;
-import com.black_dog20.servertabinfo.config.Config;
-import com.black_dog20.servertabinfo.network.PacketHandler;
-import com.black_dog20.servertabinfo.proxies.ClientProxy;
-import com.black_dog20.servertabinfo.proxies.IProxy;
-import com.black_dog20.servertabinfo.proxies.ServerProxy;
-import com.black_dog20.servertabinfo.reference.Reference;
+import com.black_dog20.bml.client.overlay.OverlayRegistry;
+import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
+import com.black_dog20.servertabinfo.client.overlays.PlayerListOverlay;
+import com.black_dog20.servertabinfo.client.overlays.TpsListOverlay;
+import com.black_dog20.servertabinfo.common.compat.ModCompat;
+import com.black_dog20.servertabinfo.common.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(Reference.MOD_ID)
+@Mod(ServerTabInfo.MOD_ID)
 public class ServerTabInfo {
 
-	public static ServerTabInfo instance;
+    public static final String MOD_ID = "servertabinfo";
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static IProxy Proxy;
-	public static boolean modOnServer = false;
 	
 	public ServerTabInfo() {
-		instance = this;
         IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-client.toml"));
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+        Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
         event.addListener(this::setup);
-        event.addListener(this::doClientStuff);
-        Proxy = DistExecutor.runForDist(()-> ClientProxy::new, ()-> ServerProxy::new);
+        event.addListener(this::setupClient);
 
-        event.addListener(this::config);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
         ModCompat.register(event);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
-	
-	private void setup(final FMLCommonSetupEvent event){
-        // some preinit code
-		PacketHandler.init();
-        LOGGER.info("Pre Initialization Complete!");
+
+    private void setup(final FMLCommonSetupEvent event){
+		PacketHandler.register();
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-    	Proxy.registerKeyBindings();
-    	Proxy.registerRendersPreInit();
-    	
+    private void setupClient(final FMLClientSetupEvent event) {
+        ClientRegistry.registerKeyBinding(Keybinds.SHOW);
+        OverlayRegistry.register(new PlayerListOverlay());
+        OverlayRegistry.register(new TpsListOverlay());
     }
-	
-    
-    public void config(ModConfig.ModConfigEvent event)
-    {
-        if (event.getConfig().getSpec() == Config.SPEC)
-            Config.load();
+
+    public static String getVersion() {
+        ModContainer container = ModList.get().getModContainerById(MOD_ID).orElse(null);
+
+        if(container != null)
+            return container.getModInfo().getVersion().toString();
+
+        return "@Version@";
     }
-	
-    
-	/*@NetworkCheckHandler
-	public boolean checkModLists(Map<String, String> modList, Side side) {
-		if (side == Side.SERVER) {
-			modOnServer = modList.containsKey(Reference.MOD_ID);
-		}
-	
-		return true;
-	}*/
 }

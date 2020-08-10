@@ -1,0 +1,12 @@
+{
+  "servertabinfo.gui.mean": "middel",
+  "servertabinfo.gui.not_installed": "Server Tab Info er ikke installeret p\u00E5 serveren",
+  "servertabinfo.gui.page": "Side %d af %d",
+  "servertabinfo.gui.unknown": "Ukendt",
+  "servertabinfo.lostcities:lostcities": "Lost Cities",
+  "servertabinfo.minecraft:overworld": "Oververden",
+  "servertabinfo.minecraft:the_end": "End",
+  "servertabinfo.minecraft:the_nether": "Nether",
+  "servertabinfo.servertabinfo:overall": "Overordnet",
+  "servertabinfo.twilightforest:twilight_forest": "Twilight Forest"
+}

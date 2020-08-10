@@ -1,0 +1,10 @@
+{
+  "servertabinfo.gui.not_installed": "\u670D\u52A1\u5668\u672A\u5B89\u88C5\u670D\u52A1\u5668Tab\u4FE1\u606F",
+  "servertabinfo.keys.category": "\u670D\u52A1\u5668Tab   \u4FE1\u606F",
+  "servertabinfo.keys.show": "\u663E\u793A TPS",
+  "servertabinfo.lostcities:lostcities": "\u5931\u843D\u7684\u57CE\u5E02",
+  "servertabinfo.minecraft:overworld": "\u4E3B\u4E16\u754C",
+  "servertabinfo.minecraft:the_end": "\u672B\u5730",
+  "servertabinfo.minecraft:the_nether": "\u4E0B\u754C",
+  "servertabinfo.twilightforest:twilight_forest": "\u66AE\u8272\u68EE\u6797"
+}

@@ -17,12 +17,14 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: "com.wynprice.cursemaven"
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'eclipse'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
@@ -36,6 +38,10 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 sourceSets {
     main.resources.srcDirs += 'src/main/generated_resources'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 minecraft {
@@ -102,12 +108,28 @@ repositories {
     name = "ModMaven"
     url = "modmaven.k-4u.nl"
   }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/crimix/bml")
+        credentials {
+            username = priv.githubUser
+            password = priv.githubToken
+        }
+    }
+    mavenLocal()
+}
+
+configurations {
+    shadowCompileOnly
+    compile.extendsFrom shadowCompileOnly
 }
 
 dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
-    //compileOnly fg.deobf("curse.maven:hwyla:2880069") Re-add when it is released
-    //runtimeOnly fg.deobf("curse.maven:hwyla:2880069") Re-add when it is released
+    compileOnly fg.deobf("curse.maven:hwyla:3017694")
+    runtimeOnly fg.deobf("curse.maven:hwyla:3017694")
+    shadowCompileOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
+    runtimeOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
 }
 
 jar {
@@ -122,13 +144,30 @@ jar {
     }
 }
 
+shadowJar {
+    configurations = [project.configurations.shadowCompileOnly]
+    exclude 'com/black_dog20/bml/Bml.class'
+    exclude 'com/black_dog20/bml/internal/**'
+    exclude 'assets/blackdogsmoddinglibrary/**'
+    exclude 'bml-logo.png'
+    minimize()
+    relocate 'com.black_dog20.bml', 'com.black_dog20.servertabinfo.repack.bml'
+
+
+    classifier '' // Replace the default jar
+}
+
+reobf {
+    shadowJar {}
+}
+
 curseforge {
   apiKey = priv.apiKey
   project {
     id = '291788'
     changelogType = 'markdown'
-      changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
-    releaseType = 'alpha'
+    changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
+    releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.16.1'
   }
