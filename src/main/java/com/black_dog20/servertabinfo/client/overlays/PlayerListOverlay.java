@@ -13,6 +13,7 @@ import com.black_dog20.bml.utils.text.TextComponentBuilder;
 import com.black_dog20.servertabinfo.Config;
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.ClientDataManager;
+import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
 import com.black_dog20.servertabinfo.common.utils.Dimension;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 
 import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 
+@OnlyIn(Dist.CLIENT)
 public class PlayerListOverlay extends Overlay.Pre {
 
     private static final Ordering<NetworkPlayerInfo> ENTRY_ORDERING = Ordering.from(new PlayerComparator());
@@ -60,6 +62,8 @@ public class PlayerListOverlay extends Overlay.Pre {
 
     @Override
     public void onRender(MatrixStack matrixStack, int width, int height) {
+        if(Keybinds.SHOW.isKeyDown())
+            return;
         int y = 10;
         int z = 0;
         if (Util.milliTime() - 2000 > lastRenderTime) {
@@ -107,7 +111,6 @@ public class PlayerListOverlay extends Overlay.Pre {
     private List<Row> getRows() {
         ClientPlayNetHandler nethandlerplayclient = this.minecraft.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
-        list.addAll(list);
 
         return list.stream()
                 .map(this::buildRow)

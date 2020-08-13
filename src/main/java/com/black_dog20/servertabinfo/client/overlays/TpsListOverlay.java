@@ -22,6 +22,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.LinkedList;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 
 import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 
+@OnlyIn(Dist.CLIENT)
 public class TpsListOverlay extends Overlay.Pre {
 
     private Minecraft minecraft;

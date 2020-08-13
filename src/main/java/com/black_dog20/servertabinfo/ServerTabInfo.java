@@ -1,9 +1,5 @@
 package com.black_dog20.servertabinfo;
 
-import com.black_dog20.bml.client.overlay.OverlayRegistry;
-import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
-import com.black_dog20.servertabinfo.client.overlays.PlayerListOverlay;
-import com.black_dog20.servertabinfo.client.overlays.TpsListOverlay;
 import com.black_dog20.servertabinfo.common.compat.ModCompat;
 import com.black_dog20.servertabinfo.common.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,10 +7,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -34,7 +28,6 @@ public class ServerTabInfo {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
         Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
         event.addListener(this::setup);
-        event.addListener(this::setupClient);
 
         ModCompat.register(event);
 
@@ -43,12 +36,6 @@ public class ServerTabInfo {
 
     private void setup(final FMLCommonSetupEvent event){
 		PacketHandler.register();
-    }
-
-    private void setupClient(final FMLClientSetupEvent event) {
-        ClientRegistry.registerKeyBinding(Keybinds.SHOW);
-        OverlayRegistry.register(new PlayerListOverlay());
-        OverlayRegistry.register(new TpsListOverlay());
     }
 
     public static String getVersion() {
