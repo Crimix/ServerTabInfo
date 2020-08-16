@@ -44,6 +44,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     mappings channel: 'snapshot', version: "${mcp_mappings}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
@@ -126,8 +127,8 @@ configurations {
 
 dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
-    compileOnly fg.deobf("curse.maven:hwyla:3017694")
-    runtimeOnly fg.deobf("curse.maven:hwyla:3017694")
+    compileOnly fg.deobf("curse.maven:hwyla:3033593")
+    runtimeOnly fg.deobf("curse.maven:hwyla:3033593")
     shadowCompileOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
 }
@@ -167,9 +168,9 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
     changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
-    releaseType = 'release'
+    releaseType = 'beta'
     addGameVersion 'Java 8'
-    addGameVersion '1.16.1'
+    addGameVersion '1.16.2'
   }
 }
 
