@@ -168,7 +168,7 @@ curseforge {
     id = '291788'
     changelogType = 'markdown'
     changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
-    releaseType = 'beta'
+    releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.16.2'
   }

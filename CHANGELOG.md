@@ -1,6 +1,11 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.1, 1.3.1] - 2020-09-05
+- First 1.16.2 release
+- Updated to Forge version 33.0.37
+
+
 ## [1.16.1, 1.3.1-b1] - 2020-08-13
 - Update to 1.16.2 as a beta version.
 - Will be in beta until some more Forge updates and mappings have been released.
