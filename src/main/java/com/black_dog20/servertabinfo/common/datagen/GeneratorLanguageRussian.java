@@ -16,11 +16,11 @@ public class GeneratorLanguageRussian extends BaseLanguageProvider {
     @Override
     protected void addTranslations() {
         // Keys
-        //addPrefixed(CATEGORY, "Server Tab Info");
+        addPrefixed(CATEGORY, "Вкладка информации сервера");
         //addPrefixed(SHOW_KEY, "Show TPS list");
 
         // Gui
-        addPrefixed(NOT_INSTALLED, "Server Tab Info не установлен на сервере");
+        addPrefixed(NOT_INSTALLED, "Вкладка информации сервера не установлен на сервере");
         //addPrefixed(PAGE, "Page %d of %d");
         addPrefixed(MEAN,"в среднем");
         addPrefixed(MS, "мс");
