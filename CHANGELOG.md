@@ -1,6 +1,9 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.1, 1.3.2] - 2020-09-11
+- Added more russian translations (Thanks DrHesperus)
+
 ## [1.16.1, 1.3.1] - 2020-08-13
 - Fixes crashes on servers [Fixes #7](https://github.com/Crimix/ServerTabInfo/issues/7)
 - Fixes overlay issues when on servers.
