@@ -2,6 +2,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
+## [1.16.2, 1.3.3] - 2020-09-23
+- Fixed and issue which caused the client to be rejected if the mod was not installed.
+- Restored proper behaviour of the mod not needed on the server or client. 
+
 ## [1.16.2, 1.3.2] - 2020-09-11
 - Added more russian translations (Thanks DrHesperus)
 

@@ -29,8 +29,8 @@ public class PacketHandler {
 
 	public static final SimpleChannel NETWORK = NetworkRegistry.ChannelBuilder
 			.named(new ResourceLocation(ServerTabInfo.MOD_ID, "network"))
-			.clientAcceptedVersions(s -> checkRemoteVersion(s))
-			.serverAcceptedVersions(PROTOCOL_VERSION::equals)
+			.clientAcceptedVersions(PacketHandler::checkRemoteVersion)
+			.serverAcceptedVersions(PacketHandler::checkClientVersion)
 			.networkProtocolVersion(() -> PROTOCOL_VERSION)
 			.simpleChannel();
 
@@ -71,6 +71,10 @@ public class PacketHandler {
 			ClientDataManager.modOnServer = false;
 		else
 			ClientDataManager.modOnServer = true;
+		return true;
+	}
+
+	private static boolean checkClientVersion(String s) {
 		return true;
 	}
 
