@@ -1,7 +1,6 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-
 ## [1.16.2, 1.3.3] - 2020-09-23
 - Fixed and issue which caused the client to be rejected if the mod was not installed.
 - Restored proper behaviour of the mod not needed on the server or client. 
@@ -13,9 +12,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - First 1.16.2 release
 - Updated to Forge version 33.0.37
 
-## [1.16.1, 1.3.1-b1] - 2020-08-13
+## [1.16.2, 1.3.1-b1] - 2020-08-13
 - Update to 1.16.2 as a beta version.
 - Will be in beta until some more Forge updates and mappings have been released.
+
+## [1.16.1, 1.3.3] - 2020-09-23
+- Fixed and issue which caused the client to be rejected if the mod was not installed.
+- Restored proper behaviour of the mod not needed on the server or client.
+
+## [1.16.1, 1.3.2] - 2020-09-11
+- Added more russian translations (Thanks DrHesperus)
 
 ## [1.16.1, 1.3.1] - 2020-08-13
 - Fixes crashes on servers [Fixes #7](https://github.com/Crimix/ServerTabInfo/issues/7)

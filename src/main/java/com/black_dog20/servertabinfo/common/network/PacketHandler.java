@@ -77,5 +77,4 @@ public class PacketHandler {
 	private static boolean checkClientVersion(String s) {
 		return true;
 	}
-
 }
