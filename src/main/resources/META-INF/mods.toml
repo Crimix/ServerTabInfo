@@ -1,6 +1,8 @@
 modLoader="javafml" #mandatory
-loaderVersion="[32,)"
+loaderVersion="[33,)"
 issueTrackerURL="https://github.com/Crimix/ServerTabInfo/issues"
+# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+license="All rights reserved"
 
 [[mods]] #mandatory
 modId="servertabinfo"
@@ -19,12 +21,12 @@ The inspiration came from a small feature from MineTogether which used to work q
 [[dependencies.servertabinfo]]
     modId="forge"
     mandatory=true
-    versionRange="[32,)"
+    versionRange="[33,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.servertabinfo]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1]"
+    versionRange="[1.16.2]"
     ordering="NONE"
     side="BOTH"

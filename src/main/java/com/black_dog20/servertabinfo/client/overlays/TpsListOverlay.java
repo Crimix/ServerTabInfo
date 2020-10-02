@@ -84,7 +84,7 @@ public class TpsListOverlay extends Overlay.Pre {
 
         DrawingContext drawingContext = new DrawingContext(matrixStack, width, height, x, y, z, fontRenderer, itemRenderer);
         y = RowHelper.drawRowsWithBackground(drawingContext, rows);
-        fontRenderer.func_238407_a_(matrixStack, PAGE.get(page, maxPages), width / 2 + 2, y + 2, -1);
+        fontRenderer.func_243246_a(matrixStack, PAGE.get(page, maxPages), width / 2 + 2, y + 2, -1);
         ticks++;
         lastRenderTime = Util.milliTime();
     }
