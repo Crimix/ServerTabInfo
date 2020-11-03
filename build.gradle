@@ -159,6 +159,8 @@ shadowJar {
     exclude 'com/black_dog20/bml/internal/**'
     exclude 'assets/blackdogsmoddinglibrary/**'
     exclude 'bml-logo.png'
+    exclude 'bml.mixins.json'
+    exclude 'bml.refmap.json'
     minimize()
     relocate 'com.black_dog20.bml', 'com.black_dog20.servertabinfo.repack.bml'
 
