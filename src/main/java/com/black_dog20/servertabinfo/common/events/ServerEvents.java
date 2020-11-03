@@ -46,15 +46,15 @@ public class ServerEvents {
             DIMENSIONS.clear();
             DIMENSIONS.add(new Dimension(new ResourceLocation(ServerTabInfo.MOD_ID, "overall"), overall.getSecond(), overall.getFirst()));
             for (ServerWorld world : server.forgeGetWorldMap().values()) {
-                ResourceLocation name = world.func_234923_W_().func_240901_a_();
-                Pair<Integer, Double> tpsAndMean = getTpsAndMean(server.getTickTime(world.func_234923_W_()));
+                ResourceLocation name = world.getDimensionKey().getLocation();
+                Pair<Integer, Double> tpsAndMean = getTpsAndMean(server.getTickTime(world.getDimensionKey()));
                 DIMENSIONS.add(new Dimension(name, tpsAndMean.getSecond(), tpsAndMean.getFirst()));
 		    }
 
             List<ServerPlayerEntity> playerList = server.getPlayerList().getPlayers();
             PLAYER_DIMENSIONS.clear();
             for (ServerPlayerEntity player : playerList) {
-                ResourceLocation name = player.getEntityWorld().func_234923_W_().func_240901_a_();
+                ResourceLocation name = player.getEntityWorld().getDimensionKey().getLocation();
                 PLAYER_DIMENSIONS.put(player.getUniqueID(), name);
             }
 
@@ -86,7 +86,7 @@ public class ServerEvents {
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getPlayer().world.isRemote) {
             ServerPlayerEntity playerEntity = (ServerPlayerEntity) event.getPlayer();
-            ResourceLocation name = playerEntity.getEntityWorld().func_234923_W_().func_240901_a_();
+            ResourceLocation name = playerEntity.getEntityWorld().getDimensionKey().getLocation();
             PLAYER_DIMENSIONS.put(playerEntity.getUniqueID(), name);
 
             PacketHandler.sendTo(new PacketDimensions(DIMENSIONS), playerEntity);

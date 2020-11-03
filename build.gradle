@@ -60,6 +60,10 @@ minecraft {
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
+
+            // Disable mixin refmaps
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 ServerTabInfo {
                     source sourceSets.main
@@ -72,6 +76,10 @@ minecraft {
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
+
+            // Disable mixin refmaps
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 ServerTabInfo {
                     source sourceSets.main
@@ -129,8 +137,8 @@ dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
     compileOnly fg.deobf("curse.maven:hwyla:3033593")
     runtimeOnly fg.deobf("curse.maven:hwyla:3033593")
-    shadowCompileOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
-    runtimeOnly fg.deobf("com.black_dog20.bml:BML:${mc_version}-${bml_version}")
+    shadowCompileOnly fg.deobf("com.black_dog20.bml:bml:${mc_version}-${bml_version}")
+    runtimeOnly fg.deobf("com.black_dog20.bml:bml:${mc_version}-${bml_version}")
 }
 
 jar {
@@ -167,10 +175,13 @@ curseforge {
   project {
     id = '291788'
     changelogType = 'markdown'
-    changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/master/CHANGELOG.md)'
+    changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/1.16.4/CHANGELOG.md)'
     releaseType = 'release'
     addGameVersion 'Java 8'
-    addGameVersion '1.16.3'
+    addGameVersion '1.16.4'
+      relations {
+          requiredDependency 'permission-levels'
+      }
   }
 }
 

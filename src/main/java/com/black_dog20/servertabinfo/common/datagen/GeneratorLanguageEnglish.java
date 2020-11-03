@@ -27,6 +27,9 @@ public class GeneratorLanguageEnglish extends BaseLanguageProvider {
         addPrefixed(TPS, "tps");
         addPrefixed(UNKOWN, "Unknown");
 
+        // MSG
+        addPrefixed(NOT_ALLOWED, "You do not have permission to see tps information");
+
         // Dims
         addPrefixed(OVERALL, "Overall");
         addPrefixed(OVERWORLD, "Overworld");

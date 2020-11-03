@@ -7,6 +7,7 @@
   "servertabinfo.minecraft:overworld": "Oververden",
   "servertabinfo.minecraft:the_end": "End",
   "servertabinfo.minecraft:the_nether": "Nether",
+  "servertabinfo.msg.not_allowed": "Du har ikke tilladelse til at se tps informationer",
   "servertabinfo.servertabinfo:overall": "Overordnet",
   "servertabinfo.twilightforest:twilight_forest": "Twilight Forest"
 }

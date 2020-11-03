@@ -27,6 +27,9 @@ public class GeneratorLanguageDanish extends BaseLanguageProvider {
         //addPrefixed(TPS, "tps");
         addPrefixed(UNKOWN, "Ukendt");
 
+        // MSG
+        addPrefixed(NOT_ALLOWED, "Du har ikke tilladelse til at se tps informationer");
+
         // Dims
         addPrefixed(OVERALL, "Overordnet");
         addPrefixed(OVERWORLD, "Oververden");

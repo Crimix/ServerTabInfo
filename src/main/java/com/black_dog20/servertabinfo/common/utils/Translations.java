@@ -11,7 +11,8 @@ public enum Translations  implements ITranslation {
     MEAN("gui.mean"),
     MS("gui.ms"),
     UNKOWN("gui.unknown"),
-    TPS("gui.tps");
+    TPS("gui.tps"),
+    NOT_ALLOWED("msg.not_allowed");
 
 
     private final String modId;

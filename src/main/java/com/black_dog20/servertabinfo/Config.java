@@ -25,6 +25,7 @@ public class Config {
 
     public static ForgeConfigSpec.IntValue REFRESH_TICKS;
     public static ForgeConfigSpec.BooleanValue REPLACE_PLAYER_LIST;
+    public static ForgeConfigSpec.BooleanValue OP_ONLY_MODE;
 
     static {
         CLIENT_BUILDER.comment("Client settings").push(CLIENT_SETTINGS);
@@ -37,6 +38,8 @@ public class Config {
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         REFRESH_TICKS = SERVER_BUILDER.comment("How often should the server send tps updates to clients")
                 .defineInRange("refreshTicks", 100, 100,  600);
+        OP_ONLY_MODE = SERVER_BUILDER.comment("Only ops can see tps information, this is to stop tps hunters")
+                .define("opOnlyMode", false);
         SERVER_BUILDER.pop();
 
         SERVER_CONFIG = SERVER_BUILDER.build();

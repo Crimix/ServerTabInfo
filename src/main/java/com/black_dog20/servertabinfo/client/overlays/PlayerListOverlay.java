@@ -131,6 +131,12 @@ public class PlayerListOverlay extends Overlay.Pre {
                 .build();
     }
 
+    private boolean isAllowed() {
+        return !Config.OP_ONLY_MODE.get() || minecraft.isSingleplayer() || Optional.ofNullable(minecraft.player)
+                .map(player -> player.hasPermissionLevel(1))
+                .orElse(false);
+    }
+
     private List<Row> getPagedRows(List<Row> rows, int itemsPerPage) {
         rows = rows.stream()
                 .skip((page - 1) * itemsPerPage)
@@ -153,9 +159,16 @@ public class PlayerListOverlay extends Overlay.Pre {
 
     private ITextComponent getPlayerDim(NetworkPlayerInfo playerInfo) {
         ResourceLocation dimName = ClientDataManager.PLAYER_DIMENSIONS.getOrDefault(playerInfo.getGameProfile().getId(), null);
-        return TextComponentBuilder.of(getDimensionName(dimName))
-                .with(getDimensionTps(dimName))
-                .build();
+        boolean allowed = isAllowed();
+        if(allowed) {
+            return TextComponentBuilder.of(getDimensionName(dimName))
+                    .with(getDimensionTps(dimName))
+                    .build();
+        } else {
+            return TextComponentBuilder.of(getDimensionName(dimName))
+                    .build();
+        }
+
     }
 
     private TextComponent getDimensionName(ResourceLocation dimensionName) {

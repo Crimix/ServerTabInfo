@@ -9,6 +9,7 @@ import com.black_dog20.bml.client.rows.columns.Column;
 import com.black_dog20.bml.client.rows.columns.ITextComponentColumn;
 import com.black_dog20.bml.utils.dimension.DimensionUtil;
 import com.black_dog20.bml.utils.text.TextComponentBuilder;
+import com.black_dog20.servertabinfo.Config;
 import com.black_dog20.servertabinfo.ServerTabInfo;
 import com.black_dog20.servertabinfo.client.ClientDataManager;
 import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
@@ -28,6 +29,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.black_dog20.servertabinfo.common.utils.Translations.*;
@@ -41,6 +43,7 @@ public class TpsListOverlay extends Overlay.Pre {
     private long lastRenderTime = Util.milliTime();
     private int ticks = 0;
     private int page = 1;
+    private boolean hasBeenShown = false;
 
     public TpsListOverlay() {
         this.minecraft = Minecraft.getInstance();
@@ -104,10 +107,27 @@ public class TpsListOverlay extends Overlay.Pre {
     @Override
     public boolean doRender(RenderGameOverlayEvent.ElementType elementType) {
         if (elementType == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
-            return Keybinds.SHOW.isKeyDown();
+            if (Keybinds.SHOW.isKeyDown()) {
+                boolean allowed = isAllowed();
+                if (!hasBeenShown && !allowed) {
+                    hasBeenShown = true;
+                    Optional.ofNullable(minecraft.player)
+                            .ifPresent(player -> player.sendStatusMessage(NOT_ALLOWED.get(), true));
+                }
+
+                return allowed;
+            } else {
+                hasBeenShown = false;
+            }
         }
 
         return false;
+    }
+
+    private boolean isAllowed() {
+        return !Config.OP_ONLY_MODE.get() || minecraft.isSingleplayer() || Optional.ofNullable(minecraft.player)
+                .map(player -> player.hasPermissionLevel(1))
+                .orElse(false);
     }
 
     @Override
