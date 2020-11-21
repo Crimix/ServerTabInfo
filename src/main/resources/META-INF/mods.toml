@@ -27,6 +27,6 @@ The inspiration came from a small feature from MineTogether which used to work q
 [[dependencies.servertabinfo]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.4]"
+    versionRange="[1.16.4,1.17)"
     ordering="NONE"
     side="BOTH"

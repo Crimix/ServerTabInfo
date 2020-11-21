@@ -1,6 +1,12 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.4, 1.3.3] - 2020-11-20
+- Full stable release
+- Partial support for [#12](https://github.com/Crimix/ServerTabInfo/issues/12)  
+Now an integer based scoreboard objective can be displayed in the player tab list between the dimension tps info and ping.  
+For now there is no support for heart based scores.
+
 ## [1.16.4, 1.3.3-b1] - 2020-11-04
 - Port to 1.16.4
 - Will be in beta until some more Forge updates and mappings have been released.

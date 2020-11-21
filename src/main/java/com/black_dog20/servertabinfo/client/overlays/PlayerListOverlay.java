@@ -23,7 +23,11 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.network.play.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.scoreboard.Score;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
@@ -39,6 +43,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.black_dog20.servertabinfo.common.utils.Translations.*;
@@ -119,6 +124,9 @@ public class PlayerListOverlay extends Overlay.Pre {
 
     private Row buildRow(NetworkPlayerInfo playerInfo) {
         Row.RowBuilder builder = new Row.RowBuilder();
+        Scoreboard scoreboard = Optional.ofNullable(minecraft.world)
+                .map(ClientWorld::getScoreboard)
+                .orElse(null);
 
         return builder
                 .withColumn(HeadColumn.of("head", playerInfo))
@@ -126,9 +134,39 @@ public class PlayerListOverlay extends Overlay.Pre {
                 .withColumn(BlankColumn.of("nameSpace", 6))
                 .withColumn(ITextComponentColumn.of("dim", getPlayerDim(playerInfo)))
                 .withColumn(BlankColumn.of("dimSpace", 3))
+                .withColumn(ITextComponentColumn.of("score", getPlayerScore(playerInfo, scoreboard)), showScoreObjective(scoreboard))
+                .withColumn(BlankColumn.of("scoreSpace", 3), showScoreObjective(scoreboard))
                 .withColumn(ITextComponentColumn.of("ping", getPlayerPing(playerInfo), Column.Alignment.RIGHT))
                 .withColumn(BlankColumn.of("pingSpace", 1))
                 .build();
+    }
+
+    private ITextComponent getPlayerScore(NetworkPlayerInfo playerInfo, Scoreboard scoreboard) {
+        ScoreObjective scoreObjective = Optional.ofNullable(scoreboard)
+                .map(s -> s.getObjectiveInDisplaySlot(0))
+                .orElse(null);
+
+        return TextComponentBuilder.of("")
+                .with(getScore(playerInfo, scoreboard, scoreObjective), showPlayerScore(playerInfo, scoreObjective))
+                .format(TextFormatting.YELLOW)
+                .build();
+    }
+
+    private Supplier<Boolean> showPlayerScore(NetworkPlayerInfo playerInfo, ScoreObjective scoreObjective) {
+        return () -> scoreObjective != null && GameType.SPECTATOR != playerInfo.getGameType();
+    }
+
+    private int getScore(NetworkPlayerInfo playerInfo, Scoreboard scoreboard, ScoreObjective scoreObjective) {
+        if (scoreObjective != null) {
+            Score score = scoreboard.getOrCreateScore(playerInfo.getGameProfile().getName(), scoreObjective);
+            return score.getScorePoints();
+        } else {
+            return 0;
+        }
+    }
+
+    private Supplier<Boolean> showScoreObjective(Scoreboard scoreboard) {
+        return () -> scoreboard != null && scoreboard.getObjectiveInDisplaySlot(0) != null;
     }
 
     private boolean isAllowed() {
@@ -159,15 +197,9 @@ public class PlayerListOverlay extends Overlay.Pre {
 
     private ITextComponent getPlayerDim(NetworkPlayerInfo playerInfo) {
         ResourceLocation dimName = ClientDataManager.PLAYER_DIMENSIONS.getOrDefault(playerInfo.getGameProfile().getId(), null);
-        boolean allowed = isAllowed();
-        if(allowed) {
-            return TextComponentBuilder.of(getDimensionName(dimName))
-                    .with(getDimensionTps(dimName))
-                    .build();
-        } else {
-            return TextComponentBuilder.of(getDimensionName(dimName))
-                    .build();
-        }
+        return TextComponentBuilder.of(getDimensionName(dimName))
+                .with(getDimensionTps(dimName), this::isAllowed)
+                .build();
 
     }
 
