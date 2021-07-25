@@ -1,6 +1,11 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.17.1, 1.3.4-b1] - 2021-07-25
+- Port to 1.17.1 
+- Will be in beta until full Forge release, expect things to break.
+- Added more control over refresh rate [#14](https://github.com/Crimix/ServerTabInfo/issues/14)
+
 ## [1.16.4, 1.3.3] - 2020-11-20
 - Full stable release
 - Partial support for [#12](https://github.com/Crimix/ServerTabInfo/issues/12)  

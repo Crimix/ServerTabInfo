@@ -1,6 +1,6 @@
 package com.black_dog20.servertabinfo.common.utils;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class Dimension {
 

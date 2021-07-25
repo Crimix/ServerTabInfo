@@ -12,9 +12,9 @@ public class Waila {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onWailaRenderEvent(WailaRenderEvent.Pre event) {
-        if (Minecraft.getInstance().gameSettings.keyBindPlayerList.isKeyDown() && !Minecraft.getInstance().isSingleplayer()) {
+        if (Minecraft.getInstance().options.keyPlayerList.isDown() && !Minecraft.getInstance().hasSingleplayerServer()) {
             event.setCanceled(true);
-        } else if (Keybinds.SHOW.isKeyDown()){
+        } else if (Keybinds.SHOW.isDown()){
             event.setCanceled(true);
         }
     }

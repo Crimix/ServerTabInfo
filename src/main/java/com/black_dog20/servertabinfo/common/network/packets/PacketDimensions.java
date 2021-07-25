@@ -2,10 +2,10 @@ package com.black_dog20.servertabinfo.common.network.packets;
 
 import com.black_dog20.servertabinfo.client.ClientDataManager;
 import com.black_dog20.servertabinfo.common.utils.Dimension;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class PacketDimensions{
         this.dimensions = dimensions;
     }
 
-    public static void encode(PacketDimensions msg, PacketBuffer buffer) {
+    public static void encode(PacketDimensions msg, FriendlyByteBuf buffer) {
         buffer.writeInt(msg.dimensions.size());
         for (Dimension dimension : msg.dimensions) {
             buffer.writeResourceLocation(dimension.name);
@@ -28,7 +28,7 @@ public class PacketDimensions{
         }
     }
 
-    public static PacketDimensions decode(PacketBuffer buffer) {
+    public static PacketDimensions decode(FriendlyByteBuf buffer) {
         List<Dimension> dimensions = new LinkedList<>();
         int length = buffer.readInt();
         for (int i = 0; i < length; i++) {

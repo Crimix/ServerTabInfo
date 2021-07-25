@@ -6,7 +6,7 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.nio.file.Path;
 
@@ -36,8 +36,8 @@ public class Config {
         CLIENT_CONFIG = CLIENT_BUILDER.build();
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-        REFRESH_TICKS = SERVER_BUILDER.comment("How often should the server send tps updates to clients")
-                .defineInRange("refreshTicks", 100, 100,  600);
+        REFRESH_TICKS = SERVER_BUILDER.comment("How often should the server send tps updates to clients", "Default is 100 ticks")
+                .defineInRange("refreshTicks", 100, 1,  6000);
         OP_ONLY_MODE = SERVER_BUILDER.comment("Only ops can see tps information, this is to stop tps hunters")
                 .define("opOnlyMode", false);
         SERVER_BUILDER.pop();
@@ -58,12 +58,14 @@ public class Config {
     }
 
     @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading configEvent) {
+    public static void onLoad(final ModConfigEvent.Loading configEvent) {
+
 
     }
 
     @SubscribeEvent
-    public static void onReload(final ModConfig.Reloading configEvent) {
+    public static void onReload(final ModConfigEvent.Reloading configEvent) {
+
     }
 
 }
