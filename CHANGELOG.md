@@ -1,9 +1,15 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.17.1, 1.3.4-b2] - 2021-08-07
+- Updated Forge version
+- Will be in beta until full Forge release, expect things to break
+- Improved chinese translation, thanks SummonHIM [#13](https://github.com/Crimix/ServerTabInfo/pull/13)
+- Fixed head icons rendering wrong after port to 1.17.1
+
 ## [1.17.1, 1.3.4-b1] - 2021-07-25
 - Port to 1.17.1 
-- Will be in beta until full Forge release, expect things to break.
+- Will be in beta until full Forge release, expect things to break
 - Added more control over refresh rate [#14](https://github.com/Crimix/ServerTabInfo/issues/14)
 
 ## [1.16.4, 1.3.3] - 2020-11-20

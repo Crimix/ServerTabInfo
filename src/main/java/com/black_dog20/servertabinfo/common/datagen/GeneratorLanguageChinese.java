@@ -16,22 +16,22 @@ public class GeneratorLanguageChinese extends BaseLanguageProvider {
     @Override
     protected void addTranslations() {
         // Keys
-        addPrefixed(CATEGORY, "服务器Tab   信息");
+        addPrefixed(CATEGORY, "服务器 Tab 信息");
         addPrefixed(SHOW_KEY, "显示 TPS");
 
         // Gui
-        addPrefixed(NOT_INSTALLED, "服务器未安装服务器Tab信息");
-        //addPrefixed(PAGE, "Page %d of %d");
-        //addPrefixed(MEAN,"mean");
-        //addPrefixed(MS, "ms");
+        addPrefixed(NOT_INSTALLED, "Tab 信息暂未安装在此服务器内");
+        addPrefixed(PAGE, "第 %d 页，共 %d 页");
+        addPrefixed(MEAN,"平均延迟");
+        addPrefixed(MS, "毫秒");
         //addPrefixed(TPS, "tps");
-        //addPrefixed(UNKOWN, "Unknown");
+        addPrefixed(UNKOWN, "未知");
 
         // MSG
         //addPrefixed(NOT_ALLOWED, "You do not have permission to see tps information");
 
         // Dims
-        //addPrefixed(OVERALL, "Overall");
+        addPrefixed(OVERALL, "全部世界");
         addPrefixed(OVERWORLD, "主世界");
         addPrefixed(THE_NETHER, "下界");
         addPrefixed(THE_END, "末地");

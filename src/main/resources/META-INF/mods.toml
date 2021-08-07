@@ -15,7 +15,7 @@ logoFile="servertabinfo-logo.png"
 credits="To all my friends for putting up with me breaking the server multiple times during testing"
 description='''
 Server Tab Info is a small server utility mod that displays mean tick time and tps information on a nice elegant way.
-The inspiration came from a small feature from MineTogether which used to work quite nice for me, but lately failed to work, therefore I create this mod.
+The inspiration came from a small feature from MineTogether which used to work quite nice for me, but lately failed to work, therefore I created this mod.
 '''
 
 [[dependencies.servertabinfo]]
