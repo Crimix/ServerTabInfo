@@ -1,41 +1,30 @@
 buildscript {
     repositories {
-        jcenter()
-        maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-		maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-      		url "https://plugins.gradle.org/m2/"
-    	}
+        maven { url 'https://maven.minecraftforge.net' }
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
-        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
+        classpath "net.saliman:gradle-properties-plugin:1.5.1" // To have private properties
+        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: "com.wynprice.cursemaven"
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'eclipse'
-//Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
-
-ext.priv = parseConfig(file('private.properties'))
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: 'net.saliman.properties'
+apply plugin: 'java'
 
 version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_archivesBaseName + "-" + mc_version
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 sourceSets {
     main.resources.srcDirs += 'src/main/generated_resources'
 }
@@ -104,25 +93,30 @@ minecraft {
 
 repositories {
   maven {
-	name = "forge"
-	url = "http://files.minecraftforge.net/maven"
-  }
-  maven {
     // location of the maven that hosts JEI files
     name = "Progwml6 maven"
-    url = "http://dvs1.progwml6.com/files/maven"
+    url = "https://dvs1.progwml6.com/files/maven"
   }
   maven {
     // location of a maven mirror for JEI files, as a fallback
     name = "ModMaven"
-    url = "modmaven.k-4u.nl"
+    url = "https://modmaven.k-4u.nl"
   }
     maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/crimix/bml")
         credentials {
-            username = priv.githubUser
-            password = priv.githubToken
+            username = github_user
+            password = github_token
+        }
+        content {
+            includeGroup "com.black_dog20.bml"
+        }
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
         }
     }
     mavenLocal()
@@ -130,13 +124,13 @@ repositories {
 
 configurations {
     shadowCompileOnly
-    compile.extendsFrom shadowCompileOnly
+    compileOnly.extendsFrom(shadowCompileOnly)
 }
 
 dependencies {
     minecraft "${project.forge_group}:forge:${project.mc_version}-${project.forge_version}"
-    compileOnly fg.deobf("curse.maven:hwyla:3033593")
-    runtimeOnly fg.deobf("curse.maven:hwyla:3033593")
+    compileOnly fg.deobf("curse.maven:hwyla-253449:3033593")
+    runtimeOnly fg.deobf("curse.maven:hwyla-253449:3033593")
     shadowCompileOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
 }
@@ -172,8 +166,12 @@ reobf {
     shadowJar {}
 }
 
+// this replaces jar.finalizedBy('reobfJar') in the standard forge mod buildscript
+tasks.build.dependsOn reobfShadowJar
+jar.finalizedBy('reobfShadowJar')
+
 curseforge {
-  apiKey = priv.apiKey
+  apiKey = curse_apiKey
   project {
     id = '291788'
     changelogType = 'markdown'
@@ -181,16 +179,9 @@ curseforge {
     releaseType = 'release'
     addGameVersion 'Java 8'
     addGameVersion '1.16.4'
+    addGameVersion '1.16.5'
       relations {
           optionalDependency  'permission-levels'
       }
   }
-}
-
-def parseConfig(File config) {
-    config.withReader {
-        def prop = new Properties()
-        prop.load(it)
-        return (new ConfigSlurper().parse(prop))
-    }
 }

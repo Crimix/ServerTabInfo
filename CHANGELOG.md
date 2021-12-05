@@ -1,6 +1,9 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.16.4, 1.3.4] - 2021-12-05
+- Added option to exclude dimensions in the TPS tab list [#15](https://github.com/Crimix/ServerTabInfo/issues/15)
+
 ## [1.16.4, 1.3.3] - 2020-11-20
 - Full stable release
 - Partial support for [#12](https://github.com/Crimix/ServerTabInfo/issues/12)  
