@@ -138,9 +138,22 @@ public class TpsListOverlay extends GameOverlay.PreLayer {
 
     private List<Row> getRows() {
         List<Row> rows = ClientDataManager.DIMENSIONS.stream()
+                .filter(this::isNotBlocked)
                 .map(this::buildRow)
                 .collect(Collectors.toCollection(LinkedList::new));
         return rows;
+    }
+
+    private boolean isNotBlocked(Dimension dimension) {
+        for (String blocked : Config.DIMENSION_BLOCK_LIST.get()) {
+            if (dimension.name.toString().equalsIgnoreCase(blocked.trim())) {
+                return false;
+            } else if (dimension.name.getNamespace().equalsIgnoreCase(blocked.split(":")[0]) && "*".equalsIgnoreCase(blocked.split(":")[1])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private Row buildRow(Dimension dimension) {
