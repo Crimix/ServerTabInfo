@@ -6,10 +6,10 @@ import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
 import com.black_dog20.servertabinfo.client.overlays.PlayerListOverlay;
 import com.black_dog20.servertabinfo.client.overlays.TpsListOverlay;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 @Mod.EventBusSubscriber( modid = ServerTabInfo.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientStartup {

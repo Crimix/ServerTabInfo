@@ -15,15 +15,15 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply from: 'https://raw.githubusercontent.com/Crimix/bml/1.17/common.gradle'
-apply from: 'https://raw.githubusercontent.com/Crimix/bml/1.17/shadow.gradle'
+apply from: 'https://raw.githubusercontent.com/Crimix/bml/1.18/common.gradle'
+apply from: 'https://raw.githubusercontent.com/Crimix/bml/1.18/shadow.gradle'
 
 version = version_major + '.' + version_minor + '.' + version_patch
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_archivesBaseName + "-" + mc_version
 
-// Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+// Mojang ships Java 17 to end users in 1.18+ instead of Java 16 in 1.17 so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -164,11 +164,11 @@ curseforge {
     project {
         id = '291788'
         changelogType = 'markdown'
-        changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/1.17/CHANGELOG.md)'
-        releaseType = 'beta'
+        changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/1.18/CHANGELOG.md)'
+        releaseType = 'release'
         addGameVersion 'Forge'
-        addGameVersion 'Java 16'
-        addGameVersion '1.17.1'
+        addGameVersion 'Java 17'
+        addGameVersion '1.18'
         relations {
             optionalDependency 'permission-levels'
         }
