@@ -168,7 +168,7 @@ curseforge {
         releaseType = 'release'
         addGameVersion 'Forge'
         addGameVersion 'Java 17'
-        addGameVersion '1.18'
+        addGameVersion '1.18.2'
         relations {
             optionalDependency 'permission-levels'
         }
