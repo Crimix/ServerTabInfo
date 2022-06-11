@@ -1,4 +1,6 @@
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fdownloads%3FprojectId%3D291788%26mode%3Dfull)](https://minecraft.curseforge.com/projects/server-tab-info)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fversions%3FprojectId%3D291788)](https://minecraft.curseforge.com/projects/server-tab-info)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fversions%3FprojectId%3D291788)](https://minecraft.curseforge.com/projects/server-tab-info)  
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fmodrinth-badge-shields-io-s1co4c2czdpy.runkit.sh/%2Fdownloads%3FprojectId%3DVZptDEBF%26mode%3Dfull)](https://modrinth.com/mod/server-tab-info)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fmodrinth-badge-shields-io-s1co4c2czdpy.runkit.sh%2Fversions%3FprojectId%3DVZptDEBF)](https://modrinth.com/mod/server-tab-info)
 # Server Tab Info
 [Server Tab Info](https://minecraft.curseforge.com/projects/server-tab-info) is a small server utility mod that displays mean tick time and tps information on a nice elegant way. The inspiration came from a small feature from [MineTogether](https://minecraft.curseforge.com/projects/creeperhost-minetogether) which used to work quite nice for me, but lately failed to work, therefore I create this mod.

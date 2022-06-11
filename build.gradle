@@ -174,3 +174,16 @@ curseforge {
         }
     }
 }
+
+modrinth {
+    token = modrinth_token
+    projectId = "VZptDEBF"
+    uploadFile = jar
+    changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/ServerTabInfo/blob/1.18/CHANGELOG.md)'
+    versionType = "release"
+    loaders = ["forge"]
+    gameVersions = ["1.18.2"]
+    dependencies {
+        optional.project "liHwiCTl"
+    }
+}
