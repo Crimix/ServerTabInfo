@@ -164,7 +164,7 @@ curseforge {
     project {
         id = '291788'
         changelogType = 'markdown'
-        changelog = "As always find the changelog here [CHANGELOG](${property('placeholder.update_url')})"
+        changelog = "As always find the changelog here [CHANGELOG](${changelog_url})"
         releaseType = 'release'
         addGameVersion 'Forge'
         addGameVersion 'Java 17'
@@ -179,7 +179,7 @@ modrinth {
     token = modrinth_token
     projectId = "VZptDEBF"
     uploadFile = jar
-    changelog = "As always find the changelog here [CHANGELOG](${property('placeholder.update_url')})"
+    changelog = "As always find the changelog here [CHANGELOG](${changelog_url})"
     versionType = "release"
     loaders = ["forge"]
     gameVersions = ["1.19"]
