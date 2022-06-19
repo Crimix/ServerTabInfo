@@ -26,9 +26,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.network.chat.BaseComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.scores.Objective;
@@ -141,7 +140,7 @@ public class PlayerListOverlay extends GameOverlay.Pre {
                 .build();
     }
 
-    private BaseComponent getPlayerScore(PlayerInfo playerInfo, Scoreboard scoreboard) {
+    private Component getPlayerScore(PlayerInfo playerInfo, Scoreboard scoreboard) {
         Objective scoreObjective = Optional.ofNullable(scoreboard)
                 .map(s -> s.getDisplayObjective(0))
                 .orElse(null);
@@ -186,16 +185,16 @@ public class PlayerListOverlay extends GameOverlay.Pre {
     private Component getPlayerName(PlayerInfo playerInfo) {
         return Optional.ofNullable(playerInfo)
                 .map(PlayerInfo::getTabListDisplayName)
-                .orElseGet(() -> PlayerTeam.formatNameForTeam(playerInfo.getTeam(), new TextComponent(playerInfo.getProfile().getName())));
+                .orElseGet(() -> PlayerTeam.formatNameForTeam(playerInfo.getTeam(), Component.literal(playerInfo.getProfile().getName())));
     }
 
-    private BaseComponent getPlayerPing(PlayerInfo playerInfo) {
+    private Component getPlayerPing(PlayerInfo playerInfo) {
         return TextComponentBuilder.of(playerInfo.getLatency())
                 .with(MS)
                 .build();
     }
 
-    private BaseComponent getPlayerDim(PlayerInfo playerInfo) {
+    private Component getPlayerDim(PlayerInfo playerInfo) {
         ResourceLocation dimName = ClientDataManager.PLAYER_DIMENSIONS.getOrDefault(playerInfo.getProfile().getId(), null);
         return TextComponentBuilder.of(getDimensionName(dimName))
                 .with(getDimensionTps(dimName), this::isAllowed)
@@ -203,27 +202,27 @@ public class PlayerListOverlay extends GameOverlay.Pre {
 
     }
 
-    private BaseComponent getDimensionName(ResourceLocation dimensionName) {
+    private Component getDimensionName(ResourceLocation dimensionName) {
         if (dimensionName == null)
-            return (BaseComponent) UNKOWN.get();
+            return UNKOWN.get();
 
         if (ClientDataManager.DIMENSION_NAME_CACHE.containsKey(dimensionName))
             return ClientDataManager.DIMENSION_NAME_CACHE.get(dimensionName);
 
-        BaseComponent name = DimensionUtil.getFormattedDimensionName(dimensionName, ServerTabInfo.MOD_ID);
+        MutableComponent name = DimensionUtil.getFormattedDimensionName(dimensionName, ServerTabInfo.MOD_ID);
         ClientDataManager.DIMENSION_NAME_CACHE.put(dimensionName, name);
         return name;
     }
 
-    private BaseComponent getDimensionTps(ResourceLocation dimensionName) {
+    private Component getDimensionTps(ResourceLocation dimensionName) {
         if (dimensionName == null)
-            return new TextComponent("");
+            return Component.literal("");
         Dimension dimension = ClientDataManager.DIMENSIONS.stream()
                 .filter(d -> d.name.equals(dimensionName))
                 .findFirst()
                 .orElse(null);
         if (dimension == null)
-            return new TextComponent("");
+            return Component.literal("");
 
         int tps = dimension.tps;
         ChatFormatting color = ChatFormatting.GREEN;

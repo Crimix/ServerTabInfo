@@ -19,11 +19,11 @@ public class ModGenerator {
     private static void registerClientProviders(DataGenerator generator, GatherDataEvent event) {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        generator.addProvider(new GeneratorLanguageEnglish(generator));
-        generator.addProvider(new GeneratorLanguageDanish(generator));
-        generator.addProvider(new GeneratorLanguageGerman(generator));
-        generator.addProvider(new GeneratorLanguageRussian(generator));
-        generator.addProvider(new GeneratorLanguageChinese(generator));
+        generator.addProvider(true, new GeneratorLanguageEnglish(generator));
+        generator.addProvider(true, new GeneratorLanguageDanish(generator));
+        generator.addProvider(true, new GeneratorLanguageGerman(generator));
+        generator.addProvider(true, new GeneratorLanguageRussian(generator));
+        generator.addProvider(true, new GeneratorLanguageChinese(generator));
     }
 
 

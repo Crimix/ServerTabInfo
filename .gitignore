@@ -167,3 +167,4 @@ src/generated/resources/.cache/cache
 /.vscode/
 /logs/
 /gradle-local.properties
+/src/main/generated_resources/.cache/

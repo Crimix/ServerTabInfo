@@ -21,7 +21,8 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -179,18 +180,18 @@ public class TpsListOverlay extends GameOverlay.PreLayer {
         return rows;
     }
 
-    private BaseComponent getDimensionName(Dimension dimension) {
+    private Component getDimensionName(Dimension dimension) {
         ResourceLocation dimensionName = dimension.name;
 
         if(ClientDataManager.DIMENSION_NAME_CACHE.containsKey(dimensionName))
             return ClientDataManager.DIMENSION_NAME_CACHE.get(dimensionName);
 
-        BaseComponent name = DimensionUtil.getFormattedDimensionName(dimensionName, ServerTabInfo.MOD_ID);
+        MutableComponent name = DimensionUtil.getFormattedDimensionName(dimensionName, ServerTabInfo.MOD_ID);
         ClientDataManager.DIMENSION_NAME_CACHE.put(dimensionName, name);
         return name;
     }
 
-    private BaseComponent getDimensionMean(Dimension dimension) {
+    private Component getDimensionMean(Dimension dimension) {
         double mean = dimension.meanTickTime;
 
         return TextComponentBuilder.of(String.format("%.2f", mean))
@@ -198,7 +199,7 @@ public class TpsListOverlay extends GameOverlay.PreLayer {
                 .build();
     }
 
-    private BaseComponent getDimensionTps(Dimension dimension) {
+    private Component getDimensionTps(Dimension dimension) {
         int tps = dimension.tps;
         ChatFormatting color = ChatFormatting.GREEN;
 
