@@ -20,6 +20,6 @@ public class Jade implements IWailaPlugin {
     }
 
     private boolean beforeRender(ITooltip var1, Rect2i var2, PoseStack var3, Accessor<?> var4, JadeBeforeRenderCallback.ColorSetting var5) {
-        return Minecraft.getInstance().options.keyPlayerList.isDown() && !Minecraft.getInstance().hasSingleplayerServer() || Keybinds.SHOW.isDown();
+        return (Minecraft.getInstance().options.keyPlayerList.isDown() && !Minecraft.getInstance().hasSingleplayerServer()) || Keybinds.SHOW.isDown();
     }
 }

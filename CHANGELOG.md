@@ -1,6 +1,9 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19, 1.3.6] - 2022-06-19
+- Make sure the Jade hide overlay logic works
+
 ## [1.19, 1.3.5] - 2022-06-19
 - Port to 1.19 may be a bit unstable as Forge 1.19 is in beta
 
