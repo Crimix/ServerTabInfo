@@ -26,8 +26,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.overlay.NamedGuiOverlay;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 
 @OnlyIn(Dist.CLIENT)
-public class TpsListOverlay extends GameOverlay.PreLayer {
+public class TpsListOverlay extends GameOverlay.Pre {
 
     private Minecraft minecraft;
     private Font fontRenderer;
@@ -107,8 +107,8 @@ public class TpsListOverlay extends GameOverlay.PreLayer {
     }
 
     @Override
-    public boolean doRender(IIngameOverlay iIngameOverlay) {
-        if (iIngameOverlay == ForgeIngameGui.CROSSHAIR_ELEMENT) {
+    public boolean doRender(NamedGuiOverlay overlay) {
+        if (overlay.id().equals(VanillaGuiOverlay.CROSSHAIR.id())) {
             if (Keybinds.SHOW.isDown()) {
                 boolean allowed = isAllowed();
                 if (!hasBeenShown && !allowed) {

@@ -36,7 +36,8 @@ import net.minecraft.world.scores.Score;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.gui.overlay.NamedGuiOverlay;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -99,9 +100,12 @@ public class PlayerListOverlay extends GameOverlay.Pre {
     }
 
     @Override
-    public boolean doRender(RenderGameOverlayEvent.ElementType elementType) {
-        if (elementType == RenderGameOverlayEvent.ElementType.PLAYER_LIST) {
-            return Config.REPLACE_PLAYER_LIST.get();
+    public boolean doRender(NamedGuiOverlay overlay) {
+        if (overlay.id().equals(VanillaGuiOverlay.PLAYER_LIST.id())) {
+            Objective scoreboard = minecraft.level.getScoreboard().getDisplayObjective(0);
+            ClientPacketListener handler = minecraft.player.connection;
+            boolean shouldShowTabList = (minecraft.options.keyPlayerList.isDown() && (!minecraft.isLocalServer() || handler.getOnlinePlayers().size() > 1 || scoreboard != null));
+            return shouldShowTabList && Config.REPLACE_PLAYER_LIST.get();
         }
 
         return false;
