@@ -1,6 +1,9 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19, 1.3.7] - 2022-07-31
+- Port to 1.19.1
+
 ## [1.19, 1.3.7] - 2022-07-17
 - Updated to Forge version 41.0.99 to work with the new client refactor and rename refactor
 
