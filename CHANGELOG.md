@@ -1,6 +1,10 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19.3, 1.3.7] - 2022-12-10
+- Port to 1.19.3
+- Jade compact is missing until Jade has updated
+
 ## [1.19, 1.3.7] - 2022-07-31
 - Port to 1.19.1
 

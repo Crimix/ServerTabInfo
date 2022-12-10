@@ -126,7 +126,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
+    //implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     shadowCompileOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
 }

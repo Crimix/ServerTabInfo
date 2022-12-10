@@ -118,7 +118,7 @@ public class PlayerListOverlay extends GameOverlay.Pre {
 
     private List<Row> getRows() {
         ClientPacketListener nethandlerplayclient = this.minecraft.player.connection;
-        List<PlayerInfo> list = ENTRY_ORDERING.<PlayerInfo>sortedCopy(nethandlerplayclient.getOnlinePlayers());
+        List<PlayerInfo> list = ENTRY_ORDERING.<PlayerInfo>sortedCopy(nethandlerplayclient.getListedOnlinePlayers());
 
         return list.stream()
                 .map(this::buildRow)
