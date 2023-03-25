@@ -157,7 +157,7 @@ curseforge {
         releaseType = 'release'
         addGameVersion 'Forge'
         addGameVersion 'Java 17'
-        addGameVersion '1.19.3'
+        addGameVersion '1.19.4'
         relations {
             optionalDependency 'permission-levels'
         }
@@ -172,7 +172,7 @@ modrinth {
     changelog = "As always find the changelog here [CHANGELOG](${changelog_url})"
     versionType = "release"
     loaders = ["forge"]
-    gameVersions = ["1.19.3"]
+    gameVersions = ["1.19.4"]
     dependencies {
         optional.project "liHwiCTl"
     }
