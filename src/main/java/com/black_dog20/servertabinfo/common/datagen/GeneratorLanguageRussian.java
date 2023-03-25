@@ -10,7 +10,7 @@ import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 public class GeneratorLanguageRussian extends BaseLanguageProvider {
 
     public GeneratorLanguageRussian(DataGenerator gen) {
-        super(gen, ServerTabInfo.MOD_ID, "ru_ru");
+        super(gen.getPackOutput(), ServerTabInfo.MOD_ID, "ru_ru");
     }
 
     @Override

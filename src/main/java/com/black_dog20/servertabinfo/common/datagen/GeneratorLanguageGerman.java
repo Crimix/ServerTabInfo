@@ -5,12 +5,13 @@ import com.black_dog20.servertabinfo.ServerTabInfo;
 import net.minecraft.data.DataGenerator;
 
 import static com.black_dog20.servertabinfo.common.utils.DimensionTranslations.*;
-import static com.black_dog20.servertabinfo.common.utils.Translations.*;
+import static com.black_dog20.servertabinfo.common.utils.Translations.MEAN;
+import static com.black_dog20.servertabinfo.common.utils.Translations.NOT_INSTALLED;
 
 public class GeneratorLanguageGerman extends BaseLanguageProvider {
 
     public GeneratorLanguageGerman(DataGenerator gen) {
-        super(gen, ServerTabInfo.MOD_ID, "de_de");
+        super(gen.getPackOutput(), ServerTabInfo.MOD_ID, "de_de");
     }
 
     @Override

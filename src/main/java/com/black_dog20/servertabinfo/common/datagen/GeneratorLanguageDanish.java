@@ -10,7 +10,7 @@ import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 public class GeneratorLanguageDanish extends BaseLanguageProvider {
 
     public GeneratorLanguageDanish(DataGenerator gen) {
-        super(gen, ServerTabInfo.MOD_ID, "da_dk");
+        super(gen.getPackOutput(), ServerTabInfo.MOD_ID, "da_dk");
     }
 
     @Override
