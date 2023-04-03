@@ -1,13 +1,16 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19.4, 1.3.8] - 2023-04-03
+- Fixed Jade compat
+
 ## [1.19.4, 1.3.7] - 2023-03-25
 - Port to 1.19.4
-- Jade compact is still missing as there seems to be mixin issues
+- Jade compat is still missing as there seems to be mixin issues
 
 ## [1.19.3, 1.3.7] - 2022-12-10
 - Port to 1.19.3
-- Jade compact is missing until Jade has updated
+- Jade compat is missing until Jade has updated
 
 ## [1.19, 1.3.7] - 2022-07-31
 - Port to 1.19.1

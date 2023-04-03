@@ -47,6 +47,9 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            // Disable mixin refmaps
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 ServerTabInfo {
                     source sourceSets.main
@@ -66,6 +69,9 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            // Disable mixin refmaps
+            property 'mixin.env.disableRefMap', 'true'
 
             mods {
                 ServerTabInfo {
@@ -126,7 +132,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    //implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
+    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     shadowCompileOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:bml:${bml_version}")
 }
