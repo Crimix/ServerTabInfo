@@ -10,7 +10,7 @@ import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 public class GeneratorLanguageChinese extends BaseLanguageProvider {
 
     public GeneratorLanguageChinese(DataGenerator gen) {
-        super(gen, ServerTabInfo.MOD_ID, "zh_cn");
+        super(gen.getPackOutput(), ServerTabInfo.MOD_ID, "zh_cn");
     }
 
     @Override
