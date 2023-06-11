@@ -1,8 +1,8 @@
 package com.black_dog20.servertabinfo.common.compat;
 
 import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
 import snownee.jade.api.Accessor;
 import snownee.jade.api.ITooltip;
@@ -19,7 +19,7 @@ public class Jade implements IWailaPlugin {
         registration.addBeforeRenderCallback(this::beforeRender);
     }
 
-    private boolean beforeRender(ITooltip var1, Rect2i var2, PoseStack var3, Accessor<?> var4, JadeBeforeRenderCallback.ColorSetting var5) {
+    private boolean beforeRender(ITooltip var1, Rect2i var2, GuiGraphics var3, Accessor<?> var4, JadeBeforeRenderCallback.ColorSetting var5) {
         return (Minecraft.getInstance().options.keyPlayerList.isDown() && !Minecraft.getInstance().hasSingleplayerServer()) || Keybinds.SHOW.isDown();
     }
 }

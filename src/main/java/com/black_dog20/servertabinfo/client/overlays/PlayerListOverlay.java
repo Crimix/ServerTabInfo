@@ -17,15 +17,14 @@ import com.black_dog20.servertabinfo.client.keybinds.Keybinds;
 import com.black_dog20.servertabinfo.common.utils.Dimension;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -52,9 +51,8 @@ import static com.black_dog20.servertabinfo.common.utils.Translations.*;
 public class PlayerListOverlay extends GameOverlay.Pre {
 
     private static final Ordering<PlayerInfo> ENTRY_ORDERING = Ordering.from(new PlayerComparator());
-    private Minecraft minecraft;
-    private Font fontRenderer;
-    private ItemRenderer itemRenderer;
+    private final Minecraft minecraft;
+    private final Font fontRenderer;
     private long lastRenderTime = Util.getMillis();
     private int ticks = 0;
     private int page = 1;
@@ -62,11 +60,10 @@ public class PlayerListOverlay extends GameOverlay.Pre {
     public PlayerListOverlay() {
         this.minecraft = Minecraft.getInstance();
         this.fontRenderer = minecraft.font;
-        this.itemRenderer = minecraft.getItemRenderer();
     }
 
     @Override
-    public void onRender(PoseStack matrixStack, int width, int height) {
+    public void onRender(GuiGraphics guiGraphics, int width, int height) {
         if(Keybinds.SHOW.isDown())
             return;
         int y = 10;
@@ -92,9 +89,9 @@ public class PlayerListOverlay extends GameOverlay.Pre {
         int maxWidth = RowHelper.getMaxWidth(rows);
         int x = width / 2 - maxWidth / 2;
 
-        DrawingContext drawingContext = new DrawingContext(matrixStack, width, height, x, y, z, fontRenderer, itemRenderer);
+        DrawingContext drawingContext = new DrawingContext(guiGraphics, width, height, x, y, z, fontRenderer);
         y = RowHelper.drawRowsWithBackground(drawingContext, rows);
-        fontRenderer.drawShadow(matrixStack, PAGE.get(page, maxPages), width / 2 + 2, y + 2, -1);
+        guiGraphics.drawString(fontRenderer, PAGE.get(page, maxPages), width / 2 + 2, y + 2, -1);
         ticks++;
         lastRenderTime = Util.getMillis();
     }

@@ -84,7 +84,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.getEntity().level.isClientSide) {
+        if (!event.getEntity().level().isClientSide) {
             ServerPlayer playerEntity = (ServerPlayer) event.getEntity();
             ResourceLocation name = playerEntity.getCommandSenderWorld().dimension().location();
             PLAYER_DIMENSIONS.put(playerEntity.getUUID(), name);
