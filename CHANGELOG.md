@@ -1,7 +1,7 @@
 # Server Tab Info Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [1.20, 1.3.8] - 2023-06-xx
+## [1.20, 1.3.8] - 2023-06-18
 - Port to 1.20
 
 ## [1.19.4, 1.3.8] - 2023-04-03
