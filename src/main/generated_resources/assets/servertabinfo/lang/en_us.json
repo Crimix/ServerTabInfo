@@ -13,5 +13,19 @@
   "servertabinfo.minecraft:the_nether": "The Nether",
   "servertabinfo.msg.not_allowed": "You do not have permission to see tps information",
   "servertabinfo.servertabinfo:overall": "Overall",
-  "servertabinfo.twilightforest:twilight_forest": "The Twilight Forest"
+  "servertabinfo.twilightforest:twilight_forest": "The Twilight Forest",
+  "servertabinfo.deeperdarker:otherside": "Otherside",
+  "servertabinfo.bracken:dormis": "Dormis",
+  "servertabinfo.bracken:glacium": "Glacium",
+  "servertabinfo.bracken:omnidrome": "Omnidrome",
+  "servertabinfo.bracken:panacea": "Panacea",
+  "servertabinfo.bracken:pax": "Pax",
+  "servertabinfo.bracken:sanctum": "Sanctum",
+  "servertabinfo.bracken:the_brine": "The Brine",
+  "servertabinfo.bracken:the_faewild": "The Faewild",
+  "servertabinfo.bracken:the_underdark": "The Underdark",
+  "servertabinfo.bracken:varskspace": "Varskspace",
+  "servertabinfo.bracken:void": "Void",
+  "servertabinfo.bro:saturated": "Saturated",
+  "servertabinfo.bro:void": "Null"
 }
